@@ -5,11 +5,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+
+
+import "./Navigation.css"
 
   
 
 function Navigation(props) {
+
         const useStyles = makeStyles(theme => ({
             root: {
               flexGrow: 1,
@@ -23,18 +27,19 @@ function Navigation(props) {
         }));
 
 
+
+
         const classes = useStyles();
 
         return (
             <div className={classes.root}>
-              <AppBar position="static">
+              <AppBar position="static" style={{backgroundColor: "#836529", opacity:"0.92", color:"black"}}>
                 <Toolbar>
                   <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
+                    <HomeIcon />
                   </IconButton>
-                  <Typography variant="h6" className={classes.title}>
-                    News
-                  </Typography>
+                  <h4 className={classes.title}>Have something to say here.</h4>
+                  {props.loggedIn ? <Button color="inherit">My Trips</Button> : null}
                   {props.loggedIn ? <Button color="inherit">Logout</Button> : <Button color="inherit">Login</Button>}
                 </Toolbar>
               </AppBar>
