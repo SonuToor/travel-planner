@@ -5,30 +5,24 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 
-export default class Login extends React.Component {
-    // TO DO
-        // form verification
-            // done yourself or a library?
-        // write to firebase
+export default class Signup extends React.Component {
     constructor() {
         super()
         this.state = {
             showPassword : false
         }
     }
-
+    
     componentDidMount = () => {
         // state in App.js should have loggedIn as false 
     }
-
-    handleClickShowPassword = () => {
-        this.setState({
-            showPassword : !this.state.showPassword
-        })
-    }
-
+    
+    // TO DO
+        // need logic to confirm passwords match
+        // verification (your own logic or a library?)
+        // writing to firebase 
     render() {
-        return (
+        return(
             <div>
                 <FormControl>
                     <InputLabel htmlFor="user-username">Enter Username</InputLabel>
@@ -40,8 +34,8 @@ export default class Login extends React.Component {
                             </InputAdornment>
                         }
                     />
-                 </FormControl>
-                 <FormControl>
+                </FormControl>
+                <FormControl>
                     <InputLabel htmlFor="user-password">Enter Password</InputLabel>
                     <Input
                         variant="outlined"
@@ -57,6 +51,23 @@ export default class Login extends React.Component {
                             </InputAdornment>
                         }
                     />
+                </FormControl>
+                <FormControl>
+                    <InputLabel htmlFor="user-reenterpassword">Reenter Password</InputLabel>
+                    <Input
+                        variant="outlined"
+                        id="user-reenterpassword"
+                        type={this.state.showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton 
+                                    aria-label="toggle password visibility"
+                                    onClick={this.handleClickShowPassword}>
+                                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />          
                 </FormControl>
             </div>
         )
