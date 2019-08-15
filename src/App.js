@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Home from "./Components/Home"
@@ -27,9 +27,16 @@ export default class App extends React.Component {
   constructor(){
     super()
     this.state = {
-      loggedIn : true,
-      userName : null
+      loggedIn : false,
+      user : null
     }
+  }
+
+  newUser = (email) => {
+    this.setState({
+      user : email,
+      loggedIn : true
+    })
   }
   
   logOut = () => {
@@ -37,10 +44,6 @@ export default class App extends React.Component {
       loggedIn : false
     })
   }
-
-  // TO DO 
-  // I do need to have Login, Signup and Landing here 
-    // those components need this.state.loggedIn as a prop
 
   render() {
     return (
@@ -50,8 +53,8 @@ export default class App extends React.Component {
             <div>
               <Route path={routes.home} component={Home}/>
               <Route exact path={routes.landing} render={()=><Landing logOut={this.logOut}/>}/>
-              <Route  path={routes.login} component={Login}/>
-              <Route  path={routes.signup} component={Signup}/>            
+              <Route path={routes.login} render={()=><Login logOut={this.logOut}/>}/>
+              <Route path={routes.signup} render={()=><Signup logOut={this.logOut} register={this.newUser}/>}/>            
             </div>
           </Router>
         </Container>

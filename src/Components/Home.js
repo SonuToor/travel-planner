@@ -9,6 +9,7 @@ export default class Landing extends React.Component {
 
     componentDidMount = () => {
         // state in App.js should have loggedIn as true 
+        
     }
 
     render() {

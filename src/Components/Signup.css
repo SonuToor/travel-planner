@@ -1,0 +1,21 @@
+.form-background {
+    background-color: rgb(131, 101, 41);
+    opacity: 0.8;
+    width: 25%;
+    padding-bottom: 1%;
+    margin-top: 10%;
+    margin-left: 37.5%;
+    border-radius: 25px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: 8%;
+}
+
+.signup-button {
+    margin-top : 20%;
+}

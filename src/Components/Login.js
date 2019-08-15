@@ -1,24 +1,48 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { FormControl, Input, IconButton, InputAdornment, InputLabel} from '@material-ui/core';
+import { Button, FormControl, Input, IconButton, InputAdornment, InputLabel} from '@material-ui/core';
+import firebase from "../config/Firebase"
+import './Login.css'
 import React from 'react';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 
 export default class Login extends React.Component {
-    // TO DO
-        // form verification
-            // done yourself or a library?
-        // write to firebase
     constructor() {
         super()
         this.state = {
-            showPassword : false
+            showPassword : false,
+            email : '',
+            password : ''
         }
     }
 
+    handleChange = (event) => {
+        if (event.target.id === "user-email") {
+            this.setState({
+                email : event.target.value
+            })
+        }
+        else {
+            this.setState({
+                password : event.target.value
+            })
+        }
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        
+        // firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
+        //     // Handle Errors here.
+        //     var errorCode = error.code;
+        //     var errorMessage = error.message;
+        //     // ...
+        //   });
+    }
+
     componentDidMount = () => {
-        // state in App.js should have loggedIn as false 
+        this.props.logOut();    
     }
 
     handleClickShowPassword = () => {
@@ -29,35 +53,42 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div>
-                <FormControl>
-                    <InputLabel htmlFor="user-username">Enter Username</InputLabel>
-                    <Input
-                        id="user-username"
-                        startAdornment={
-                            <InputAdornment position="start">
-                            <AccountCircle />
-                            </InputAdornment>
-                        }
-                    />
-                 </FormControl>
-                 <FormControl>
-                    <InputLabel htmlFor="user-password">Enter Password</InputLabel>
-                    <Input
-                        variant="outlined"
-                        id="user-password"
-                        type={this.state.showPassword ? 'text' : 'password'}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton 
-                                    aria-label="toggle password visibility"
-                                    onClick={this.handleClickShowPassword}>
-                                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+            <div className="form-background">
+                <form className="login-form" onSubmit={this.handleSubmit}>
+                    <h3>Login</h3>
+                    <FormControl>
+                        <InputLabel htmlFor="user-email">Enter Email</InputLabel>
+                        <Input
+                            id="user-email"
+                            type="email"
+                            onChange={this.handleChange}
+                            startAdornment={
+                                <InputAdornment position="start">
+                                <AccountCircle />
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel htmlFor="user-password">Enter Password</InputLabel>
+                        <Input
+                            variant="outlined"
+                            id="user-password"
+                            type={this.state.showPassword ? 'text' : 'password'}
+                            onChange={this.handleChange}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton 
+                                        aria-label="toggle password visibility"
+                                        onClick={this.handleClickShowPassword}>
+                                        {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
+                    <Button variant="contained" className="login-button" type="submit" style={{marginTop : "2%"}}>Submit</Button>
+                </form>
             </div>
         )
     }
