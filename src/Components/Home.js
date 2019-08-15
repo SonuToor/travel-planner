@@ -5,12 +5,7 @@ export default class Landing extends React.Component {
         // does this carry most of the info in state?
             // log in info should stay in App.js
         // write to firebase from here?
-
-
-    componentDidMount = () => {
-        // state in App.js should have loggedIn as true 
-        
-    }
+// 
 
     render() {
         return (

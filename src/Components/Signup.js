@@ -19,15 +19,14 @@ export default class Signup extends React.Component {
             error : null
         }
     }
-
+    // toggle between showing and hiding password 
     handleClickShowPassword = () => {
         this.setState({
             showPassword : !this.state.showPassword
         })
     }
-
+    // store the input fields within state
     handleChange = (event) => {
-        // store the input fields within state
         if (event.target.id === "user-email") {
             this.setState({
                 email : event.target.value
@@ -55,48 +54,32 @@ export default class Signup extends React.Component {
                 error : "Passwords don't match!"
             })
         }
-        else if (this.state.password.length < 4) {
-            this.setState({
-                isError : true,
-                error : "Password must be longer than 4 characters"
-            })
-        }
         // submission is valid 
         else {
             this.setState({
                 isError : false,
                 errorMessage : null
             })
-            // the passwords match and are of the appropriate length, sign user up with firebase authentication
-
-            // TO DO 
-                // make sure the sign up authentication below is right according to docs
-                // then make sure the sign out function in navigation is correct
-                // then make sure you can redirect the user after sign in to the "/home" path
-                // then check to make sure the login process is working
-                // then give it a go and see if signup ---> log out ----> log in    works as intended 
+            // the passwords match, sign user up with firebase authentication
             firebase
                 .auth()
-                .createUserWithEmailAndPassword(
-                    this.state.email, 
-                    this.state.password
-                )
-                .then(() => {
+                .createUserWithEmailAndPassword(this.state.email, this.state.password)
+                .then((response) => {
                     this.props.register(this.state.email);
+                    this.props.history.push(this.props.route)
                     console.log(this.state.email + " has created an account!");
+                    console.log(response)
                   })
-                .catch(function(error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                this.setState({
-                    // TO DO
-                        // now if i set isError to true here, it will display the error message given by firebase
-                        // how and when does it get removed?
-                    error: errorMessage
-                })
-              });
+                  .catch((error) => {
+                    // display errors if sign up fails 
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    this.setState({
+                        isError : true,
+                        error : errorMessage
+                    })
+                  })
         }
-
     }
 
     componentDidMount = () => {

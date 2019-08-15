@@ -26,22 +26,19 @@ function Navigation(props) {
             },
         }));
 
-
         const routes = props.routes
 
         const classes = useStyles();
-
-        let logOutUser = (event) => {
-          // TO DO 
-          // use firebase to log user out here 
-          // make sure this works properly by reading docs
-
-          console.log('logout button')
-
-          // firebase.auth().signOut().then(function() {
-          // }).catch(function(error) {
-          //   console.log(error)
-          // });
+        
+        let logOutUser = () => {
+          firebase.auth().signOut()
+          .then(function() { 
+            this.props.logOut()
+            console.log("user has succesfully logged out")
+          })
+          .catch(function(error) {
+            console.log(error)
+          });
         }
 
         return (
@@ -61,7 +58,8 @@ function Navigation(props) {
                     </IconButton>
                   </NavLink>
                   }
-                  <h4 className={classes.title}>Have something to say here.</h4>
+                  {/* {TO DO ----- have an api that displays random travel quotes here} */}
+                  <h4 className={classes.title}>Let's get planning!</h4>
                   {props.loggedIn ? 
                     <Button>My Trips</Button> 
                     : 

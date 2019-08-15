@@ -13,10 +13,12 @@ export default class Login extends React.Component {
         this.state = {
             showPassword : false,
             email : '',
-            password : ''
+            password : '',
+            isError : false,
+            error : null
         }
     }
-
+    // store the input fields within state
     handleChange = (event) => {
         if (event.target.id === "user-email") {
             this.setState({
@@ -32,13 +34,30 @@ export default class Login extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        
-        // firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
-        //     // Handle Errors here.
-        //     var errorCode = error.code;
-        //     var errorMessage = error.message;
-        //     // ...
-        //   });
+        // remove any existing error messages
+        this.setState({
+            isError : false,
+            error : null
+        })
+        // use fire base authentication to log user in
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then((response) => {
+                this.props.login(this.state.email)
+                this.props.history.push(this.props.route)
+                console.log(this.state.email + " has logged in!");
+                console.log(response)
+            })
+            .catch((error) => {
+                // display any errors if authentication fails
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                this.setState({
+                    isError : true,
+                    error : errorMessage
+                })
+              })
     }
 
     componentDidMount = () => {
@@ -56,6 +75,7 @@ export default class Login extends React.Component {
             <div className="form-background">
                 <form className="login-form" onSubmit={this.handleSubmit}>
                     <h3>Login</h3>
+                    {this.state.isError ? <p style={{color : "red", textAlign : "center"}}>{this.state.error}</p> : null}
                     <FormControl>
                         <InputLabel htmlFor="user-email">Enter Email</InputLabel>
                         <Input

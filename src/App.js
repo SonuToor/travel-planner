@@ -32,7 +32,7 @@ export default class App extends React.Component {
     }
   }
 
-  newUser = (email) => {
+  signIn = (email) => {
     this.setState({
       user : email,
       loggedIn : true
@@ -41,7 +41,8 @@ export default class App extends React.Component {
   
   logOut = () => {
     this.setState({
-      loggedIn : false
+      loggedIn : false, 
+      user : null
     })
   }
 
@@ -53,8 +54,8 @@ export default class App extends React.Component {
             <div>
               <Route path={routes.home} component={Home}/>
               <Route exact path={routes.landing} render={()=><Landing logOut={this.logOut}/>}/>
-              <Route path={routes.login} render={()=><Login logOut={this.logOut}/>}/>
-              <Route path={routes.signup} render={()=><Signup logOut={this.logOut} register={this.newUser}/>}/>            
+              <Route path={routes.login} render={(props)=><Login {...props} route={routes.home} logOut={this.logOut} login={this.signIn}/>}/>
+              <Route path={routes.signup} render={(props)=><Signup {...props} route={routes.home} logOut={this.logOut} register={this.signIn}/>}/>            
             </div>
           </Router>
         </Container>
