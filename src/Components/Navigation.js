@@ -61,7 +61,7 @@ function Navigation(props) {
                   {/* {TO DO ----- have an api that displays random travel quotes here} */}
                   <h4 className={classes.title}>Let's get planning!</h4>
                   {props.loggedIn ? 
-                    <Button>My Trips</Button> 
+                    <Button onClick={props.trips}>My Trips</Button> 
                     : 
                     <NavLink to={routes.signup}>
                       <Button>Sign Up</Button>

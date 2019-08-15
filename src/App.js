@@ -28,8 +28,23 @@ export default class App extends React.Component {
     super()
     this.state = {
       loggedIn : false,
-      user : null
+      user : null,
+      displayTrips : false,
     }
+  }
+  clearHome = () => {
+    // here you should remove anything else and have the home page looking the way it would when you first login 
+    this.setState({
+      displayTrips : false
+    })
+  }
+
+  logOut = () => {
+    this.setState({
+      loggedIn : false, 
+      user : null,
+      displayTrips : false
+    })
   }
 
   signIn = (email) => {
@@ -39,20 +54,21 @@ export default class App extends React.Component {
     })
   }
   
-  logOut = () => {
+  usersTrips = () => {
     this.setState({
-      loggedIn : false, 
-      user : null
+      displayTrips : true
     })
+
   }
+
 
   render() {
     return (
         <Container > 
           <Router>
-          <Navigation loggedIn={this.state.loggedIn} theme={theme} routes={routes} logOut={this.logOut}/>
+          <Navigation loggedIn={this.state.loggedIn} theme={theme} routes={routes} logOut={this.logOut} trips={this.usersTrips}/>
             <div>
-              <Route path={routes.home} component={Home}/>
+              <Route path={routes.home} render={() => <Home displayTrips={this.state.displayTrips}/>}/>
               <Route exact path={routes.landing} render={()=><Landing logOut={this.logOut}/>}/>
               <Route path={routes.login} render={(props)=><Login {...props} route={routes.home} logOut={this.logOut} login={this.signIn}/>}/>
               <Route path={routes.signup} render={(props)=><Signup {...props} route={routes.home} logOut={this.logOut} register={this.signIn}/>}/>            

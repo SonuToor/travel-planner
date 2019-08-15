@@ -1,6 +1,7 @@
 import React from 'react';
+import Trips from './homecomponents/Trips'
 
-export default class Landing extends React.Component {
+export default class Home extends React.Component {
     // main logic should go here?
         // does this carry most of the info in state?
             // log in info should stay in App.js
@@ -9,7 +10,10 @@ export default class Landing extends React.Component {
 
     render() {
         return (
-            <h1> Home Page - Once logged in</h1>
+            <div>
+                <h1> Home Page - Once logged in</h1>
+                {this.props.displayTrips ? <Trips/> : null}
+            </div>
         )
     }
 }
