@@ -1,6 +1,5 @@
 .form-background {
-    background-color: rgb(131, 101, 41);
-    opacity: 0.8;
+    background-color: rgba(131, 101, 41, 0.877);
     width: 25%;
     padding-bottom: 1%;
     margin-top: 10%;
