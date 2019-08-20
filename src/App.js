@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
+import firebase from './config/Firebase'
 import Home from "./Components/Home"
 import Navigation from "./Components/Navigation"
 import Landing from './Components/Landing'
@@ -45,6 +46,14 @@ export default class App extends React.Component {
       user : null,
       displayTrips : false
     })
+    firebase.auth().signOut()
+          .then(function() { 
+            this.props.logOut()
+            console.log("user has succesfully logged out")
+          })
+          .catch(function(error) {
+            console.log(error)
+          });
   }
 
   signIn = (email) => {
@@ -68,7 +77,7 @@ export default class App extends React.Component {
           <Router>
           <Navigation loggedIn={this.state.loggedIn} theme={theme} routes={routes} logOut={this.logOut} trips={this.usersTrips}/>
             <div>
-              <Route path={routes.home} render={() => <Home displayTrips={this.state.displayTrips}/>}/>
+              <Route path={routes.home} render={(props) => <Home {...props}  route={routes.landing} loggedIn={this.state.loggedIn} displayTrips={this.state.displayTrips}/>}/>
               <Route exact path={routes.landing} render={()=><Landing logOut={this.logOut}/>}/>
               <Route path={routes.login} render={(props)=><Login {...props} route={routes.home} logOut={this.logOut} login={this.signIn}/>}/>
               <Route path={routes.signup} render={(props)=><Signup {...props} route={routes.home} logOut={this.logOut} register={this.signIn}/>}/>            

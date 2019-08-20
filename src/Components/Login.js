@@ -44,10 +44,9 @@ export default class Login extends React.Component {
             .auth()
             .signInWithEmailAndPassword(this.state.email, this.state.password)
             .then((response) => {
-                this.props.login(this.state.email)
+                this.props.login(response.user.email)
                 this.props.history.push(this.props.route)
-                console.log(this.state.email + " has logged in!");
-                console.log(response)
+                console.log(response.user.email + " has logged in!");
             })
             .catch((error) => {
                 // display any errors if authentication fails

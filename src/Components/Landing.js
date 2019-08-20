@@ -1,6 +1,8 @@
 import background from "../background.jpg"
+import Container from '@material-ui/core/Container';
 import "./Landing.css"
 import React from 'react';
+
 
 export default class Landing extends React.Component {
 
@@ -21,7 +23,10 @@ export default class Landing extends React.Component {
                     <div className="second-step"></div>
                     <div className="third-step"></div>
                 </div>
-                <img className="bg" src={background}/>
+                <Container>
+                {/* {style this image better} */}
+                <img className="bg" src={background} alt="by Dariusz Sankowski"/>
+                </Container>
             </div>
 
         )
