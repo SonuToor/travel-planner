@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import { CSSTransitionGroup } from 'react-transition-group';
 import "./LocationForm.css"
 import { placesKey } from "../../config/APIs"
+import plane from "./airplane.png"
 import React from 'react';
 import Script from 'react-load-script';
 import SearchBar from 'material-ui-search-bar';
@@ -41,8 +42,6 @@ export default class LocationForm extends React.Component {
         // Extract City From Address Object
         let place = this.autocomplete.getPlace();
         let address = place.address_components;
-        console.log(address)
-        console.log(place)
     
         // Check if address is valid
         if (address) {
@@ -58,6 +57,11 @@ export default class LocationForm extends React.Component {
       
       handleSubmit = (event) => {
           event.preventDefault()
+          this.props.handleLocation(this.state.city)
+          this.setState({
+              city : '',
+              query : ''
+          })
       }
  
 
@@ -71,17 +75,16 @@ export default class LocationForm extends React.Component {
             transitionLeave={true}
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
+                <h2>Where are we off to?<img className="plane" src={plane}/></h2>
                 <div className="location-form">
                     <Script url={url} onLoad={this.handleScriptLoad}/>  
-                    <h2 style={{textAlign : "center", fontSize : "250%"}}>Where are we off to?</h2>
                     <form onSubmit={this.handleSubmit}>
-                        <SearchBar id="autocomplete" placeholder="Enter City" value={this.state.query}
+                        <SearchBar id="autocomplete" placeholder="Enter City" required value={this.state.query}
                             style={{
                                 marginLeft : "-50%",
                                 width: "200%",
                                 }}
                         />
-                        {/* {style button the way you want to} */}
                         <Button 
                             style={{backgroundColor : "#836529", 
                                     marginTop : "5%",

@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.3.1",
     "@material-ui/icons": "^4.2.1",
+    "@wojtekmaj/react-daterange-picker": "^2.4.0",
     "firebase": "^6.3.5",
     "material-ui-search-bar": "^1.0.0-beta.13",
     "react": "^16.9.0",

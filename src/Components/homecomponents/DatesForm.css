@@ -1,18 +1,18 @@
 h2{
-  margin-top : 8%;
-  text-align : center;
-  font-size : 250%
+    margin-top : 8%;
+    text-align: center;
+    font-size : 250%
+  }
+
+.calendar-pic {
+    width: 6%;
 }
 
-.location-form {
+.dates-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 4%;
-}
-
-.plane {
-    width : 8%;
 }
 
 .example-enter {
