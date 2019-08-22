@@ -1,5 +1,4 @@
 import background from "../background.jpg"
-import Container from '@material-ui/core/Container';
 import "./Landing.css"
 import React from 'react';
 
@@ -14,21 +13,24 @@ export default class Landing extends React.Component {
     render() {
         return (
             <div>
-                <div className="landing-banner">
-                    <h1>Landing page</h1>
-                    <p>Adds some catchy shit</p>
-                </div>
+                <h1>Welcome to your new travel buddy.</h1>
                 <div className="planner-demo">
-                    <div className="first-step"></div>
-                    <div className="second-step"></div>
-                    <div className="third-step"></div>
+                    <div className="first-step">
+                        <p>1. Choose a destination.</p>
+                        <span>image representing step goes here</span>
+                    </div>
+                    <div className="second-step">
+                        <p>2. Pick your dates.</p>
+                        <span>image representing step goes here</span>
+                    </div>
+                    <div className="third-step">
+                        <p>Fill in your desired itinerary.</p>
+                        <span>image representing step goes here</span>
+                    </div>
                 </div>
-                <Container>
-                {/* {style this image better} */}
+                <h3>We'll organize all the details, so you'll always be ontop of things!</h3>
                 <img className="bg" src={background} alt="by Dariusz Sankowski"/>
-                </Container>
             </div>
-
         )
     }
 }

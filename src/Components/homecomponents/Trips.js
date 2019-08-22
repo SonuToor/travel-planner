@@ -2,6 +2,12 @@ import React from "react"
 
 
 export default class Trips extends React.Component {
+
+    componentDidMount = () => {
+        this.props.display()
+    }
+
+
     render() {
         return (
             <div>

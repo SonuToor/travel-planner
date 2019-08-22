@@ -12,14 +12,9 @@ export default class DateForm extends React.Component {
             date: [new Date(), new Date()],
         }
     }
+    
     onChange = date => this.setState({ date })
 
-
-    // TO DO
-        // this.state.date here is an array of two dates (date objects I believe)
-        // you only want the day, month and year, drop the rest of it for both the first and second date
-
-        // pass it to Home.js to be stored on state, so it can be written to the database. 
     handleSubmit = (event) => {
         event.preventDefault()
  

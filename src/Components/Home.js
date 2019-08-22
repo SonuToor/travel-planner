@@ -24,10 +24,10 @@ export default class Home extends React.Component {
                 // the itinerary --- now is the itinerary stored as a whole or stored split per day? -- what makes sense for the trips display?
 
     handleDateFormSubmit = (dates) => {
-        console.log(dates)
         this.setState({
             dates : dates
         })
+        return this.state.location, this.state.dates
     }
 
     handleLocationFormSubmit = (place) => {
@@ -43,14 +43,22 @@ export default class Home extends React.Component {
         if (this.props.loggedIn === false) {
             this.props.history.push(this.props.route) 
             }
-        }
+    }
+
+    clearHomeForTripsDisplay = () => {
+        this.setState({
+            datesFormDisplay : false,
+            locationFormDisplay : false
+        })
+    }
+
 
     render() {
         return (
             <div>
                 {this.state.locationFormDisplay ? <LocationForm handleLocation={this.handleLocationFormSubmit}/> : null}
                 {this.state.datesFormDisplay ? <DatesForm handleDate={this.handleDateFormSubmit}/> : null}
-                {this.props.displayTrips ? <Trips/> : null}
+                {this.props.displayTrips ? <Trips display={this.clearHomeForTripsDisplay}/> : null}
             </div>
         )
     }
