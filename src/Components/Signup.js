@@ -68,6 +68,9 @@ export default class Signup extends React.Component {
                     this.props.register(response.user.email);
                     this.props.history.push(this.props.route)
                     console.log(response.user.email + " has created an account!");
+                    firebase.database().ref(firebase.auth().currentUser.uid+"/").set({
+                        "email" : response.user.email
+                    });
                   })
                   .catch((error) => {
                     // display errors if sign up fails 
@@ -77,6 +80,7 @@ export default class Signup extends React.Component {
                         error : errorMessage
                     })
                   })
+                
         }
     }
 

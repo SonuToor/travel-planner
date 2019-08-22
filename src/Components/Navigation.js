@@ -46,7 +46,7 @@ function Navigation(props) {
               <AppBar position="static" style={{backgroundColor: "#836529", opacity:"0.92", color:"black"}}>
                 <Toolbar>
                   {props.loggedIn ? 
-                    <NavLink to={routes.home}>
+                    <NavLink to={routes.home} onClick={props.clearHome}>
                       <IconButton edge="start" className={classes.menuButton} aria-label="menu">
                         <ExploreIcon />
                       </IconButton>

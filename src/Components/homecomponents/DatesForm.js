@@ -5,6 +5,17 @@ import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import React from "react";
 import { CSSTransitionGroup } from 'react-transition-group';
 
+
+
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+// get the duration of the trip based off of the two dates (account for different timezones)
+let dateDiffInDays = (dateOne, dateTwo) => {
+    const utc1 = Date.UTC(dateOne.getFullYear(), dateOne.getMonth(), dateOne.getDate());
+    const utc2 = Date.UTC(dateTwo.getFullYear(), dateTwo.getMonth(), dateTwo.getDate());
+
+    return Math.floor(((utc2 - utc1) / _MS_PER_DAY) + 1);
+}
+
 export default class DateForm extends React.Component {
     constructor () {
         super()
@@ -17,8 +28,12 @@ export default class DateForm extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault()
- 
-        this.props.handleDate([this.state.date[0].toDateString(), this.state.date[1].toDateString()])
+
+        let duration = dateDiffInDays(this.state.date[0], this.state.date[1])
+
+        console.log(duration)
+        
+        this.props.handleDate([this.state.date[0].toDateString(), this.state.date[1].toDateString()], duration)
 
         this.setState({
             date: [new Date(), new Date()]

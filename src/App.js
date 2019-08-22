@@ -31,16 +31,13 @@ export default class App extends React.Component {
       loggedIn : false,
       user : null,
       displayTrips : false,
+      locationFormDisplay : true,
+      datesFormDisplay : false,
     }
   }
-  clearHome = () => {
-    // here you should remove anything else and have the home page looking the way it would when you first login 
-    this.setState({
-      displayTrips : false
-    })
-  }
-
+  
   logOut = () => {
+    // log user out by updating UI and logging out of firebase
     this.setState({
       loggedIn : false, 
       user : null,
@@ -57,27 +54,53 @@ export default class App extends React.Component {
   }
 
   signIn = (email) => {
+    // sign in by updating the users email in state and changing the UI
     this.setState({
       user : email,
       loggedIn : true
     })
   }
+
+  // the following three methods are used to update the UI of the Home Component
+    // the Home Component in essence is the heart of trip-planner, I have separated the logic that involves the rendering of components to App.js 
+  clearHome = () => {
+    // here you should remove anything else and have the home page looking the way it would when you first login 
+    this.setState({
+      displayTrips : false,
+      datesFormDisplay : false,
+      locationFormDisplay : true
+    })
+  }
+  showDatesForm = () => {
+    // now after the location is submitted render the form that prompts for dates 
+    this.setState({
+      displayTrips : false,
+      locationFormDisplay : false,
+      datesFormDisplay : true
+    })
+  }
   
   usersTrips = () => {
+    // display the users trips only and remove other forms 
     this.setState({
-      displayTrips : true
+      displayTrips : true,
+      locationFormDisplay : false,
+      datesFormDisplay : false
     })
-
   }
 
-
   render() {
+    const homeDisplay = {
+      locationForm : this.state.locationFormDisplay,
+      datesForm : this.state.datesFormDisplay,
+      trips : this.state.displayTrips
+    }
     return (
         <Container > 
           <Router>
-          <Navigation loggedIn={this.state.loggedIn} theme={theme} routes={routes} logOut={this.logOut} trips={this.usersTrips}/>
+          <Navigation loggedIn={this.state.loggedIn} theme={theme} routes={routes} logOut={this.logOut} trips={this.usersTrips} clearHome={this.clearHome}/>
             <div>
-              <Route path={routes.home} render={(props) => <Home {...props}  route={routes.landing} loggedIn={this.state.loggedIn} displayTrips={this.state.displayTrips}/>}/>
+              <Route path={routes.home} render={(props) => <Home {...props}  user={this.state.user} route={routes.landing} loggedIn={this.state.loggedIn} display={homeDisplay} showTrips={this.usersTrips} showDatesForm={this.showDatesForm}/>}/>
               <Route exact path={routes.landing} render={()=><Landing logOut={this.logOut}/>}/>
               <Route path={routes.login} render={(props)=><Login {...props} route={routes.home} logOut={this.logOut} login={this.signIn}/>}/>
               <Route path={routes.signup} render={(props)=><Signup {...props} route={routes.home} logOut={this.logOut} register={this.signIn}/>}/>            
