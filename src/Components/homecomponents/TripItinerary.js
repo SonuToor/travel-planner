@@ -1,20 +1,15 @@
 import { CSSTransitionGroup } from 'react-transition-group';
 import firebase from '../../config/Firebase'
 import React from "react"
-import TripCards from "./TripCards"
-import './Trips.css'
+import './TripItinerary.css'
 
-export default class Trips extends React.Component {
+
+export default class TripItinerary extends React.Component {
     constructor() {
         super()
         this.state = {
             tripDetails : {}
         }
-    }
-
-    tripSelected = (event) => {
-        event.preventDefault();
-        this.props.displayTrip(event.target.id)
     }
 
     componentDidMount = () => { 
@@ -29,6 +24,12 @@ export default class Trips extends React.Component {
              }))
     }
 
+    // TO DO 
+        // decide what the actual UI will look like
+            // what inputs, how will it be laid out, what info to be displayed
+        
+        // figure out how to simulatenously read and write to firebase
+            // so user sees what they put last time into the itinerary and can add to it
     render() {
         return (
             <CSSTransitionGroup
@@ -39,11 +40,7 @@ export default class Trips extends React.Component {
             transitionLeave={true}
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
-                <h2 className="main-title">Trips</h2>
-                {this.state.tripDetails === null || this.state.tripDetails === undefined ? 
-                <h3 className="no-trips-title">No trips saved yet!</h3> 
-                :
-                <TripCards trips={this.state.tripDetails} tripsKeys={Object.keys(this.state.tripDetails)} tripSelected={this.tripSelected}/>}
+                <p>show individual trip itinerary</p>
             </CSSTransitionGroup>
         )
     }

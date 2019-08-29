@@ -3,14 +3,18 @@ import firebase from "../config/Firebase"
 import LocationForm from './homecomponents/LocationForm'
 import React from 'react';
 import Trips from './homecomponents/Trips'
+import TripItinerary from './homecomponents/TripItinerary'
 
 export default class Home extends React.Component {
     constructor () {
         super()
+        // the location, dates and duration are stored here in state simply to write to the database, as the meta details of the newly created trip.
+        // selectedTrip is used to temporarily keep track of the trip that the user wants to edit in TripItinerary 
         this.state = {
             location : "",
             dates : null,
             tripDuration : null,
+            selectedTrip : null
         }
     }
 
@@ -56,27 +60,22 @@ export default class Home extends React.Component {
         this.props.showTrips()
     }
 
-    // getTrips = () => {
-    //     // get the meta-details for the trips that are stored in the database 
-    //     firebase.database()
-    //         .ref(`trip-details-${firebase.auth().currentUser.uid}`)
-    //         .on('value')
-    //         .then((snapshot) => {
-    //         let tripsObj = snapshot.val();
-    //         this.setState({
-    //             tripDetails : tripsObj
-    //         })
-    //     })
-    // }
+    displayTrip = (trip) => {
+        this.setState({
+            selectedTrip : trip
+        })
+        this.props.showItinerary()
+    }
 
     componentDidMount = () => {
-        // if there is no user logged in, redirect to the landing page
+        // if there is no user logged in, redirect to the landing page, but clear whatever is stored in state 
         if (this.props.loggedIn === false) {
             this.setState({
                 location : "",
                 dates : null,
                 tripDuration : null, 
-                tripDetails : {}
+                tripDetails : {},
+                selectedTrip : null
             })
             this.props.history.push(this.props.route) 
         }
@@ -88,7 +87,8 @@ export default class Home extends React.Component {
             <div>
                 {this.props.display.locationForm ? <LocationForm handleLocation={this.handleLocationFormSubmit}/> : null}
                 {this.props.display.datesForm ? <DatesForm handleDate={this.handleDateFormSubmit}/> : null}
-                {this.props.display.trips ? <Trips /> : null}
+                {this.props.display.trips ? <Trips displayTrip={this.displayTrip}/> : null}
+                {this.props.display.itinerary ? <TripItinerary trip={this.state.selectedTrip}/> : null}
             </div>
         )
     }

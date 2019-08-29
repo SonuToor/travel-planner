@@ -27,8 +27,6 @@ const useStyles = makeStyles({
 });
 
 export default function TripCards(props) {
-    console.log(props.trips, props.tripsKeys)
-
     const classes = useStyles();
   return (
     <div className="trip-cards">
@@ -42,11 +40,11 @@ export default function TripCards(props) {
                         {props.trips[trip]["location"]}
                     </Typography>
                 </CardContent>
-                <CardActions>
-                    <Button variant="contained">
-                        (Edit or View?) Itinerary
-                        <Add/>
-                    </Button>                
+                <CardActions >
+                    <Button variant="contained" style={{marginLeft: "12%", marginBottom: "5%"}}id={trip} onClick={props.tripSelected}>
+                        <span className="MuiButton-label" id={trip}>Add to Itinerary.</span>
+                        <Add id={trip}/>
+                    </Button>
                 </CardActions>
             </Card>
         )}
