@@ -1,29 +1,11 @@
 import { CSSTransitionGroup } from 'react-transition-group';
-import firebase from '../../config/Firebase'
+// import firebase from '../../config/Firebase'
 import React from "react"
+import TravelAndAccommoInput from "./TravelAndAccommoInput"
 import './TripItinerary.css'
 
 
 export default class TripItinerary extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            tripDetails : {}
-        }
-    }
-
-    componentDidMount = () => { 
-        firebase.database()
-            .ref(`trip-details-${firebase.auth().currentUser.uid}`)
-            .on('value', 
-            ((snapshot) => {
-                let tripsObj = snapshot.val();
-                this.setState({
-                    tripDetails : tripsObj
-                })
-             }))
-    }
-
     // TO DO 
         // decide what the actual UI will look like
             // what inputs, how will it be laid out, what info to be displayed
@@ -40,7 +22,9 @@ export default class TripItinerary extends React.Component {
             transitionLeave={true}
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
-                <p>show individual trip itinerary</p>
+                <h2 className="trip-title">{`Your trip to ${this.props.trip["location"]}`}</h2>
+                <h4 className="trip-date-title">{`${this.props.trip["dates"][0].slice(3)} to ${this.props.trip["dates"][1].slice(3)}`}</h4>
+                <TravelAndAccommoInput/>
             </CSSTransitionGroup>
         )
     }

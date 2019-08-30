@@ -98,7 +98,6 @@ export default class App extends React.Component {
   }
 
   displayTripItinerary = () => {
-    console.log("okay?")
     this.setState({
       displayTrips : false,
       locationFormDisplay : false,

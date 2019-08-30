@@ -61,9 +61,15 @@ export default class Home extends React.Component {
     }
 
     displayTrip = (trip) => {
-        this.setState({
-            selectedTrip : trip
-        })
+        firebase.database()
+        .ref(`trip-details-${firebase.auth().currentUser.uid}/${trip}`)
+        .on('value', 
+        ((snapshot) => {
+            let tripsObj = snapshot.val();
+            this.setState({
+                selectedTrip : tripsObj
+            })
+         }))
         this.props.showItinerary()
     }
 

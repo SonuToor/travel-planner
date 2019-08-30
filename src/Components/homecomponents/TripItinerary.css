@@ -24,3 +24,9 @@
     opacity: 1;
     transition: opacity .5s ease-in;
   }
+  .trip-title{
+      margin-top: 2%;
+  }
+  .trip-date-title{
+      text-align: center;
+  }
