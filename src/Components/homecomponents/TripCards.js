@@ -42,7 +42,7 @@ export default function TripCards(props) {
                 </CardContent>
                 <CardActions >
                     <Button variant="contained" style={{marginLeft: "12%", marginBottom: "5%"}}id={trip} onClick={props.tripSelected}>
-                        <span className="MuiButton-label" id={trip}>Add to Itinerary.</span>
+                        <span className="MuiButton-label" id={trip}>Add to Itinerary</span>
                         <Add id={trip}/>
                     </Button>
                 </CardActions>

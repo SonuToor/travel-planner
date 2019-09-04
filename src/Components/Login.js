@@ -50,7 +50,6 @@ export default class Login extends React.Component {
             })
             .catch((error) => {
                 // display any errors if authentication fails
-                var errorCode = error.code;
                 var errorMessage = error.message;
                 this.setState({
                     isError : true,

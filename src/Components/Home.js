@@ -1,9 +1,9 @@
-import DatesForm from "./homecomponents/DatesForm"
-import firebase from "../config/Firebase"
-import LocationForm from './homecomponents/LocationForm'
+import DatesForm from "./homecomponents/DatesForm";
+import firebase from "../config/Firebase";
+import LocationForm from './homecomponents/LocationForm';
 import React from 'react';
-import Trips from './homecomponents/Trips'
-import TripItinerary from './homecomponents/TripItinerary'
+import Trips from './homecomponents/Trips';
+import TripItinerary from './homecomponents/TripItinerary';
 
 export default class Home extends React.Component {
     constructor () {
@@ -50,7 +50,7 @@ export default class Home extends React.Component {
                     // the itinerary --- now is the itinerary stored as a whole or stored split per day? -- what makes sense for the trips display?
     
         firebase.database()
-            .ref(`trip-details-${firebase.auth().currentUser.uid}/${this.state.dates[1]}`)
+            .ref(`trip-details-${firebase.auth().currentUser.uid}/${this.state.dates[0]}`)
             .set({
             'location': this.state.location,
             'dates': this.state.dates,
@@ -86,7 +86,6 @@ export default class Home extends React.Component {
             this.props.history.push(this.props.route) 
         }
     }
-
 
     render() {
         return (
