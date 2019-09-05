@@ -1,0 +1,15 @@
+.individual-day {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.event-inputs {
+    display: flex;
+    margin-left: 2%;
+}
+.travelaccommo-display{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 4%;
+    margin-top: 4%;
+}

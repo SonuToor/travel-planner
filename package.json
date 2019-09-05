@@ -15,6 +15,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-time-picker": "^3.7.1",
     "react-transition-group": "^1.2.1"
   },
   "scripts": {
