@@ -1,19 +1,19 @@
 import { CSSTransitionGroup } from 'react-transition-group';
 import firebase from '../../config/Firebase'
-import Itinerary from './Itinerary'
+import Itinerary from './itinerarycomponents/Itinerary'
 import moment from 'moment';
 import React from "react"
-import TravelAndAccommoInput from "./TravelAndAccommoInput"
+import TravelAndAccommoInput from "./itinerarycomponents/TravelAndAccommoInput";
 import './TripItinerary.css'
 
 
 export default class TripItinerary extends React.Component {
-    // constructor () {
-    //     super() 
-    //     this.state =  {
-
-    //     }
-    // }
+    constructor() {
+        super() 
+        this.state =  {
+            itinerarySnap : null 
+        }
+    }
 
     // when a user updates information regarding the accommodation or travel, this function will update the information in firebase
     handleTravelAccommoInput = (flight, accommo, carRental, train) => {
@@ -47,6 +47,20 @@ export default class TripItinerary extends React.Component {
 
         // where is the info from TravelAndAccommoInput going to be displayed?
 
+        componentDidMount = () => {
+            // when the component mounts get the requisite information from firebase 
+            firebase.database()
+            .ref(`${this.props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
+            .on('value', 
+            ((snapshot) => {
+                let tripsObj = snapshot.val();
+                this.setState({
+                    itinerarySnap : tripsObj
+                })
+             }))
+        }
+
+
     render() {
         return (
             <CSSTransitionGroup
@@ -60,7 +74,7 @@ export default class TripItinerary extends React.Component {
                 <h2 className="trip-title">{`Your trip to ${this.props.trip["location"]}`}</h2>
                 <h4 className="trip-date-title">{`${this.props.trip["dates"][0].slice(3)} to ${this.props.trip["dates"][1].slice(3)}`}</h4>
                 <TravelAndAccommoInput updateInfo={this.handleTravelAccommoInput}/>
-                <Itinerary dates={this.getDatesArray(this.props.trip.dates[0], this.props.trip.dates[1])}/>
+                <Itinerary dates={this.getDatesArray(this.props.trip.dates[0], this.props.trip.dates[1])} itinerary={this.state.itinerarySnap}/>
             </CSSTransitionGroup>
         )
     }
