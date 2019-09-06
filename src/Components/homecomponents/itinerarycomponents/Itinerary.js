@@ -10,29 +10,45 @@ import TrainIcon from '@material-ui/icons/Train';
 
 
 export default class Itinerary extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            itinerarySnap : ''
+        }
+    }
+
+    // componentDidMount = () => {
+    //     // when the component mounts get the requisite information from firebase 
+    //     firebase.database()
+    //     .ref(`${this.props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
+    //     .on('value', 
+    //     ((snapshot) => {
+    //         let tripsObj = snapshot.val();
+    //         this.setState({
+    //             itinerarySnap : tripsObj
+    //         })
+    //      }))
+    // }
     render() {
+        console.log(this.props.itinerary)
         return(
         <div className="itinerary">
             <div className="travelaccommo-display">
                 <Chip
                     icon={<Flight/>}
-                    // label={this.props.itinerary['flight']}
-                    label="will get from firebase"
+                    label={this.props.itinerary['flight']}
                     />
                 <Chip
                     icon={<LocalHotel/>}
-                    // label={this.props.itinerary['accommodation']}
-                    label="will get from firebase"
+                    label={this.props.itinerary['accommodation']}
                     />
                 <Chip
                     icon={<DirectionsCarIcon/>}
-                    // label={this.props.itinerary['carrental']}
-                    label="will get from firebase"
+                    label={this.props.itinerary['carrental']}
                     />
                 <Chip
                     icon={<TrainIcon/>}
-                    // label={this.props.itinerary['train']}
-                    label="will get from firebase"
+                    label={this.props.itinerary['train']}
                     />
             </div>
             {this.props.dates.map((day, i)  =>

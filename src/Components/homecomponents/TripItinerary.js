@@ -11,12 +11,25 @@ export default class TripItinerary extends React.Component {
     constructor() {
         super() 
         this.state =  {
-            itinerarySnap : null 
+            itinerarySnap : '' 
         }
     }
 
     // when a user updates information regarding the accommodation or travel, this function will update the information in firebase
     handleTravelAccommoInput = (flight, accommo, carRental, train) => {
+        // if the user doesn't submit a new entry for a specific field, keep the field the same. 
+        if (flight === '') {
+            flight = this.state.itinerarySnap['flight']
+        }
+        if (accommo === '') {
+            accommo = this.state.itinerarySnap['accommodation']
+        }
+        if (carRental === '') {
+            carRental = this.state.itinerarySnap['carrental']
+        }
+        if (train === '') {
+            train = this.state.itinerarySnap['train']
+        }
         firebase.database()
             .ref(`${this.props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
             .set({
