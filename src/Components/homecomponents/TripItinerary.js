@@ -43,8 +43,8 @@ export default class TripItinerary extends React.Component {
     getDatesArray = (startDate, stopDate) => {
         var dateArray = [];
         var currentDate = moment(startDate);
-        var stopDate = moment(stopDate);
-        while (currentDate <= stopDate) {
+        var endDate = moment(stopDate);
+        while (currentDate <= endDate) {
             dateArray.push( moment(currentDate).format('MMMM Do YYYY') )
             currentDate = moment(currentDate).add(1, 'days');
         }
@@ -87,7 +87,7 @@ export default class TripItinerary extends React.Component {
                 <h2 className="trip-title">{`Your trip to ${this.props.trip["location"]}`}</h2>
                 <h4 className="trip-date-title">{`${this.props.trip["dates"][0].slice(3)} to ${this.props.trip["dates"][1].slice(3)}`}</h4>
                 <TravelAndAccommoInput updateInfo={this.handleTravelAccommoInput}/>
-                <Itinerary dates={this.getDatesArray(this.props.trip.dates[0], this.props.trip.dates[1])} itinerary={this.state.itinerarySnap}/>
+                <Itinerary dates={this.getDatesArray(this.props.trip.dates[0], this.props.trip.dates[1])} itinerary={this.state.itinerarySnap} dateID={this.props.trip.dates[0]}/>
             </CSSTransitionGroup>
         )
     }
