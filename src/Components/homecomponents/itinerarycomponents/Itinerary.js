@@ -13,6 +13,10 @@ import TrainIcon from '@material-ui/icons/Train';
 export default class Itinerary extends React.Component {
 
     handleActivityAdd = (day, time, activity) => {
+
+        if (activity === "") {
+            return
+        }
         let activityEntry = `${time} - ${activity}`;
 
         firebase.database()
@@ -44,7 +48,8 @@ export default class Itinerary extends React.Component {
                     />
             </div>
             {this.props.dates.map((day, i)  =>
-                <Day key={i} date={day} index={i} handleAdd={this.handleActivityAdd} activities={this.props.itinerary[day]}/>
+                // TO CONSIDER - you could instead create the morning, afternoon, evening, and night arrays here and then pass them onto <Day/> - right now that logic is inside <Day>
+                <Day key={day} date={day} index={i} handleAdd={this.handleActivityAdd} activities={this.props.itinerary[day]} dateID={this.props.dateID}/>
             )}
         </div>
         )
