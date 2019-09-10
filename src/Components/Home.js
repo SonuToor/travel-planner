@@ -14,7 +14,8 @@ export default class Home extends React.Component {
             location : "",
             dates : null,
             tripDuration : null,
-            selectedTrip : null
+            selectedTrip : null,
+            itinerarySnap : null
         }
     }
 
@@ -85,7 +86,18 @@ export default class Home extends React.Component {
             })
             this.props.history.push(this.props.route) 
         }
+            // when the component mounts get the requisite information from firebase 
+        // firebase.database()
+        // .ref(`${this.state.selectedTrip.dates[0]}-${firebase.auth().currentUser.uid}/`)
+        // .on('value', 
+        // ((snapshot) => {
+        //     let tripsObj = snapshot.val();
+        //     this.setState({
+        //         itinerarySnap : tripsObj
+        //     })
+        //     }))
     }
+    
 
     render() {
         return (
