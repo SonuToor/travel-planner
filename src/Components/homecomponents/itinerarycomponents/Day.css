@@ -1,0 +1,12 @@
+.event-form {
+    display: flex;
+    align-items: center;
+}
+
+.card-title {
+    text-align: center;
+}
+
+.activities-list {
+    list-style: none;
+}

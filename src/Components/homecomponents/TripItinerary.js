@@ -11,12 +11,25 @@ export default class TripItinerary extends React.Component {
     constructor() {
         super() 
         this.state =  {
-            itinerarySnap : null 
+            itinerarySnap : '' 
         }
     }
 
     // when a user updates information regarding the accommodation or travel, this function will update the information in firebase
     handleTravelAccommoInput = (flight, accommo, carRental, train) => {
+        // if the user doesn't submit a new entry for a specific field, keep the field the same. 
+        if (flight === '') {
+            flight = this.state.itinerarySnap['flight']
+        }
+        if (accommo === '') {
+            accommo = this.state.itinerarySnap['accommodation']
+        }
+        if (carRental === '') {
+            carRental = this.state.itinerarySnap['carrental']
+        }
+        if (train === '') {
+            train = this.state.itinerarySnap['train']
+        }
         firebase.database()
             .ref(`${this.props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
             .set({
@@ -30,23 +43,13 @@ export default class TripItinerary extends React.Component {
     getDatesArray = (startDate, stopDate) => {
         var dateArray = [];
         var currentDate = moment(startDate);
-        var stopDate = moment(stopDate);
-        while (currentDate <= stopDate) {
+        var endDate = moment(stopDate);
+        while (currentDate <= endDate) {
             dateArray.push( moment(currentDate).format('MMMM Do YYYY') )
             currentDate = moment(currentDate).add(1, 'days');
         }
         return dateArray;
     }
-
-    // TO DO 
-        // decide what the actual UI will look like
-            // what inputs, how will it be laid out, what info to be displayed
-        
-        // figure out how to simulatenously read and write to firebase
-            // so user sees what they put last time into the itinerary and can add to it
-
-        // where is the info from TravelAndAccommoInput going to be displayed?
-
         componentDidMount = () => {
             // when the component mounts get the requisite information from firebase 
             firebase.database()
@@ -74,7 +77,7 @@ export default class TripItinerary extends React.Component {
                 <h2 className="trip-title">{`Your trip to ${this.props.trip["location"]}`}</h2>
                 <h4 className="trip-date-title">{`${this.props.trip["dates"][0].slice(3)} to ${this.props.trip["dates"][1].slice(3)}`}</h4>
                 <TravelAndAccommoInput updateInfo={this.handleTravelAccommoInput}/>
-                <Itinerary dates={this.getDatesArray(this.props.trip.dates[0], this.props.trip.dates[1])} itinerary={this.state.itinerarySnap}/>
+                <Itinerary dates={this.getDatesArray(this.props.trip.dates[0], this.props.trip.dates[1])} itinerary={this.state.itinerarySnap} dateID={this.props.trip.dates[0]}/>
             </CSSTransitionGroup>
         )
     }
