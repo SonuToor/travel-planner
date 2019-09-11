@@ -36,17 +36,23 @@ const useStyles = makeStyles(theme => ({
     }));
 
 export default function Day(props) {
+
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+
+    const handleChange = panel => (event, isExpanded) => {
+        console.log(event.target.classList)
+
+        if (event.target.id === `expand-icon-${props.index}`) {
+            setExpanded(isExpanded ? panel : false);
+        }
+
+    };
 
     const [time, handleTime] = useState('00:00');
     const [activity, handleActivity] = useState(''); 
     
-    const handleChange = panel => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
-    };
-
-
+    // delete
     const handleDelete = (event, activity) => {
         let timeID = activity.slice(0, 5)
         console.log(timeID)
@@ -54,10 +60,8 @@ export default function Day(props) {
         firebase.database()
             .ref(`${props.dateID}-${firebase.auth().currentUser.uid}/${props.date}/${timeID}`)
             .remove()
-            // delete it from Firebase (this should update UI on its own.)
-
     }
-
+    // write
     const handleSubmit = (event) => {
         event.preventDefault();
         props.handleAdd(props.date, time, activity)
@@ -81,7 +85,7 @@ export default function Day(props) {
     return (
             <ExpansionPanel expanded={expanded === `panel${props.index}`} onChange={handleChange(`panel${props.index}`)}>
                 <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    expandIcon={<ExpandMoreIcon id={`expand-icon-${props.index}`}/>}
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
                     >
