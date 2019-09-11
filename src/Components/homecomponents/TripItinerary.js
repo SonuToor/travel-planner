@@ -50,16 +50,6 @@ export default class TripItinerary extends React.Component {
         }
         return dateArray;
     }
-
-    // TO DO 
-        // decide what the actual UI will look like
-            // what inputs, how will it be laid out, what info to be displayed
-        
-        // figure out how to simulatenously read and write to firebase
-            // so user sees what they put last time into the itinerary and can add to it
-
-        // where is the info from TravelAndAccommoInput going to be displayed?
-
         componentDidMount = () => {
             // when the component mounts get the requisite information from firebase 
             firebase.database()

@@ -14,8 +14,7 @@ export default class Home extends React.Component {
             location : "",
             dates : null,
             tripDuration : null,
-            selectedTrip : null,
-            itinerarySnap : null
+            selectedTrip : null
         }
     }
 
@@ -25,7 +24,7 @@ export default class Home extends React.Component {
             dates : dates,
             tripDuration : duration
         }, 
-        this.writeTripDetails); 
+        this.createTripInFirebase); 
 
         // you have to clear state at this point, you can't keep city and dates from the previous submission
     }
@@ -37,19 +36,7 @@ export default class Home extends React.Component {
         this.props.showDatesForm()
     }
 
-    writeTripDetails = () => {
-            // MAJOR TO DO!  ---- LOOK AT CLIO NOTEBOOK FOR MOCKUPS AND QUESTIONS!!
-                // now that database is writing somewhat correctly, figure out the schema!
-                // what is the schema to be used for firebase?
-                // I am thinking:
-                    // userID/trips/trip <--- where trip is the date the user is leaving on
-                    // userID/trips/trip/trip-details <--- where meta data for the trip is stored
-                    // userID/trips/trip/itinerary <--- where the itinerary is stored
-                    // the trip is stored ... (is the key or identifier the location or the date? - probably the date as it would be unique they could visit a place twice)
-
-                // what is stored in the trip database for the user?
-                    // the itinerary --- now is the itinerary stored as a whole or stored split per day? -- what makes sense for the trips display?
-    
+    createTripInFirebase = () => {
         firebase.database()
             .ref(`trip-details-${firebase.auth().currentUser.uid}/${this.state.dates[0]}`)
             .set({
@@ -57,6 +44,15 @@ export default class Home extends React.Component {
             'dates': this.state.dates,
             'duration' : this.state.tripDuration
         })
+
+        firebase.database()
+            .ref(`${this.state.dates[0]}-${firebase.auth().currentUser.uid}/`)
+            .set({
+                'flight': '',
+                'accommodation': '',
+                'carrental' : '',
+                'train' : ''
+                })
 
         this.props.showTrips()
     }
@@ -86,18 +82,7 @@ export default class Home extends React.Component {
             })
             this.props.history.push(this.props.route) 
         }
-            // when the component mounts get the requisite information from firebase 
-        // firebase.database()
-        // .ref(`${this.state.selectedTrip.dates[0]}-${firebase.auth().currentUser.uid}/`)
-        // .on('value', 
-        // ((snapshot) => {
-        //     let tripsObj = snapshot.val();
-        //     this.setState({
-        //         itinerarySnap : tripsObj
-        //     })
-        //     }))
     }
-    
 
     render() {
         return (
