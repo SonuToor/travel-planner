@@ -25,7 +25,7 @@ const routes = {
 }
 
 export default class App extends React.Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
       datesFormDisplay : false,
@@ -65,7 +65,8 @@ export default class App extends React.Component {
   }
 
   // the following four methods are used to update the UI of the Home Component
-    // the Home Component in essence is the heart of trip-planner, I have separated the logic that involves the rendering of components to App.js 
+    // the Home Component in essence is the heart of trip-planner, I have separated the boolean logic that is involved with the rendering of components 
+    // in Home.js to App.js 
   
   clearHome = () => {
     // here you should remove anything else and have the home page looking the way it would when you first login 
@@ -88,7 +89,7 @@ export default class App extends React.Component {
   }
   
   usersTrips = () => {
-    // display the users trips only and remove other forms 
+    // display the users trips only and hide other forms 
     this.setState({
       displayTrips : true,
       locationFormDisplay : false,
@@ -98,6 +99,7 @@ export default class App extends React.Component {
   }
 
   displayTripItinerary = () => {
+    // display the currently selected itinerary and hide everything else
     this.setState({
       displayTrips : false,
       locationFormDisplay : false,

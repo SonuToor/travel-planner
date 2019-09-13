@@ -1,11 +1,14 @@
 import background from "../background.jpg"
+import datesFormImage from "../date-selection.png"
+import itineraryImage from "../itinerary-input.png"
 import "./Landing.css"
+import locationFormImage from "../location-selection.png"
 import React from 'react';
 
-
+// this is the landing page that users first see when they navigate to travel-planner
 export default class Landing extends React.Component {
 
-
+    // if this page is rendered make sure no user is logged in 
     componentDidMount = () => {
         this.props.logOut();
     }
@@ -17,18 +20,17 @@ export default class Landing extends React.Component {
                 <div className="planner-demo">
                     <div className="first-step">
                         <p>1. Choose a destination.</p>
-                        <span>image representing step goes here</span>
+                        <img className="demo-pics" src={locationFormImage} alt="the destination form"/>
                     </div>
                     <div className="second-step">
                         <p>2. Pick your dates.</p>
-                        <span>image representing step goes here</span>
+                        <img className="demo-pics" src={datesFormImage} alt="the dates form"/>
                     </div>
                     <div className="third-step">
-                        <p>Fill in your desired itinerary.</p>
-                        <span>image representing step goes here</span>
+                        <p>3. Fill in your desired itinerary.</p>
+                        <img className="demo-pics" src={itineraryImage} alt="the sample itinerary"/>
                     </div>
                 </div>
-                <h3>We'll organize all the details, so you'll always be ontop of things!</h3>
                 <img className="bg" src={background} alt="by Dariusz Sankowski"/>
             </div>
         )

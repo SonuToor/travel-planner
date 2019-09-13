@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import "./Navigation.css"
 
   
-
+// this is the Navigation bar that is stickied to the top of the page thoroughout the App 
 function Navigation(props) {
 
         const useStyles = makeStyles(theme => ({
@@ -31,6 +31,7 @@ function Navigation(props) {
         const classes = useStyles();
         
         let logOutUser = () => {
+          // if the logout button is clicked log the user out 
           firebase.auth().signOut()
           .then(function() { 
             this.props.logOut()
@@ -58,7 +59,6 @@ function Navigation(props) {
                     </IconButton>
                   </NavLink>
                   }
-                  {/* {TO DO ----- have an api that displays random travel quotes here} */}
                   <h4 className={classes.title}>Let's get exploring!</h4>
                   {props.loggedIn ? 
                     <Button onClick={props.trips}>My Trips</Button> 

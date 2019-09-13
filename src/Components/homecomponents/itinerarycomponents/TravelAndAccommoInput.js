@@ -12,13 +12,9 @@ import TrainIcon from '@material-ui/icons/Train';
 import "./TravelAndAccommoInput.css"
 
 
-
-
-
-
-
 export default function TravelAndAccommoInput(props) { 
     
+    // these are the hooks for each input 
     const [flightData, updateFlight] = useState("") 
     const [accommoData, updateAccommo] = useState("") 
     const [carData, updateCar] = useState("") 
@@ -28,7 +24,6 @@ export default function TravelAndAccommoInput(props) {
         event.preventDefault()
         props.updateInfo(flightData, accommoData, carData, trainData)
     }
-
 
     return (
         <form className="accommodation-travel-input" onSubmit={handleSubmit}>
