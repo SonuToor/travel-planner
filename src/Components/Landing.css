@@ -2,15 +2,15 @@ img.bg {
   position: fixed;
   left: 0;
   width: 100%;
-  margin-top: 3%;
   height: 90%;
+  margin-top: 2%;
 }
 
 h1 {
   text-align: center;
-  margin-top: 6%;
 }
-h3 {
+
+p {
   text-align: center;
 }
 
@@ -19,7 +19,24 @@ h3 {
   justify-content: space-evenly;
 }
 
-.first-step .second-step .third-step {
+.first-step {
   display: flex;
   flex-direction: column;
+  width: 33%;
+}
+
+.second-step {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
+
+.third-step {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
+
+.demo-pics {
+  width: 100%;
 }

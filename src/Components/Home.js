@@ -18,25 +18,25 @@ export default class Home extends React.Component {
         }
     }
 
-    handleDateFormSubmit = (dates, duration) => {
-        // store the dates in state and now display the trips of the user, including the new trip 
-        this.setState({
-            dates : dates,
-            tripDuration : duration
-        }, 
-        this.createTripInFirebase); 
-
-        // you have to clear state at this point, you can't keep city and dates from the previous submission
-    }
-
     handleLocationFormSubmit = (place) => {
+        // take the selected destination and store in state
         this.setState({
             location : place,
         })
         this.props.showDatesForm()
     }
 
+    handleDateFormSubmit = (dates, duration) => {
+        // store the dates in state
+        this.setState({
+            dates : dates,
+            tripDuration : duration
+        }, 
+        this.createTripInFirebase); 
+    }
+
     createTripInFirebase = () => {
+        // create a trip details node in firebase to hold the meta details for the new trip
         firebase.database()
             .ref(`trip-details-${firebase.auth().currentUser.uid}/${this.state.dates[0]}`)
             .set({
@@ -44,7 +44,7 @@ export default class Home extends React.Component {
             'dates': this.state.dates,
             'duration' : this.state.tripDuration
         })
-
+        // create an empty node in firebase to store the itinerary details 
         firebase.database()
             .ref(`${this.state.dates[0]}-${firebase.auth().currentUser.uid}/`)
             .set({
@@ -58,6 +58,7 @@ export default class Home extends React.Component {
     }
 
     displayTrip = (trip) => {
+        // grab the trip the user has selected from firebase and store it in state so it can be passed to the itinerary components 
         firebase.database()
         .ref(`trip-details-${firebase.auth().currentUser.uid}/${trip}`)
         .on('value', 

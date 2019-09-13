@@ -29,12 +29,13 @@ export default class DateForm extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault()
 
+        // get the duration of the trip
         let duration = dateDiffInDays(this.state.date[0], this.state.date[1])
-
-        console.log(duration)
         
+        // pass both the dates and the duration to Home.js so they can be written to firebase
         this.props.handleDate([this.state.date[0].toDateString(), this.state.date[1].toDateString()], duration)
 
+        // reset the date input 
         this.setState({
             date: [new Date(), new Date()]
         })
@@ -50,7 +51,7 @@ export default class DateForm extends React.Component {
                 transitionLeave={true}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}>
-                <h2>What are our dates?<img className="calendar-pic" src={calendarPic}/></h2>
+                <h2>What are our dates?<img className="calendar-pic" src={calendarPic} alt="hand drawn calendar"/></h2>
                 <form className="dates-form" onSubmit={this.handleSubmit}>
                     <DateRangePicker
                         required

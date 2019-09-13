@@ -18,7 +18,7 @@ export default class LocationForm extends React.Component {
             query : '',
         }
     }
-
+    // this loads the script for google autocomplete
     handleScriptLoad = () => {
         // Declare Options For Autocomplete 
         var options = { 
@@ -54,7 +54,8 @@ export default class LocationForm extends React.Component {
           );
         }
       }
-      
+
+      // pass the information on to the home componenet where it can be written to firebase, reset the inputs to empty string
       handleSubmit = (event) => {
           event.preventDefault()
           this.props.handleLocation(this.state.city)
@@ -75,7 +76,7 @@ export default class LocationForm extends React.Component {
             transitionLeave={true}
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
-                <h2>Where are we off to?<img className="plane" src={plane}/></h2>
+                <h2>Where are we off to?<img className="plane" src={plane} alt="paper airplane"/></h2>
                 <div className="location-form">
                     <Script url={url} onLoad={this.handleScriptLoad}/>  
                     <form onSubmit={this.handleSubmit}>

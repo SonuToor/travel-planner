@@ -13,12 +13,9 @@ import TrainIcon from '@material-ui/icons/Train';
 export default class Itinerary extends React.Component {
 
     handleActivityAdd = (day, time, activity) => {
-
-        if (activity === "") {
-            return
-        }
         let activityEntry = `${time} - ${activity}`;
 
+        // add the newly created event to firbase, once it is written to firebase it automatically updates the UI
         firebase.database()
         .ref(`${this.props.dateID}-${firebase.auth().currentUser.uid}/${day}`)
         .update({
