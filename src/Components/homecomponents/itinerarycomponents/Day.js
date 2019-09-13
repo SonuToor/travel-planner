@@ -40,19 +40,24 @@ export default function Day(props) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
+    // this handles the opening and closing of the expansion panels
     const handleChange = panel => (event, isExpanded) => {
-        console.log(event.target.classList)
-
-        // only expand if icon is clicked - a rudimentary fix, any better methods?
+        // this could use improvement, I don't as of yet know how to make the MaterialUI API for the expansion panel open and close only the icon click
+            // this is a rudimentary fix but it still is slightly buggy
         if (event.target.id === `expand-icon-${props.index}`) {
             setExpanded(isExpanded ? panel : false);
         }
+
     };
 
+    // the hooks for both the inputs
     const [time, handleTime] = useState('00:00');
     const [activity, handleActivity] = useState(''); 
+
+    let onChange = time => handleTime(time)
+
     
-    // delete
+
     const handleDelete = (event, activity) => {
         let timeID = activity.slice(0, 5)
         console.log(timeID)
@@ -61,21 +66,21 @@ export default function Day(props) {
             .ref(`${props.dateID}-${firebase.auth().currentUser.uid}/${props.date}/${timeID}`)
             .remove()
     }
-    // write
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.handleAdd(props.date, time, activity)
-        handleActivity('')
-        handleTime('00:00')
+        // validate the input before passing to Itinerary to write to firebase 
+        if (time === null || activity === "") {
+            return
+        }
+        else {
+            props.handleAdd(props.date, time, activity)
+            handleActivity('')
+            handleTime('00:00')
+        }
     }
     
-     let onChange = time => handleTime(time)
-     
-     // TO DO 
-        // now the activities per day are being read and written correctly
-        // (2)   add a garbage icon on each activity and allow user to delete an activity 
-        // (3)   
-
+    // create empty arrays to sort each activity into 
     let mornList = []
     let aftList = []
     let eveList = []
@@ -128,11 +133,42 @@ export default function Day(props) {
                                     }                                     
                                 })
                             }
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <h3 className="card-title">Morning</h3>
-                                    <ul className="activities-list">
-                                        {mornList.map(activity => 
+                            <div className="cards">
+                                <Card className={classes.card}>
+                                    <CardContent>
+                                        <h3 className="card-title">Morning</h3>
+                                        <ul className="activities-list">
+                                            {mornList.map(activity => 
+                                                <li key={activity}>
+                                                    {activity}
+                                                    <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
+                                                        <DeleteIcon id={activity} fontSize="small" />
+                                                    </IconButton>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </CardContent>
+                                </Card>
+                                <Card className={classes.card}>
+                                    <CardContent>
+                                        <h3 className="card-title">Afternoon</h3>
+                                        <ul className="activities-list">
+                                            {aftList.map(activity => 
+                                                <li key={activity}>
+                                                    {activity}
+                                                    <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
+                                                        <DeleteIcon id={activity} fontSize="small" />
+                                                    </IconButton>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </CardContent>
+                                </Card>
+                                <Card className={classes.card}>
+                                    <CardContent>
+                                        <h3 className="card-title">Evening</h3>
+                                        <ul className="activities-list">
+                                        {eveList.map(activity => 
                                             <li key={activity}>
                                                 {activity}
                                                 <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
@@ -140,55 +176,26 @@ export default function Day(props) {
                                                 </IconButton>
                                             </li>
                                         )}
-                                    </ul>
-                                </CardContent>
-                            </Card>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <h3 className="card-title">Afternoon</h3>
-                                    <ul className="activities-list">
-                                        {aftList.map(activity => 
-                                            <li key={activity}>
-                                                {activity}
-                                                <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
-                                                    <DeleteIcon id={activity} fontSize="small" />
-                                                </IconButton>
-                                            </li>
-                                        )}
-                                    </ul>
-                                </CardContent>
-                            </Card>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <h3 className="card-title">Evening</h3>
-                                    <ul className="activities-list">
-                                    {eveList.map(activity => 
-                                        <li key={activity}>
-                                            {activity}
-                                            <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
-                                                <DeleteIcon id={activity} fontSize="small" />
-                                            </IconButton>
-                                        </li>
-                                    )}
-                                    </ul>
+                                        </ul>
 
-                                </CardContent>
-                            </Card>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <h3 className="card-title">Night</h3>
-                                    <ul className="activities-list">
-                                    {nightList.map(activity => 
-                                        <li key={activity}>
-                                            {activity}
-                                            <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
-                                                <DeleteIcon id={activity} fontSize="small" />
-                                            </IconButton>
-                                        </li>
-                                    )}
-                                    </ul>
-                                </CardContent>
-                            </Card>
+                                    </CardContent>
+                                </Card>
+                                <Card className={classes.card}>
+                                    <CardContent>
+                                        <h3 className="card-title">Night</h3>
+                                        <ul className="activities-list">
+                                        {nightList.map(activity => 
+                                            <li key={activity}>
+                                                {activity}
+                                                <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
+                                                    <DeleteIcon id={activity} fontSize="small" />
+                                                </IconButton>
+                                            </li>
+                                        )}
+                                        </ul>
+                                    </CardContent>
+                                </Card>
+                        </div>
                     </ExpansionPanelDetails>
                 </div>
             </ExpansionPanel>
