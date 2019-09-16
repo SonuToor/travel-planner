@@ -1,13 +1,12 @@
 import Button from '@material-ui/core/Button';
 import { CSSTransitionGroup } from 'react-transition-group';
 import "./LocationForm.css"
-import { placesKey } from "../../config/APIs"
 import plane from "./airplane.png"
 import React from 'react';
 import Script from 'react-load-script';
 import SearchBar from 'material-ui-search-bar';
 
-const url = `https://maps.googleapis.com/maps/api/js?key=${placesKey}&libraries=places`
+const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`
 
 
 export default class LocationForm extends React.Component {
