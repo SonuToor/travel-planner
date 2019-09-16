@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-import { FIREBASE_KEY } from './APIs'
 import "firebase/auth";
 import "firebase/database";
 
