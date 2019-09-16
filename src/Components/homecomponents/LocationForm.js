@@ -58,6 +58,12 @@ export default class LocationForm extends React.Component {
       // pass the information on to the home componenet where it can be written to firebase, reset the inputs to empty string
       handleSubmit = (event) => {
           event.preventDefault()
+          
+          if (this.state.city === "") {
+          // make sure the user doesn't submit an empty string, make sure they select from the autocomplete suggestions
+           return
+          }
+          
           this.props.handleLocation(this.state.city)
           this.setState({
               city : '',
