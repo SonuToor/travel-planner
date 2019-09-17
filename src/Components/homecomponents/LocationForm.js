@@ -1,13 +1,14 @@
 import Button from '@material-ui/core/Button';
 import { CSSTransitionGroup } from 'react-transition-group';
 import "./LocationForm.css"
-import { placesKey } from "../../config/APIs"
 import plane from "./airplane.png"
 import React from 'react';
 import Script from 'react-load-script';
 import SearchBar from 'material-ui-search-bar';
 
-const url = `https://maps.googleapis.com/maps/api/js?key=${placesKey}&libraries=places`
+const API_KEY = process.env.REACT_APP_API_KEY
+
+const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`
 
 
 export default class LocationForm extends React.Component {
@@ -57,6 +58,12 @@ export default class LocationForm extends React.Component {
       
       handleSubmit = (event) => {
           event.preventDefault()
+
+          if (this.state.city === "") {
+              // make sure the user doesn't submit an empty string, make sure they select from the autocomplete suggestions
+              return
+          }
+          console.log(this.state.city)
           this.props.handleLocation(this.state.city)
           this.setState({
               city : '',
@@ -75,11 +82,11 @@ export default class LocationForm extends React.Component {
             transitionLeave={true}
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
-                <h2>Where are we off to?<img className="plane" src={plane}/></h2>
+                <h2>Where are we off to?<img className="plane" src={plane} alt="paper airplane"/></h2>
                 <div className="location-form">
                     <Script url={url} onLoad={this.handleScriptLoad}/>  
                     <form onSubmit={this.handleSubmit}>
-                        <SearchBar id="autocomplete" placeholder="Enter City" required value={this.state.query}
+                        <SearchBar id="autocomplete" placeholder="Select a destination" required value={this.state.query}
                             style={{
                                 marginLeft : "-50%",
                                 width: "200%",

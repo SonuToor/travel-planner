@@ -50,7 +50,7 @@ export default class DateForm extends React.Component {
                 transitionLeave={true}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}>
-                <h2>What are our dates?<img className="calendar-pic" src={calendarPic}/></h2>
+                <h2>What are our dates?<img className="calendar-pic" src={calendarPic} alt="hand drawn calendar"/></h2>
                 <form className="dates-form" onSubmit={this.handleSubmit}>
                     <DateRangePicker
                         required
