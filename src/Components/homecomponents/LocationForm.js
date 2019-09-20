@@ -63,7 +63,6 @@ export default class LocationForm extends React.Component {
               // make sure the user doesn't submit an empty string, make sure they select from the autocomplete suggestions
               return
           }
-          console.log(this.state.city)
           this.props.handleLocation(this.state.city)
           this.setState({
               city : '',

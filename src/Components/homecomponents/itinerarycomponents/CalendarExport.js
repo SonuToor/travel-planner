@@ -1,5 +1,8 @@
 import { Button } from '@material-ui/core';
+import CalendarIcon from '@material-ui/icons/EventNote'
+import './CalendarExport.css'
 import React from 'react';
+import moment from 'moment'
 import Script from 'react-load-script';
 
 const url = "https://apis.google.com/js/api.js"
@@ -9,29 +12,36 @@ var GoogleAuth;
 const API_KEY = process.env.REACT_APP_API_KEY
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
 
+const months = { 
+    "January" : "01", 
+    "February" : "02", 
+    "March" : "03", 
+    "April" : "04",
+    "May" : "05",
+    "June" : "06",
+    "July" : "07",
+    "August" : "08",
+    "September" : "09",
+    "October" : "10",
+    "November" : "11",
+    "December" : "12"}
 
 export default class CalendarExport extends React.Component {
     constructor() {
         super()
         this.state = {
-            googleAuth: null,
             showAuthButton : true, 
-            calendar : null
+            eventsArray : [], 
         }
         this.getEvents = this.getEvents.bind(this);
       }
 
+      // load the script that is required for the Google Calendar API
     handleScriptLoad = () => {
         window.gapi.load('client:auth2', this.initClient);
-
-        // TO DO    
-            // once authorization is given
-                // format them 
-                // write them correctly to the users Calendar 
-
     }
 
-
+    // once the script has loaded, provide credentials and set up an Authorization instance 
     initClient = () => {
         window.gapi.client.init({
           apiKey: API_KEY,
@@ -50,7 +60,7 @@ export default class CalendarExport extends React.Component {
       handleAuthClick = (event) => {
         GoogleAuth.signIn()
         .then(() => {
-            if (window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
+            if (GoogleAuth.isSignedIn.get()) {
                 this.setState({
                     showAuthButton : false
                 },
@@ -64,34 +74,101 @@ export default class CalendarExport extends React.Component {
         GoogleAuth.signOut()
         .then(() => {
             this.setState({
-                showAuthButton : true
+                showAuthButton : true, 
             })
         })
       }
 
       getEvents = () => {
-          console.log("get users events for this trip and store in state")
-          console.log(this.props.itinerary)
-            // TO DO
-          // go through and now format the events the way they are to be formatted for writing to Google Calendars
+          // map over the days of the itinerary 
+          let userEvents = (this.props.dates.map(day => {
+              // there is no entries for that day
+              if (this.props.itinerary[day] === undefined) {
+                  return 
+              }
+              return {[day] : Object.values(this.props.itinerary[day])}
+          }))
+          this.setState({
+              eventsArray : userEvents
+          })
       }
 
+      // export the users itinerary events to their Google Calendar
       exportEvents = (event) => {
-          // TO DO
-          // once the export button is clicked export the events to the users calendar
+          this.state.eventsArray.forEach(entry => {
+              if (entry === undefined) {
+                  return
+              }
+              else {
 
+                  let date = (Object.keys(entry)[0]).split(' ')
+                  let events = Object.values(entry)
+                  
+                  // go over each event 
+                  events[0].forEach(event => {
+
+                      let time = event.slice(0,5)
+                      let eventDescription = event.slice(7);
+                      let day;  
+
+                      // format the date according to the rfc3339 standard 
+                      date[1].length === 3 ? day = `0${date[1].slice(0, 1)}` : day = date[1].slice(0,2)
+                      
+                      let startTime = `${date[2]}-${months[date[0]]}-${day}T${time}:00`
+                    
+                      // increment the data by 30 minutes to create the end time 
+                      let endTime = moment(startTime).add('30', 'minutes').format("YYYY-MM-DDTHH:mm:ss")
+
+                      let timeZone = (Intl.DateTimeFormat().resolvedOptions().timeZone);
+
+                      // create the meta details for the trip
+                      var eventEntry = {
+                          "summary" : eventDescription,
+                          "start" : {
+                              "dateTime" : startTime,
+                              'timeZone': timeZone
+                          },
+                          "end" : {
+                              "dateTime" : endTime,
+                              'timeZone': timeZone
+                          }
+                      }
+                      // write event to calendar 
+                      window.gapi.client.load('calendar', 'v3', function() {
+                        var request = window.gapi.client.calendar.events.insert({
+                            'calendarId': 'primary',
+                            'resource': eventEntry
+                          });
+                          // change the colour of the button depending on whether the write was sucessful or unsuccesfull
+                        request.execute(function(resp) {
+                            if(resp.status=='confirmed')  {
+                                let button = document.getElementById("export-button")
+                                button.classList.add("success")
+                            }
+                        else {
+                            let button = document.getElementById("export-button")
+                            button.classList.add("failure")
+                        }
+                        })
+                      })
+                  })
+              }
+          })
       }
 
     render() {
         return (
             <div className="google-calendar-export">
                 <Script url={url} onLoad={this.handleScriptLoad}/>  
-                <span>Export to Google Calendar?</span>
+                <span><CalendarIcon/>Export trip itinerary to your Google Calendar?</span>
                 {this.state.showAuthButton === true ? 
                 <Button id="authorize-button" onClick={this.handleAuthClick}>Authorize</Button> 
                 : 
                 <Button id="signout-button" onClick={this.handleSignoutClick}>Sign Out</Button>}
-                <Button id="export-button" onClick={this.exportEvents}>Export</Button>
+                {this.state.showAuthButton === true ? 
+                null 
+                : 
+                <Button id="export-button" onClick={this.exportEvents}>Export</Button>}
             </div>
         )
     }

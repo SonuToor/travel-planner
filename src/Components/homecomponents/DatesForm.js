@@ -31,7 +31,6 @@ export default class DateForm extends React.Component {
 
         let duration = dateDiffInDays(this.state.date[0], this.state.date[1])
 
-        console.log(duration)
         
         this.props.handleDate([this.state.date[0].toDateString(), this.state.date[1].toDateString()], duration)
 
