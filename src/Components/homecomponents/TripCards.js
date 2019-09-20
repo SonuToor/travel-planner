@@ -30,6 +30,7 @@ export default function TripCards(props) {
     const classes = useStyles();
   return (
     <div className="trip-cards">
+    {/* {loop through each of the nodes of meta details for the trips and display them on a Card component} */}
         {props.tripsKeys.map(trip => 
             <Card className={classes.card} key={trip}>
                 <CardContent>

@@ -4,6 +4,7 @@ import "firebase/database";
 
 const FIREBASE_KEY = process.env.REACT_APP_FIREBASE_KEY
 
+
 const config = {
     apiKey: FIREBASE_KEY,
     authDomain: "travel-planner-80285.firebaseapp.com",
