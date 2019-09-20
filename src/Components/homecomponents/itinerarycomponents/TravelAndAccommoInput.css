@@ -2,3 +2,12 @@
     display: flex;
     justify-content: center;
 }
+
+@media only screen and (max-width: 600px) {
+
+    .accommodation-travel-input {
+        display: flex;
+        flex-direction: column;
+    }
+
+}

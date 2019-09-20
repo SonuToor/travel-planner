@@ -1,0 +1,13 @@
+.google-calendar-export {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.MuiButton-root.success  {
+    color : green;
+}
+
+.MuiButton-root.failure {
+    color : red;
+}
