@@ -6,7 +6,7 @@ import React from 'react';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-
+// this component renders and logs in users to the App
 export default class Login extends React.Component {
     constructor() {
         super()
@@ -18,6 +18,7 @@ export default class Login extends React.Component {
             error : null
         }
     }
+
     // store the input fields within state
     handleChange = (event) => {
         if (event.target.id === "user-email") {
@@ -58,10 +59,12 @@ export default class Login extends React.Component {
               })
     }
 
+    // there should be no user logged in when this component mounts
     componentDidMount = () => {
         this.props.logOut();    
     }
 
+    // toggle showing and hiding the password
     handleClickShowPassword = () => {
         this.setState({
             showPassword : !this.state.showPassword
@@ -70,7 +73,7 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div className="form-background">
+            <div className="form-background-login">
                 <form className="login-form" onSubmit={this.handleSubmit}>
                     <h3>Login</h3>
                     {this.state.isError ? <p style={{color : "red", textAlign : "center"}}>{this.state.error}</p> : null}

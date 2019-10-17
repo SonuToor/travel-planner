@@ -12,12 +12,15 @@ export default class Trips extends React.Component {
         }
     }
 
+    // provide Home.js the details of the trip that user has selected
     tripSelected = (event) => {
         event.preventDefault();
         this.props.displayTrip(event.target.id)
     }
 
+
     componentDidMount = () => { 
+        // from firebase get the nodes that represent each set of meta details for each trip that the user has created so they can be displayed on a TripCard
         firebase.database()
             .ref(`trip-details-${firebase.auth().currentUser.uid}`)
             .on('value', 

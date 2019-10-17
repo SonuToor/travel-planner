@@ -1,4 +1,4 @@
-.form-background {
+.form-background-login {
     background-color: rgba(131, 101, 41, 0.87);
     width: 25%;
     padding-bottom: 1%;
@@ -17,4 +17,22 @@
 
 .login-button {
     margin-top : 20%;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10%;
+        width: 100%;
+    }
+
+    .form-background-login {
+        background-color: rgba(131, 101, 41, 0.87);
+        padding-bottom: 1%;
+        width: 75%;
+        margin-left: 12.5%;
+    }
 }
