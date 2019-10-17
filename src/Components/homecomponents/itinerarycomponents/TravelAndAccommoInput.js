@@ -12,11 +12,6 @@ import TrainIcon from '@material-ui/icons/Train';
 import "./TravelAndAccommoInput.css"
 
 
-
-
-
-
-
 export default function TravelAndAccommoInput(props) { 
     
     const [flightData, updateFlight] = useState("") 
