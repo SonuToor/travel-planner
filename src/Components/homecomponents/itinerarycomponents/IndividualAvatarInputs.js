@@ -14,7 +14,11 @@ export default function IndividualAvatarInputs(props) {
                 <Avatar>
                     {props.icon}
                 </Avatar>
-                <TextField />
+                <TextField 
+                id={props.id}
+                onChange={props.onChange}
+                placeholder={props.placeholder}
+                value={props.value}/>
             </ListItem>
         </List>
     )
