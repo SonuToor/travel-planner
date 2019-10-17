@@ -94,7 +94,8 @@ export default class LocationForm extends React.Component {
                                 }}
                         />
                         <Button 
-                            style={{backgroundColor : "#836529", 
+                            style={{
+                                    backgroundColor : "#836529", 
                                     marginTop : "5%",
                                     width : "50%",
                                     marginLeft : "25%"

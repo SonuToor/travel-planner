@@ -39,4 +39,9 @@ p {
 
 .demo-pics {
   width: 100%;
+  transition: all .2s ease-in-out;
+}
+
+.demo-pics:hover {
+  transform: scale(1.1);
 }
