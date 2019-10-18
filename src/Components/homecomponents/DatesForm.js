@@ -29,11 +29,14 @@ export default class DateForm extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault()
 
+        // get the duration of the trip
         let duration = dateDiffInDays(this.state.date[0], this.state.date[1])
 
         
+        // pass both the dates and the duration to Home.js so they can be written to firebase
         this.props.handleDate([this.state.date[0].toDateString(), this.state.date[1].toDateString()], duration)
 
+        // reset the date input 
         this.setState({
             date: [new Date(), new Date()]
         })

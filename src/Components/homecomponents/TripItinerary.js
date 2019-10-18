@@ -16,7 +16,7 @@ export default class TripItinerary extends React.Component {
         }
     }
 
-    // when a user updates information regarding the accommodation or travel, this function will update the information in firebase
+    // when a user updates information regarding their accommodation or travel, this function will update the information in firebase
     handleTravelAccommoInput = (flight, accommo, carRental, train) => {
         // if the user doesn't submit a new entry for a specific field, keep the field the same. 
         if (flight === '') {
@@ -42,6 +42,7 @@ export default class TripItinerary extends React.Component {
     }
 
     getDatesArray = (startDate, stopDate) => {
+        // get an array of dates between the first and last dates of the trip 
         var dateArray = [];
         var currentDate = moment(startDate);
         var endDate = moment(stopDate);
@@ -52,7 +53,7 @@ export default class TripItinerary extends React.Component {
         return dateArray;
     }
         componentDidMount = () => {
-            // when the component mounts get the requisite information from firebase 
+            // when the component mounts get the requisite information about the itinerary for the  selected trip from firebase 
             firebase.database()
             .ref(`${this.props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
             .on('value', 

@@ -12,4 +12,5 @@ In the project directory:
 2. npm / yarn start
 3. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Travel Planner is also available at [https://react-travel-planner.netlify.com/]
+
+Travel Planner is also available at [https://react-travel-planner.netlify.com/](https://react-travel-planner.netlify.com/) 

@@ -19,7 +19,7 @@ export default class LocationForm extends React.Component {
             query : '',
         }
     }
-
+    // this loads the script for google autocomplete
     handleScriptLoad = () => {
         // Declare Options For Autocomplete 
         var options = { 
@@ -55,7 +55,8 @@ export default class LocationForm extends React.Component {
           );
         }
       }
-      
+
+      // pass the information on to the home componenet where it can be written to firebase, reset the inputs to empty string
       handleSubmit = (event) => {
           event.preventDefault()
 
@@ -63,6 +64,7 @@ export default class LocationForm extends React.Component {
               // make sure the user doesn't submit an empty string, make sure they select from the autocomplete suggestions
               return
           }
+          
           this.props.handleLocation(this.state.city)
           this.setState({
               city : '',
