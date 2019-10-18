@@ -1,8 +1,5 @@
 import Add from '@material-ui/icons/Add'
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import './Day.css';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -11,6 +8,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import firebase from '../../../config/Firebase'
 import IconButton from '@material-ui/core/IconButton';
 import "./Itinerary.css";
+import PeriodOfDayCard from './PeriodOfDayCard'
 import React, { useState } from 'react';
 import { TextField } from '@material-ui/core';
 import TimePicker from 'react-time-picker';
@@ -60,7 +58,6 @@ export default function Day(props) {
 
     const handleDelete = (event, activity) => {
         let timeID = activity.slice(0, 5)
-        console.log(timeID)
 
         firebase.database()
             .ref(`${props.dateID}-${firebase.auth().currentUser.uid}/${props.date}/${timeID}`)
@@ -134,67 +131,10 @@ export default function Day(props) {
                                 })
                             }
                             <div className="cards">
-                                <Card className={classes.card}>
-                                    <CardContent>
-                                        <h3 className="card-title">Morning</h3>
-                                        <ul className="activities-list">
-                                            {mornList.map(activity => 
-                                                <li key={activity}>
-                                                    {activity}
-                                                    <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
-                                                        <DeleteIcon id={activity} fontSize="small" />
-                                                    </IconButton>
-                                                </li>
-                                            )}
-                                        </ul>
-                                    </CardContent>
-                                </Card>
-                                <Card className={classes.card}>
-                                    <CardContent>
-                                        <h3 className="card-title">Afternoon</h3>
-                                        <ul className="activities-list">
-                                            {aftList.map(activity => 
-                                                <li key={activity}>
-                                                    {activity}
-                                                    <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
-                                                        <DeleteIcon id={activity} fontSize="small" />
-                                                    </IconButton>
-                                                </li>
-                                            )}
-                                        </ul>
-                                    </CardContent>
-                                </Card>
-                                <Card className={classes.card}>
-                                    <CardContent>
-                                        <h3 className="card-title">Evening</h3>
-                                        <ul className="activities-list">
-                                        {eveList.map(activity => 
-                                            <li key={activity}>
-                                                {activity}
-                                                <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
-                                                    <DeleteIcon id={activity} fontSize="small" />
-                                                </IconButton>
-                                            </li>
-                                        )}
-                                        </ul>
-
-                                    </CardContent>
-                                </Card>
-                                <Card className={classes.card}>
-                                    <CardContent>
-                                        <h3 className="card-title">Night</h3>
-                                        <ul className="activities-list">
-                                        {nightList.map(activity => 
-                                            <li key={activity}>
-                                                {activity}
-                                                <IconButton id={activity} onClick={e => handleDelete(e, activity)}>
-                                                    <DeleteIcon id={activity} fontSize="small" />
-                                                </IconButton>
-                                            </li>
-                                        )}
-                                        </ul>
-                                    </CardContent>
-                                </Card>
+                                <PeriodOfDayCard class={classes.card} period={"Morning"} list={mornList} handleDelete={handleDelete}/>
+                                <PeriodOfDayCard class={classes.card} period={"Afternoon"} list={aftList} handleDelete={handleDelete}/>
+                                <PeriodOfDayCard class={classes.card} period={"Evening"} list={eveList} handleDelete={handleDelete}/>
+                                <PeriodOfDayCard class={classes.card} period={"Night"} list={nightList} handleDelete={handleDelete}/>
                         </div>
                     </ExpansionPanelDetails>
                 </div>
