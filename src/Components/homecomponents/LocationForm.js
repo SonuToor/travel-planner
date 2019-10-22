@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import { CSSTransitionGroup } from 'react-transition-group';
 import "./LocationForm.css"
-import plane from "./airplane.png"
+import plane from "../../Images/airplane.png"
 import React from 'react';
 import Script from 'react-load-script';
 import SearchBar from 'material-ui-search-bar';
