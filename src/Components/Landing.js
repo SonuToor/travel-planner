@@ -1,8 +1,8 @@
-import background from "../background.jpg"
-import datesFormImage from "../date-selection.png"
-import itineraryImage from "../itinerary-input.png"
+import background from "../Images/background.jpg"
+import datesFormImage from "../Images/date-selection.png"
+import itineraryImage from "../Images/itinerary-input.png"
 import "./Landing.css"
-import locationFormImage from "../location-selection.png"
+import locationFormImage from "../Images/location-selection.png"
 import React from 'react';
 
 // this is the landing page that users first see when they navigate to travel-planner
