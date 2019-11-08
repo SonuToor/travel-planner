@@ -4,6 +4,8 @@ import LocationForm from './homecomponents/LocationForm';
 import React from 'react';
 import Trips from './homecomponents/Trips';
 import TripItinerary from './homecomponents/TripItinerary';
+import { ItineraryProvider } from '../Contexts/tripitinerary-context'
+
 
 export default class Home extends React.Component {
     constructor () {
@@ -78,7 +80,6 @@ export default class Home extends React.Component {
                 location : "",
                 dates : null,
                 tripDuration : null, 
-                tripDetails : {},
                 selectedTrip : null
             })
             this.props.history.push(this.props.route) 
@@ -88,10 +89,12 @@ export default class Home extends React.Component {
     render() {
         return (
             <div>
-                {this.props.display.locationForm ? <LocationForm handleLocation={this.handleLocationFormSubmit}/> : null}
-                {this.props.display.datesForm ? <DatesForm handleDate={this.handleDateFormSubmit}/> : null}
-                {this.props.display.trips ? <Trips displayTrip={this.displayTrip}/> : null}
-                {this.props.display.itinerary ? <TripItinerary trip={this.state.selectedTrip}/> : null}
+                <ItineraryProvider>
+                    {this.props.display.locationForm ? <LocationForm handleLocation={this.handleLocationFormSubmit}/> : null}
+                    {this.props.display.datesForm ? <DatesForm handleDate={this.handleDateFormSubmit}/> : null}
+                    {this.props.display.trips ? <Trips displayTrip={this.displayTrip}/> : null}
+                    {this.props.display.itinerary ? <TripItinerary trip={this.state.selectedTrip}/> : null}
+                </ItineraryProvider>
             </div>
         )
     }

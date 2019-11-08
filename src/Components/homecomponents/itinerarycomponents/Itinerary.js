@@ -5,14 +5,17 @@ import firebase from '../../../config/Firebase'
 import Flight from '@material-ui/icons/Flight';
 import "./Itinerary.css";
 import LocalHotel from '@material-ui/icons/LocalHotel';
-import React from 'react';
+import React, { useContext } from 'react';
 import TrainIcon from '@material-ui/icons/Train';
+import { TripItineraryContext } from '../../../Contexts/tripitinerary-context';
 
 
 
-export default class Itinerary extends React.Component {
+export default function Itinerary (props) {
 
-    handleActivityAdd = (day, time, activity) => {
+    const [trip, updateTrip] = useContext(TripItineraryContext)
+
+    const handleActivityAdd = (day, time, activity) => {
 
         if (activity === "") {
             return
@@ -20,37 +23,35 @@ export default class Itinerary extends React.Component {
       
         let activityEntry = `${time} - ${activity}`;
 
-
-        // add the newly created event to firbase, once it is written to firebase it automatically updates the UI
+        // add the newly created event to firebase, once it is written to firebase it automatically updates the UI
         firebase.database()
-        .ref(`${this.props.dateID}-${firebase.auth().currentUser.uid}/${day}`)
+        .ref(`${props.dateID}-${firebase.auth().currentUser.uid}/${day}`)
         .update({
             [time] : activityEntry
             })
     }
 
-    render() {
-        return(
+    return (
         <div className="itinerary">
             <div className="travelaccommo-display">
                 <Chip
                     icon={<Flight/>}
-                    label={this.props.itinerary['flight'] === null ? "" : this.props.itinerary['flight']}/>
+                    label={trip['flight'] === null ? "" : trip['flight']}/>
                 <Chip
                     icon={<LocalHotel/>}
-                    label={this.props.itinerary['accommodation'] === null ? "" : this.props.itinerary['accommodation']}/>
+                    label={trip['accommodation'] === null ? "" : trip['accommodation']}/>
                 <Chip
                     icon={<DirectionsCarIcon/>}
-                    label={this.props.itinerary['carrental'] === null ? "" : this.props.itinerary['carrental']}/>
+                    label={trip['carrental'] === null ? "" : trip['carrental']}/>
                 <Chip
                     icon={<TrainIcon/>}
-                    label={this.props.itinerary['train'] === null ? "" : this.props.itinerary['train']}/>
+                    label={trip['train'] === null ? "" : trip['train']}/>
             </div>
-            {this.props.dates.map((day, i)  =>
-                <Day key={day} date={day} index={i} handleAdd={this.handleActivityAdd} activities={this.props.itinerary[day]} dateID={this.props.dateID}/>
+            {props.dates.map((day, i)  =>
+                <Day key={day} date={day} index={i} handleAdd={handleActivityAdd} dateID={props.dateID}/>
             )}
         </div>
-        )
-    }
+    )
+    
 
 }
