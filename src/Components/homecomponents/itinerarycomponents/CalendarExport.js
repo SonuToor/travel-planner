@@ -4,6 +4,7 @@ import './CalendarExport.css'
 import React from 'react';
 import moment from 'moment'
 import Script from 'react-load-script';
+import { TripItineraryContext } from '../../../Contexts/tripitinerary-context';
 
 const url = "https://apis.google.com/js/api.js"
 var SCOPES = 'https://www.googleapis.com/auth/calendar';
@@ -36,7 +37,6 @@ export default class CalendarExport extends React.Component {
         this.getEvents = this.getEvents.bind(this);
       }
 
-      // load the script that is required for the Google Calendar API
     handleScriptLoad = () => {
         window.gapi.load('client:auth2', this.initClient);
     }
@@ -80,13 +80,15 @@ export default class CalendarExport extends React.Component {
       }
 
       getEvents = () => {
+          let trip = this.context[0];
+
           // map over the days of the itinerary 
           let userEvents = (this.props.dates.map(day => {
               // there is no entries for that day
-              if (this.props.itinerary[day] === undefined) {
+              if (trip[day] === undefined) {
                   return 
               }
-              return {[day] : Object.values(this.props.itinerary[day])}
+              return {[day] : Object.values(trip[day])}
           }))
           this.setState({
               eventsArray : userEvents
@@ -141,7 +143,7 @@ export default class CalendarExport extends React.Component {
                           });
                           // change the colour of the button depending on whether the write was sucessful or unsuccesfull
                         request.execute(function(resp) {
-                            if(resp.status=='confirmed')  {
+                            if(resp.status==='confirmed')  {
                                 let button = document.getElementById("export-button")
                                 button.classList.add("success")
                             }
@@ -173,3 +175,5 @@ export default class CalendarExport extends React.Component {
         )
     }
 }
+
+CalendarExport.contextType = TripItineraryContext;

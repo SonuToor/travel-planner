@@ -9,10 +9,11 @@ import firebase from '../../../config/Firebase'
 import IconButton from '@material-ui/core/IconButton';
 import "./Itinerary.css";
 import PeriodOfDayCard from './PeriodOfDayCard'
-import React, { useState } from 'react';
+import React, {  useContext, useState } from 'react';
 import { TextField } from '@material-ui/core';
 import TimePicker from 'react-time-picker';
 import Typography from '@material-ui/core/Typography';
+import { TripItineraryContext } from '../../../Contexts/tripitinerary-context';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,6 +36,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function Day(props) {
 
+    const [trip, updateTrip] = useContext(TripItineraryContext)
+
+    const tripDay = trip[props.date];
+
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -54,6 +59,7 @@ export default function Day(props) {
 
     let onChange = time => handleTime(time)
 
+    
     
 
     const handleDelete = (event, activity) => {
@@ -110,23 +116,23 @@ export default function Day(props) {
                 </ExpansionPanelSummary>
                 <div className="individual-day">
                     <ExpansionPanelDetails>
-                            {props.activities === undefined 
+                            {tripDay === undefined 
                                 ? 
                                 null 
                                 :
-                                (Object.keys(props.activities)).map(hour => {
+                                (Object.keys(tripDay)).map(hour => {
                                     // append to the arrays above, so each array has the activities that belong to that part of day
                                     if (Number(hour.slice(0, 2)) >= 5 && Number(hour.slice(0, 2)) < 12) {
-                                        mornList.push(props.activities[hour])
+                                        mornList.push(tripDay[hour])
                                     }
                                     else if (Number(hour.slice(0, 2)) >= 12 && Number(hour.slice(0, 2)) < 17) {
-                                        aftList.push(props.activities[hour])
+                                        aftList.push(tripDay[hour])
                                     }
                                     else if (Number(hour.slice(0, 2)) >= 17 && Number(hour.slice(0, 2)) < 21) {
-                                        eveList.push(props.activities[hour])
+                                        eveList.push(tripDay[hour])
                                     }
                                     else {
-                                        nightList.push(props.activities[hour])
+                                        nightList.push(tripDay[hour])
                                     }                                     
                                 })
                             }

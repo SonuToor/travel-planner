@@ -3,36 +3,34 @@ import CalendarExport from './itinerarycomponents/CalendarExport';
 import firebase from '../../config/Firebase'
 import Itinerary from './itinerarycomponents/Itinerary'
 import moment from 'moment';
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import TravelAndAccommoInput from "./itinerarycomponents/TravelAndAccommoInput";
 import './TripItinerary.css'
+import { TripItineraryContext } from '../../Contexts/tripitinerary-context';
 
 
-export default class TripItinerary extends React.Component {
-    constructor() {
-        super() 
-        this.state =  {
-            itinerarySnap : '' 
-        }
-    }
+const TripItinerary = (props) => {
+
+    const [trip, updateTrip] = useContext(TripItineraryContext)
 
     // when a user updates information regarding their accommodation or travel, this function will update the information in firebase
-    handleTravelAccommoInput = (flight, accommo, carRental, train) => {
+    const handleTravelAccommoInput = (flight, accommo, carRental, train) => {
         // if the user doesn't submit a new entry for a specific field, keep the field the same. 
         if (flight === '') {
-            flight = this.state.itinerarySnap['flight']
+            flight = trip['flight']
         }
         if (accommo === '') {
-            accommo = this.state.itinerarySnap['accommodation']
+            accommo = trip['accommodation']
         }
         if (carRental === '') {
-            carRental = this.state.itinerarySnap['carrental']
+            carRental = trip['carrental']
         }
         if (train === '') {
-            train = this.state.itinerarySnap['train']
+            train = trip['train']
         }
+
         firebase.database()
-            .ref(`${this.props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
+            .ref(`${props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
             .set({
                 'flight': flight,
                 'accommodation': accommo,
@@ -41,7 +39,7 @@ export default class TripItinerary extends React.Component {
                 })
     }
 
-    getDatesArray = (startDate, stopDate) => {
+    const getDatesArray = (startDate, stopDate) => {
         // get an array of dates between the first and last dates of the trip 
         var dateArray = [];
         var currentDate = moment(startDate);
@@ -52,21 +50,22 @@ export default class TripItinerary extends React.Component {
         }
         return dateArray;
     }
-        componentDidMount = () => {
-            // when the component mounts get the requisite information about the itinerary for the  selected trip from firebase 
-            firebase.database()
-            .ref(`${this.props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
-            .on('value', 
-            ((snapshot) => {
-                let tripsObj = snapshot.val();
-                this.setState({
-                    itinerarySnap : tripsObj
-                })
-             }))
-        }
 
+    // get the trips for the selected trip add them to the TripContext so it's available wherever it might be needed in the app     
+    const fetchTripData = () => {
+        firebase.database()
+        .ref(`${props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
+        .on('value', 
+        ((snapshot) => {
+            let tripsObj = snapshot.val();
+            updateTrip(tripsObj)
+        }))
+    }
 
-    render() {
+    useEffect(() => {
+        fetchTripData()
+    }, [])
+
         return (
             <CSSTransitionGroup
             transitionName="example"
@@ -76,12 +75,14 @@ export default class TripItinerary extends React.Component {
             transitionLeave={true}
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
-                <h2 className="trip-title">{`Your trip to ${this.props.trip["location"]}`}</h2>
-                <h4 className="trip-date-title">{`${this.props.trip["dates"][0].slice(3)} to ${this.props.trip["dates"][1].slice(3)}`}</h4>
-                <TravelAndAccommoInput updateInfo={this.handleTravelAccommoInput}/>
-                <CalendarExport dates={this.getDatesArray(this.props.trip.dates[0], this.props.trip.dates[1])} itinerary={this.state.itinerarySnap}/>
-                <Itinerary dates={this.getDatesArray(this.props.trip.dates[0], this.props.trip.dates[1])} itinerary={this.state.itinerarySnap} dateID={this.props.trip.dates[0]}/>
+                <h2 className="trip-title">{`Your trip to ${props.trip["location"]}`}</h2>
+                <h4 className="trip-date-title">{`${props.trip["dates"][0].slice(3)} to ${props.trip["dates"][1].slice(3)}`}</h4>
+                <TravelAndAccommoInput updateInfo={handleTravelAccommoInput}/>
+                <CalendarExport dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}/>
+                <Itinerary dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])} dateID={props.trip.dates[0]}/>
             </CSSTransitionGroup>
         )
-    }
 }
+
+
+export default TripItinerary
