@@ -1,5 +1,6 @@
-import Day from './Day'
+import CalendarExport from './CalendarExport';
 import Chip from '@material-ui/core/Chip';
+import Day from './Day'
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import firebase from '../../../config/Firebase'
 import Flight from '@material-ui/icons/Flight';
@@ -47,6 +48,7 @@ export default function Itinerary (props) {
                     icon={<TrainIcon/>}
                     label={trip['train'] === null ? "" : trip['train']}/>
             </div>
+            <CalendarExport dates={props.dates}/>
             {props.dates.map((day, i)  =>
                 <Day key={day} date={day} index={i} handleAdd={handleActivityAdd} dateID={props.dateID}/>
             )}

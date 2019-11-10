@@ -1,4 +1,6 @@
 .google-calendar-export {
+    margin-top: 2%;
+    margin-bottom: 4%;
     display: flex;
     align-items: stretch;
     justify-content: center;

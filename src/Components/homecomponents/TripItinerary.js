@@ -1,5 +1,4 @@
 import { CSSTransitionGroup } from 'react-transition-group';
-import CalendarExport from './itinerarycomponents/CalendarExport';
 import firebase from '../../config/Firebase'
 import Itinerary from './itinerarycomponents/Itinerary'
 import moment from 'moment';
@@ -78,7 +77,6 @@ const TripItinerary = (props) => {
                 <h2 className="trip-title">{`Your trip to ${props.trip["location"]}`}</h2>
                 <h4 className="trip-date-title">{`${props.trip["dates"][0].slice(3)} to ${props.trip["dates"][1].slice(3)}`}</h4>
                 <TravelAndAccommoInput updateInfo={handleTravelAccommoInput}/>
-                <CalendarExport dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}/>
                 <Itinerary dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])} dateID={props.trip.dates[0]}/>
             </CSSTransitionGroup>
         )
