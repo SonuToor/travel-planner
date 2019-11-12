@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
@@ -26,6 +27,13 @@ const useStyles = makeStyles({
   },
 });
 
+
+// TO DO
+    // add a button to remove a trip on the card 
+    // put it beside where the date is 
+    // call firebase - get the unique identifier from the card and delete the whole node from firebase
+
+    
 export default function TripCards(props) {
     const classes = useStyles();
   return (
@@ -35,6 +43,8 @@ export default function TripCards(props) {
             <Card className={classes.card} key={trip}>
                 <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        <DeleteIcon />
+                        {/* <button>Delete</button> */}
                         {`${props.trips[trip]["dates"][0].slice(3)} to ${props.trips[trip]["dates"][1].slice(3)}`}
                     </Typography>
                     <Typography variant="h5" component="h2">
