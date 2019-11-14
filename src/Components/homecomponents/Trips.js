@@ -12,10 +12,23 @@ export default class Trips extends React.Component {
         }
     }
 
-    // provide Home.js the details of the trip that user has selected
-    tripSelected = (event) => {
+    deleteTrip = (event, trip) => {
         event.preventDefault();
-        this.props.displayTrip(event.target.id)
+        
+        firebase.database()
+            .ref(`trip-details-${firebase.auth().currentUser.uid}/${trip}`)
+            .remove()
+        
+        firebase.database()
+            .ref(`${trip}-${firebase.auth().currentUser.uid}`)
+            .remove()
+    }
+
+
+    // provide Home.js the details of the trip that user has selected
+    tripSelected = (event, trip) => {
+        event.preventDefault();
+        this.props.displayTrip(trip)
     }
 
 
@@ -46,7 +59,7 @@ export default class Trips extends React.Component {
                 {this.state.tripDetails === null || this.state.tripDetails === undefined ? 
                 <h3 className="no-trips-title">No trips saved yet!</h3> 
                 :
-                <TripCards trips={this.state.tripDetails} tripsKeys={Object.keys(this.state.tripDetails)} tripSelected={this.tripSelected}/>}
+                <TripCards trips={this.state.tripDetails} tripsKeys={Object.keys(this.state.tripDetails)} tripSelected={this.tripSelected} deleteTrip={this.deleteTrip}/>}
             </CSSTransitionGroup>
         )
     }

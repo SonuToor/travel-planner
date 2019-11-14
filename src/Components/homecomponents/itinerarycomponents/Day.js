@@ -44,6 +44,9 @@ export default function Day(props) {
     const [expanded, setExpanded] = React.useState(false);
 
     // this handles the opening and closing of the expansion panels
+
+    // TO DO --- improve this
+        // sometimes this click doesn't expand/close the expansion panel 
     const handleChange = panel => (event, isExpanded) => {
         // this could use improvement, I don't as of yet know how to make the MaterialUI API for the expansion panel open and close only the icon click
             // this is a rudimentary fix but it still is slightly buggy
