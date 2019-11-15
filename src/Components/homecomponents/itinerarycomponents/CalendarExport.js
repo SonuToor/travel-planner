@@ -95,6 +95,13 @@ export default class CalendarExport extends React.Component {
           })
       }
 
+      // TO DO
+        // if the event exists in the users Google Calendar, don't write it again (avoid duplicate events on Google Calendar).
+
+        // (1) read the users calendar at the dates and times you plan to write the new events 
+        // (2) compare to the events you plan to write
+        // (3) if some events exist already with the same name, overwrite or skip entirely? 
+
       // export the users itinerary events to their Google Calendar
       exportEvents = (event) => {
           this.state.eventsArray.forEach(entry => {
@@ -108,7 +115,10 @@ export default class CalendarExport extends React.Component {
                   
                   // go over each event 
                   events[0].forEach(event => {
-
+                    
+                      // TO DO 
+                        // maybe take this time and date and read the users calendar
+                        // if there is an event at the time and day we want to write, compare it to the eventDescription to see if it's a duplicate
                       let time = event.slice(0,5)
                       let eventDescription = event.slice(7);
                       let day;  
