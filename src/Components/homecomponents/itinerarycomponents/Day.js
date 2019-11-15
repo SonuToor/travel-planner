@@ -41,20 +41,6 @@ export default function Day(props) {
     const tripDay = trip[props.date];
 
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
-
-    // this handles the opening and closing of the expansion panels
-
-    // TO DO --- improve this
-        // sometimes this click doesn't expand/close the expansion panel 
-    const handleChange = panel => (event, isExpanded) => {
-        // this could use improvement, I don't as of yet know how to make the MaterialUI API for the expansion panel open and close only the icon click
-            // this is a rudimentary fix but it still is slightly buggy
-        if (event.target.id === `expand-icon-${props.index}`) {
-            setExpanded(isExpanded ? panel : false);
-        }
-
-    };
 
     // the hooks for both the inputs
     const [time, handleTime] = useState('00:00');
@@ -94,14 +80,23 @@ export default function Day(props) {
 
 
     return (
-            <ExpansionPanel expanded={expanded === `panel${props.index}`} onChange={handleChange(`panel${props.index}`)}>
+            <ExpansionPanel>
                 <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon id={`expand-icon-${props.index}`}/>}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
+                expandIcon={<ExpandMoreIcon id={`expand-icon-${props.index}`}/>}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
                     >
-                    <Typography className={classes.heading}>{props.date}</Typography>
-                    <form className="event-form" onSubmit={handleSubmit}>
+                    <Typography 
+                    className={classes.heading}
+                    aria-label="Header">
+                        {props.date}
+                    </Typography>
+                    <form 
+                    className="event-form" 
+                    onSubmit={handleSubmit}
+                    aria-label="Form"
+                    onClick={event => event.stopPropagation()}
+                    onFocus={event => event.stopPropagation()}>
                         <div className="event-inputs">
                             <TextField 
                                 placeholder="Enter activity."
