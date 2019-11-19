@@ -21,17 +21,15 @@ const routes = {
   landing : "/",
   login : "/login",
   signup : "/signup",
-  home : "/home"
+  home : "/home",
+  trips: "/home/trips",
+  location: "/home/location"
 }
 
 export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      datesFormDisplay : false,
-      displayTrips : false,
-      itineraryDisplay : false,
-      locationFormDisplay : true,
       loggedIn : false,
       user : null,
     }
@@ -42,8 +40,6 @@ export default class App extends React.Component {
     this.setState({
       loggedIn : false, 
       user : null,
-      displayTrips : false,
-      itineraryDisplay : false
     })
     firebase.auth().signOut()
           .then(function() { 
@@ -60,67 +56,16 @@ export default class App extends React.Component {
     this.setState({
       user : email,
       loggedIn : true,
-      locationFormDisplay : true,
-    })
-  }
-
-  // the following four methods are used to update the UI of the Home Component
-    // the Home Component in essence is the heart of trip-planner, I have separated the boolean logic that is involved with the rendering of components 
-    // in Home.js to App.js 
-  
-  clearHome = () => {
-    // here you should remove anything else and have the home page looking the way it would when you first login 
-    this.setState({
-      displayTrips : false,
-      datesFormDisplay : false,
-      locationFormDisplay : true,
-      itineraryDisplay : false
-    })
-  }
-
-  showDatesForm = () => {
-    // now after the location is submitted render the form that prompts for dates 
-    this.setState({
-      displayTrips : false,
-      locationFormDisplay : false,
-      itineraryDisplay : false,
-      datesFormDisplay : true,
-    })
-  }
-  
-  usersTrips = () => {
-    // display the users trips only and hide other forms 
-    this.setState({
-      displayTrips : true,
-      locationFormDisplay : false,
-      datesFormDisplay : false,
-      itineraryDisplay : false
-    })
-  }
-
-  displayTripItinerary = () => {
-    // display the currently selected itinerary and hide everything else
-    this.setState({
-      displayTrips : false,
-      locationFormDisplay : false,
-      datesFormDisplay : false, 
-      itineraryDisplay : true
     })
   }
 
   render() {
-    const homeDisplay = {
-      locationForm : this.state.locationFormDisplay,
-      datesForm : this.state.datesFormDisplay,
-      trips : this.state.displayTrips,
-      itinerary : this.state.itineraryDisplay
-    }
     return (
         <Container > 
           <Router>
-          <Navigation loggedIn={this.state.loggedIn} theme={theme} routes={routes} logOut={this.logOut} trips={this.usersTrips} clearHome={this.clearHome}/>
+          <Navigation loggedIn={this.state.loggedIn} theme={theme} routes={routes} logOut={this.logOut}/>
             <div>
-              <Route path={routes.home} render={(props) => <Home {...props}  user={this.state.user} route={routes.landing} loggedIn={this.state.loggedIn} display={homeDisplay} showTrips={this.usersTrips} showDatesForm={this.showDatesForm} showItinerary={this.displayTripItinerary}/>}/>
+              <Route path={routes.home} render={(props) => <Home {...props}  user={this.state.user} route={routes.landing} loggedIn={this.state.loggedIn}/>}/>
               <Route exact path={routes.landing} render={()=><Landing logOut={this.logOut}/>}/>
               <Route path={routes.login} render={(props)=><Login {...props} route={routes.home} logOut={this.logOut} login={this.signIn}/>}/>
               <Route path={routes.signup} render={(props)=><Signup {...props} route={routes.home} logOut={this.logOut} register={this.signIn}/>}/>            

@@ -3,9 +3,17 @@ import firebase from "../config/Firebase";
 import LocationForm from './homecomponents/LocationForm';
 import React from 'react';
 import Trips from './homecomponents/Trips';
+import { Route, Switch } from "react-router-dom";
 import TripItinerary from './homecomponents/TripItinerary';
 import { ItineraryProvider } from '../Contexts/tripitinerary-context'
 
+
+const routes = {
+    dates: "/home/dates",
+    location: "/home/location",
+    trips: "/home/trips",
+    itinerary: "/home/itinerary"
+}
 
 export default class Home extends React.Component {
     constructor () {
@@ -25,7 +33,7 @@ export default class Home extends React.Component {
         this.setState({
             location : place,
         })
-        this.props.showDatesForm()
+        this.props.history.push(routes.dates)
     }
 
     handleDateFormSubmit = (dates, duration) => {
@@ -34,7 +42,8 @@ export default class Home extends React.Component {
             dates : dates,
             tripDuration : duration
         }, 
-        this.createTripInFirebase); 
+        this.createTripInFirebase);
+        this.props.history.push(routes.trips) 
     }
 
     createTripInFirebase = () => {
@@ -55,8 +64,6 @@ export default class Home extends React.Component {
                 'carrental' : '',
                 'train' : ''
                 })
-
-        this.props.showTrips()
     }
 
     displayTrip = (trip) => {
@@ -68,9 +75,8 @@ export default class Home extends React.Component {
             let tripsObj = snapshot.val();
             this.setState({
                 selectedTrip : tripsObj
-            })
+            }, this.props.history.push(routes.itinerary))
          }))
-        this.props.showItinerary()
     }
 
     componentDidMount = () => {
@@ -84,16 +90,21 @@ export default class Home extends React.Component {
             })
             this.props.history.push(this.props.route) 
         }
+        else {
+            this.props.history.push(routes.location)
+        }
     }
 
     render() {
         return (
             <div>
                 <ItineraryProvider>
-                    {this.props.display.locationForm ? <LocationForm handleLocation={this.handleLocationFormSubmit}/> : null}
-                    {this.props.display.datesForm ? <DatesForm handleDate={this.handleDateFormSubmit}/> : null}
-                    {this.props.display.trips ? <Trips displayTrip={this.displayTrip}/> : null}
-                    {this.props.display.itinerary ? <TripItinerary trip={this.state.selectedTrip}/> : null}
+                    <Switch>
+                        <Route path={routes.location} render={()=><LocationForm handleLocation={this.handleLocationFormSubmit}/>}/>
+                        <Route path={routes.dates} render={()=><DatesForm handleDate={this.handleDateFormSubmit}/>}/>
+                        <Route path={routes.trips} render={()=><Trips displayTrip={this.displayTrip}/>}/>
+                        <Route path={routes.itinerary} render={()=><TripItinerary trip={this.state.selectedTrip}/>}/>
+                    </Switch>
                 </ItineraryProvider>
             </div>
         )

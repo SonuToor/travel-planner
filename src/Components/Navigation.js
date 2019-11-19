@@ -47,7 +47,7 @@ function Navigation(props) {
               <AppBar position="static" style={{backgroundColor: "#836529", opacity:"0.92", color:"black"}}>
                 <Toolbar>
                   {props.loggedIn ? 
-                    <NavLink to={routes.home} onClick={props.clearHome}>
+                    <NavLink to={routes.location}>
                       <IconButton edge="start" className={classes.menuButton} aria-label="menu">
                         <ExploreIcon />
                       </IconButton>
@@ -61,7 +61,9 @@ function Navigation(props) {
                   }
                   <h4 className={classes.title}>Let's get exploring!</h4>
                   {props.loggedIn ? 
-                    <Button onClick={props.trips}>My Trips</Button> 
+                    <NavLink to={routes.trips}>
+                      <Button>My Trips</Button> 
+                    </NavLink>
                     : 
                     <NavLink to={routes.signup}>
                       <Button>Sign Up</Button>
