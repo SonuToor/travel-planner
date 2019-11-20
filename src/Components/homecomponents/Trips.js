@@ -2,6 +2,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import firebase from '../../config/Firebase'
 import React from "react"
 import TripCards from "./TripCards"
+import { UserContext } from '../../Contexts/loggedin-context';
 import './Trips.css'
 
 export default class Trips extends React.Component {
@@ -36,7 +37,7 @@ export default class Trips extends React.Component {
     componentDidMount = () => { 
         // from firebase get the nodes that represent each set of meta details for each trip that the user has created so they can be displayed on a TripCard
         firebase.database()
-            .ref(`trip-details-${firebase.auth().currentUser.uid}`)
+            .ref(`trip-details-${this.context[0]}`)
             .on('value', 
             ((snapshot) => {
                 let tripsObj = snapshot.val();
@@ -65,3 +66,5 @@ export default class Trips extends React.Component {
         )
     }
 }
+
+Trips.contextType = UserContext;

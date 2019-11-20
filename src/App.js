@@ -6,6 +6,7 @@ import firebase from './config/Firebase'
 import Home from "./Components/Home"
 import Navigation from "./Components/Navigation"
 import Landing from './Components/Landing'
+import { UserProvider } from './Contexts/loggedin-context'
 import Login from './Components/Login'
 import React from 'react';
 import Signup from './Components/Signup'
@@ -31,7 +32,7 @@ export default class App extends React.Component {
     super()
     this.state = {
       loggedIn : false,
-      user : null,
+      user : "",
     }
   }
   
@@ -51,10 +52,10 @@ export default class App extends React.Component {
           });
   }
 
-  signIn = (email) => {
+  signIn = () => {
     // sign in by updating the users email in state and changing the UI
     this.setState({
-      user : email,
+      user : firebase.auth().currentUser.uid,
       loggedIn : true,
     })
   }
@@ -65,10 +66,12 @@ export default class App extends React.Component {
           <Router>
           <Navigation loggedIn={this.state.loggedIn} theme={theme} routes={routes} logOut={this.logOut}/>
             <div>
-              <Route path={routes.home} render={(props) => <Home {...props}  user={this.state.user} route={routes.landing} loggedIn={this.state.loggedIn}/>}/>
-              <Route exact path={routes.landing} render={()=><Landing logOut={this.logOut}/>}/>
-              <Route path={routes.login} render={(props)=><Login {...props} route={routes.home} logOut={this.logOut} login={this.signIn}/>}/>
-              <Route path={routes.signup} render={(props)=><Signup {...props} route={routes.home} logOut={this.logOut} register={this.signIn}/>}/>            
+              <UserProvider>
+                <Route path={routes.home} render={(props) => <Home {...props}  user={this.state.user} route={routes.landing} loggedIn={this.state.loggedIn}/>}/>
+                <Route exact path={routes.landing} render={()=><Landing logOut={this.logOut}/>}/>
+                <Route path={routes.login} render={(props)=><Login {...props} route={routes.home} logOut={this.logOut} login={this.signIn}/>}/>
+                <Route path={routes.signup} render={(props)=><Signup {...props} route={routes.home} logOut={this.logOut} register={this.signIn}/>}/>  
+              </UserProvider>          
             </div>
           </Router>
         </Container>

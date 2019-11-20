@@ -6,6 +6,7 @@ import Trips from './homecomponents/Trips';
 import { Route, Switch } from "react-router-dom";
 import TripItinerary from './homecomponents/TripItinerary';
 import { ItineraryProvider } from '../Contexts/tripitinerary-context'
+import { UserContext } from '../Contexts/loggedin-context'
 
 
 const routes = {
@@ -16,8 +17,8 @@ const routes = {
 }
 
 export default class Home extends React.Component {
-    constructor () {
-        super()
+    constructor (props) {
+        super(props)
         // the location, dates and duration are stored here in state simply to write to the database, as the meta details of the newly created trip.
         // selectedTrip is used to temporarily keep track of the trip that the user wants to edit in TripItinerary 
         this.state = {
@@ -25,7 +26,7 @@ export default class Home extends React.Component {
             dates : null,
             tripDuration : null,
             selectedTrip : null
-        }
+        } 
     }
 
     handleLocationFormSubmit = (place) => {
@@ -49,7 +50,7 @@ export default class Home extends React.Component {
     createTripInFirebase = () => {
         // create a trip details node in firebase to hold the meta details for the new trip
         firebase.database()
-            .ref(`trip-details-${firebase.auth().currentUser.uid}/${this.state.dates[0]}`)
+            .ref(`trip-details-${this.context[0]}/${this.state.dates[0]}`)
             .set({
             'location': this.state.location,
             'dates': this.state.dates,
@@ -57,7 +58,7 @@ export default class Home extends React.Component {
         })
         // create an empty node in firebase to store the itinerary details 
         firebase.database()
-            .ref(`${this.state.dates[0]}-${firebase.auth().currentUser.uid}/`)
+            .ref(`${this.state.dates[0]}-${this.context[0]}/`)
             .set({
                 'flight': '',
                 'accommodation': '',
@@ -67,9 +68,10 @@ export default class Home extends React.Component {
     }
 
     displayTrip = (trip) => {
+        console.log(this.props.user)
         // grab the trip the user has selected from firebase and store it in state so it can be passed to the itinerary components 
         firebase.database()
-        .ref(`trip-details-${firebase.auth().currentUser.uid}/${trip}`)
+        .ref(`trip-details-${this.context[0]}/${trip}`)
         .on('value', 
         ((snapshot) => {
             let tripsObj = snapshot.val();
@@ -91,6 +93,8 @@ export default class Home extends React.Component {
             this.props.history.push(this.props.route) 
         }
         else {
+            let setter = this.context[1];
+            setter(this.props.user)
             this.props.history.push(routes.location)
         }
     }
@@ -110,3 +114,5 @@ export default class Home extends React.Component {
         )
     }
 }
+
+Home.contextType = UserContext;

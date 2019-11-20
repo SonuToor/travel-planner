@@ -6,12 +6,14 @@ import React, { useContext, useEffect } from "react"
 import TravelAndAccommoInput from "./itinerarycomponents/TravelAndAccommoInput";
 import './TripItinerary.css'
 import { TripItineraryContext } from '../../Contexts/tripitinerary-context';
+import { UserContext } from '../../Contexts/loggedin-context';
 
 
 const TripItinerary = (props) => {
 
     const [trip, updateTrip] = useContext(TripItineraryContext);
-    
+    const [user, updateUser] = useContext(UserContext);
+
     // when a user updates information regarding their accommodation or travel, this function will update the information in firebase
     const handleTravelAccommoInput = (flight, accommo, carRental, train) => {
         // if the user doesn't submit a new entry for a specific field, keep the field the same. 
@@ -29,7 +31,7 @@ const TripItinerary = (props) => {
         }
 
         firebase.database()
-            .ref(`${props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
+            .ref(`${props.trip.dates[0]}-${user}/`)
             .update({
                 'flight': flight,
                 'accommodation': accommo,
@@ -52,8 +54,11 @@ const TripItinerary = (props) => {
 
     // get the trips for the selected trip add them to the TripContext so it's available wherever it might be needed in the app     
     const fetchTripData = () => {
+        if (props.trip === null) {
+            // what now
+        }
         firebase.database()
-        .ref(`${props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
+        .ref(`${props.trip.dates[0]}-${user}/`)
         .on('value', 
         ((snapshot) => {
             let tripsObj = snapshot.val();
