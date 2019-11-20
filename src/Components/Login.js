@@ -45,7 +45,7 @@ export default class Login extends React.Component {
             .auth()
             .signInWithEmailAndPassword(this.state.email, this.state.password)
             .then((response) => {
-                this.props.login(response.user.email)
+                this.props.login()
                 this.props.history.push(this.props.route)
                 console.log(response.user.email + " has logged in!");
             })

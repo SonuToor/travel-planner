@@ -3,13 +3,22 @@ import firebase from "../config/Firebase";
 import LocationForm from './homecomponents/LocationForm';
 import React from 'react';
 import Trips from './homecomponents/Trips';
+import { Route, Switch } from "react-router-dom";
 import TripItinerary from './homecomponents/TripItinerary';
 import { ItineraryProvider } from '../Contexts/tripitinerary-context'
+import { UserContext } from '../Contexts/loggedin-context'
 
+
+const routes = {
+    dates: "/home/dates",
+    location: "/home/location",
+    trips: "/home/trips",
+    itinerary: "/home/:tripselected"
+}
 
 export default class Home extends React.Component {
-    constructor () {
-        super()
+    constructor (props) {
+        super(props)
         // the location, dates and duration are stored here in state simply to write to the database, as the meta details of the newly created trip.
         // selectedTrip is used to temporarily keep track of the trip that the user wants to edit in TripItinerary 
         this.state = {
@@ -17,7 +26,7 @@ export default class Home extends React.Component {
             dates : null,
             tripDuration : null,
             selectedTrip : null
-        }
+        } 
     }
 
     handleLocationFormSubmit = (place) => {
@@ -25,7 +34,7 @@ export default class Home extends React.Component {
         this.setState({
             location : place,
         })
-        this.props.showDatesForm()
+        this.props.history.push(routes.dates)
     }
 
     handleDateFormSubmit = (dates, duration) => {
@@ -34,13 +43,14 @@ export default class Home extends React.Component {
             dates : dates,
             tripDuration : duration
         }, 
-        this.createTripInFirebase); 
+        this.createTripInFirebase);
+        this.props.history.push(routes.trips) 
     }
 
     createTripInFirebase = () => {
         // create a trip details node in firebase to hold the meta details for the new trip
         firebase.database()
-            .ref(`trip-details-${firebase.auth().currentUser.uid}/${this.state.dates[0]}`)
+            .ref(`trip-details-${this.context[0]}/${this.state.dates[0]}`)
             .set({
             'location': this.state.location,
             'dates': this.state.dates,
@@ -48,29 +58,27 @@ export default class Home extends React.Component {
         })
         // create an empty node in firebase to store the itinerary details 
         firebase.database()
-            .ref(`${this.state.dates[0]}-${firebase.auth().currentUser.uid}/`)
+            .ref(`${this.state.dates[0]}-${this.context[0]}/`)
             .set({
                 'flight': '',
                 'accommodation': '',
                 'carrental' : '',
                 'train' : ''
                 })
-
-        this.props.showTrips()
     }
 
     displayTrip = (trip) => {
+        console.log(this.props.user)
         // grab the trip the user has selected from firebase and store it in state so it can be passed to the itinerary components 
         firebase.database()
-        .ref(`trip-details-${firebase.auth().currentUser.uid}/${trip}`)
+        .ref(`trip-details-${this.context[0]}/${trip}`)
         .on('value', 
         ((snapshot) => {
             let tripsObj = snapshot.val();
             this.setState({
                 selectedTrip : tripsObj
-            })
+            }, this.props.history.push(`/home/${trip}`))
          }))
-        this.props.showItinerary()
     }
 
     componentDidMount = () => {
@@ -84,18 +92,27 @@ export default class Home extends React.Component {
             })
             this.props.history.push(this.props.route) 
         }
+        else {
+            let setter = this.context[1];
+            setter(this.props.user)
+            this.props.history.push(routes.location)
+        }
     }
 
     render() {
         return (
             <div>
                 <ItineraryProvider>
-                    {this.props.display.locationForm ? <LocationForm handleLocation={this.handleLocationFormSubmit}/> : null}
-                    {this.props.display.datesForm ? <DatesForm handleDate={this.handleDateFormSubmit}/> : null}
-                    {this.props.display.trips ? <Trips displayTrip={this.displayTrip}/> : null}
-                    {this.props.display.itinerary ? <TripItinerary trip={this.state.selectedTrip}/> : null}
+                    <Switch>
+                        <Route path={routes.location} render={()=><LocationForm handleLocation={this.handleLocationFormSubmit}/>}/>
+                        <Route path={routes.dates} render={()=><DatesForm handleDate={this.handleDateFormSubmit}/>}/>
+                        <Route path={routes.trips} render={(props)=><Trips {...props} displayTrip={this.displayTrip}/>}/>
+                        <Route path={routes.itinerary} render={()=><TripItinerary trip={this.state.selectedTrip}/>}/>
+                    </Switch>
                 </ItineraryProvider>
             </div>
         )
     }
 }
+
+Home.contextType = UserContext;

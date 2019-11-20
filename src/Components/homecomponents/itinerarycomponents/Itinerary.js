@@ -9,12 +9,15 @@ import LocalHotel from '@material-ui/icons/LocalHotel';
 import React, { useContext } from 'react';
 import TrainIcon from '@material-ui/icons/Train';
 import { TripItineraryContext } from '../../../Contexts/tripitinerary-context';
+import { UserContext } from '../../../Contexts/loggedin-context';
 
 
 
 export default function Itinerary (props) {
 
-    const [trip, updateTrip] = useContext(TripItineraryContext)
+    const [trip, updateTrip] = useContext(TripItineraryContext);
+    const [user, updateUser] = useContext(UserContext);
+
 
     const handleActivityAdd = (day, time, activity) => {
 
@@ -26,7 +29,7 @@ export default function Itinerary (props) {
 
         // add the newly created event to firebase, once it is written to firebase it automatically updates the UI
         firebase.database()
-        .ref(`${props.dateID}-${firebase.auth().currentUser.uid}/${day}`)
+        .ref(`${props.dateID}-${user}/${day}`)
         .update({
             [time] : activityEntry
             })

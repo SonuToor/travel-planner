@@ -14,6 +14,8 @@ import { TextField } from '@material-ui/core';
 import TimePicker from 'react-time-picker';
 import Typography from '@material-ui/core/Typography';
 import { TripItineraryContext } from '../../../Contexts/tripitinerary-context';
+import { UserContext } from '../../../Contexts/loggedin-context';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,7 +38,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function Day(props) {
 
-    const [trip, updateTrip] = useContext(TripItineraryContext)
+    const [trip, updateTrip] = useContext(TripItineraryContext);
+    const [user, updateUser] = useContext(UserContext);
+
 
     const tripDay = trip[props.date];
 
@@ -55,7 +59,7 @@ export default function Day(props) {
         let timeID = activity.slice(0, 5)
 
         firebase.database()
-            .ref(`${props.dateID}-${firebase.auth().currentUser.uid}/${props.date}/${timeID}`)
+            .ref(`${props.dateID}-${user}/${props.date}/${timeID}`)
             .remove()
     }
 

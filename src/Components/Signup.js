@@ -65,7 +65,7 @@ export default class Signup extends React.Component {
                 .auth()
                 .createUserWithEmailAndPassword(this.state.email, this.state.password)
                 .then((response) => {
-                    this.props.register(response.user.email);
+                    this.props.register();
                     this.props.history.push(this.props.route)
                     console.log(response.user.email + " has created an account!");
                   })
