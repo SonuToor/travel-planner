@@ -10,8 +10,8 @@ import { TripItineraryContext } from '../../Contexts/tripitinerary-context';
 
 const TripItinerary = (props) => {
 
-    const [trip, updateTrip] = useContext(TripItineraryContext)
-
+    const [trip, updateTrip] = useContext(TripItineraryContext);
+    
     // when a user updates information regarding their accommodation or travel, this function will update the information in firebase
     const handleTravelAccommoInput = (flight, accommo, carRental, train) => {
         // if the user doesn't submit a new entry for a specific field, keep the field the same. 
@@ -30,7 +30,7 @@ const TripItinerary = (props) => {
 
         firebase.database()
             .ref(`${props.trip.dates[0]}-${firebase.auth().currentUser.uid}/`)
-            .set({
+            .update({
                 'flight': flight,
                 'accommodation': accommo,
                 'carrental' : carRental,
@@ -65,21 +65,25 @@ const TripItinerary = (props) => {
         fetchTripData()
     }, [])
 
-        return (
-            <CSSTransitionGroup
-            transitionName="example"
-            transitionAppear={true}
-            transitionAppearTimeout={500}
-            transitionEnter={true}
-            transitionLeave={true}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}>
-                <h2 className="trip-title">{`Your trip to ${props.trip["location"]}`}</h2>
-                <h4 className="trip-date-title">{`${props.trip["dates"][0].slice(3)} to ${props.trip["dates"][1].slice(3)}`}</h4>
-                <TravelAndAccommoInput updateInfo={handleTravelAccommoInput}/>
-                <Itinerary dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])} dateID={props.trip.dates[0]}/>
-            </CSSTransitionGroup>
-        )
+
+    return (
+        <CSSTransitionGroup
+        transitionName="example"
+        transitionAppear={true}
+        transitionAppearTimeout={500}
+        transitionEnter={true}
+        transitionLeave={true}
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}>
+            {trip === ""  || trip === null ? <span>loading</span> : 
+            <>
+            <h2 className="trip-title">{`Your trip to ${props.trip["location"]}`}</h2>
+            <h4 className="trip-date-title">{`${props.trip["dates"][0].slice(3)} to ${props.trip["dates"][1].slice(3)}`}</h4>
+            <TravelAndAccommoInput updateInfo={handleTravelAccommoInput}/>
+            <Itinerary dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])} dateID={props.trip.dates[0]}/>
+            </>}
+        </CSSTransitionGroup>
+    )
 }
 
 

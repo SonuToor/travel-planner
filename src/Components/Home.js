@@ -12,7 +12,7 @@ const routes = {
     dates: "/home/dates",
     location: "/home/location",
     trips: "/home/trips",
-    itinerary: "/home/itinerary"
+    itinerary: "/home/:tripselected"
 }
 
 export default class Home extends React.Component {
@@ -75,7 +75,7 @@ export default class Home extends React.Component {
             let tripsObj = snapshot.val();
             this.setState({
                 selectedTrip : tripsObj
-            }, this.props.history.push(routes.itinerary))
+            }, this.props.history.push(`/home/${trip}`))
          }))
     }
 
@@ -102,7 +102,7 @@ export default class Home extends React.Component {
                     <Switch>
                         <Route path={routes.location} render={()=><LocationForm handleLocation={this.handleLocationFormSubmit}/>}/>
                         <Route path={routes.dates} render={()=><DatesForm handleDate={this.handleDateFormSubmit}/>}/>
-                        <Route path={routes.trips} render={()=><Trips displayTrip={this.displayTrip}/>}/>
+                        <Route path={routes.trips} render={(props)=><Trips {...props} displayTrip={this.displayTrip}/>}/>
                         <Route path={routes.itinerary} render={()=><TripItinerary trip={this.state.selectedTrip}/>}/>
                     </Switch>
                 </ItineraryProvider>

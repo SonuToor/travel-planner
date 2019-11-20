@@ -22,6 +22,7 @@ export default class Trips extends React.Component {
         firebase.database()
             .ref(`${trip}-${firebase.auth().currentUser.uid}`)
             .remove()
+        this.props.history.push(this.props.location)
     }
 
 
