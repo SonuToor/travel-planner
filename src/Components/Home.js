@@ -68,7 +68,6 @@ export default class Home extends React.Component {
     }
 
     displayTrip = (trip) => {
-        console.log(this.props.user)
         // grab the trip the user has selected from firebase and store it in state so it can be passed to the itinerary components 
         firebase.database()
         .ref(`trip-details-${this.context[0]}/${trip}`)
@@ -107,7 +106,7 @@ export default class Home extends React.Component {
                         <Route path={routes.location} render={()=><LocationForm handleLocation={this.handleLocationFormSubmit}/>}/>
                         <Route path={routes.dates} render={()=><DatesForm handleDate={this.handleDateFormSubmit}/>}/>
                         <Route path={routes.trips} render={(props)=><Trips {...props} displayTrip={this.displayTrip}/>}/>
-                        <Route path={routes.itinerary} render={()=><TripItinerary trip={this.state.selectedTrip}/>}/>
+                        <Route path={routes.itinerary} render={(props)=><TripItinerary {...props}  returnRoute={routes.trips} trip={this.state.selectedTrip}/>}/>
                     </Switch>
                 </ItineraryProvider>
             </div>

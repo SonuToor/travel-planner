@@ -54,9 +54,6 @@ const TripItinerary = (props) => {
 
     // get the trips for the selected trip add them to the TripContext so it's available wherever it might be needed in the app     
     const fetchTripData = () => {
-        if (props.trip === null) {
-            // what now
-        }
         firebase.database()
         .ref(`${props.trip.dates[0]}-${user}/`)
         .on('value', 
@@ -67,7 +64,12 @@ const TripItinerary = (props) => {
     }
 
     useEffect(() => {
-        fetchTripData()
+        if (props.trip === null) {
+            props.history.push(props.returnRoute)
+        }
+        else {
+            fetchTripData()
+        }
     }, [])
 
 
