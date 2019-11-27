@@ -1,34 +1,33 @@
 .cards {
-    display: flex;
+  display: flex;
 }
 
 .event-form {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .card-title {
-    text-align: center;
+  text-align: center;
 }
 
 .activities-list {
-    list-style: none;
+  list-style: none;
 }
 
 @media only screen and (max-width: 600px) {
-    .event-form {
-        display: flex;
-        align-items: center;
-    }
+  .event-form {
+    display: flex;
+    align-items: center;
+  }
 
-    .event-inputs {
-        display: flex;
-        flex-direction: column;
-    }
+  .event-inputs {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .cards {
-        display: flex;
-        flex-direction: column;
-    }
-
+  .cards {
+    display: flex;
+    flex-direction: column;
+  }
 }
