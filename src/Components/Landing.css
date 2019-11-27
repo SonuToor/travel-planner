@@ -15,7 +15,7 @@ p {
 }
 
 .planner-demo {
-  display : flex;
+  display: flex;
   justify-content: space-evenly;
 }
 
@@ -39,7 +39,7 @@ p {
 
 .demo-pics {
   width: 100%;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .demo-pics:hover {

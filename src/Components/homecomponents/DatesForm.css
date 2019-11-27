@@ -1,43 +1,43 @@
-h2{
-    margin-top : 8%;
-    text-align: center;
-    font-size : 250%
-  }
+h2 {
+  margin-top: 8%;
+  text-align: center;
+  font-size: 250%;
+}
 
 .calendar-pic {
-    width: 6%;
+  width: 6%;
 }
 
 .dates-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4%;
 }
 
 .example-enter {
-    opacity: 0.01;
-  }
-  
-  .example-enter.example-enter-active {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
-  }
-  
-  .example-leave {
-    opacity: 1;
-  }
-  
-  .example-leave.example-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
-  }
+  opacity: 0.01;
+}
 
-  .example-appear {
-    opacity: 0.01;
-  }
-  
-  .example-appear.example-appear-active {
-    opacity: 1;
-    transition: opacity .5s ease-in;
-  }
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.example-appear {
+  opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
