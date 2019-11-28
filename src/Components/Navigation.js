@@ -34,7 +34,6 @@ function Navigation(props) {
       .auth()
       .signOut()
       .then(function() {
-        this.props.logOut();
         console.log("user has succesfully logged out");
       })
       .catch(function(error) {
@@ -49,7 +48,7 @@ function Navigation(props) {
         style={{ backgroundColor: "#836529", opacity: "0.92", color: "black" }}
       >
         <Toolbar>
-          {props.loggedIn ? (
+          {props.user !== "null" ? (
             <NavLink to={routes.location}>
               <IconButton
                 edge="start"
@@ -71,7 +70,7 @@ function Navigation(props) {
             </NavLink>
           )}
           <h4 className={classes.title}>Let's get exploring!</h4>
-          {props.loggedIn ? (
+          {props.user !== "null" ? (
             <NavLink to={routes.trips}>
               <Button>My Trips</Button>
             </NavLink>
@@ -80,7 +79,7 @@ function Navigation(props) {
               <Button>Sign Up</Button>
             </NavLink>
           )}
-          {props.loggedIn ? (
+          {props.user !== "null" ? (
             <NavLink to={routes.landing}>
               <Button onClick={logOutUser}>Logout</Button>
             </NavLink>
