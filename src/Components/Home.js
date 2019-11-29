@@ -87,21 +87,9 @@ export default class Home extends React.Component {
   };
 
   componentDidMount = () => {
-    // if there is no user logged in, redirect to the landing page, but clear whatever is stored in state
-    // if (this.props.loggedIn === false) {
-    //   this.setState({
-    //     location: "",
-    //     dates: null,
-    //     tripDuration: null,
-    //     selectedTrip: null
-    //   });
-    //   this.props.history.push(this.props.route);
-    // } else {
     let setter = this.context[1];
-    console.log(this.props.user);
-    setter(this.props.user);
+    setter(localStorage.getItem("user"));
     this.props.history.push(routes.location);
-    // }
   };
 
   render() {

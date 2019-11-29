@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme } from "@material-ui/core/styles";
 import firebase from "./config/Firebase";
@@ -8,7 +8,7 @@ import Navigation from "./Components/Navigation";
 import Landing from "./Components/Landing";
 import { UserProvider } from "./Contexts/loggedin-context";
 import Login from "./Components/Login";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Signup from "./Components/Signup";
 
 const theme = createMuiTheme({
@@ -29,6 +29,8 @@ const routes = {
 const App = props => {
   const [user, updateUser] = useState(localStorage.getItem("user"));
 
+  // const history = useHistory();
+
   const logOut = () => {
     firebase
       .auth()
@@ -48,67 +50,56 @@ const App = props => {
     updateUser(localStorage.getItem("user"));
   };
 
-  // componentDidMount = () => {
-  //   firebase.auth().onAuthStateChanged(function(user) {
-  //     if (user) {
-  //       localStorage.setItem('user', user.uid);
-  //       this.setState({
-  //         user: user.uid
-  //       })
-  //     } else {
-  //       // No user is signed in.
-  //       localStorage.setItem('user', null)
-  //       this.setState({
-  //         user: "null"
-  //       })
-  //     }
-  //   });
-  // };
+  useEffect(() => {
+    if (user === "null") {
+      props.history.push(routes.landing);
+    } else {
+      props.history.push(routes.location);
+    }
+  }, []);
 
   return (
     <Container>
-      <Router>
-        <Navigation user={user} theme={theme} routes={routes} logOut={logOut} />
-        <div>
-          <UserProvider>
-            <Route
-              path={routes.home}
-              render={props => (
-                <Home {...props} user={user} route={routes.landing} />
-              )}
-            />
-            <Route
-              exact
-              path={routes.landing}
-              render={() => <Landing logOut={logOut} />}
-            />
-            <Route
-              path={routes.login}
-              render={props => (
-                <Login
-                  {...props}
-                  route={routes.home}
-                  logOut={logOut}
-                  login={signIn}
-                />
-              )}
-            />
-            <Route
-              path={routes.signup}
-              render={props => (
-                <Signup
-                  {...props}
-                  route={routes.home}
-                  logOut={logOut}
-                  register={signIn}
-                />
-              )}
-            />
-          </UserProvider>
-        </div>
-      </Router>
+      <Navigation user={user} theme={theme} routes={routes} logOut={logOut} />
+      <div>
+        <UserProvider>
+          <Route
+            path={routes.home}
+            render={props => (
+              <Home {...props} user={user} route={routes.landing} />
+            )}
+          />
+          <Route
+            exact
+            path={routes.landing}
+            render={() => <Landing logOut={logOut} />}
+          />
+          <Route
+            path={routes.login}
+            render={props => (
+              <Login
+                {...props}
+                route={routes.home}
+                logOut={logOut}
+                login={signIn}
+              />
+            )}
+          />
+          <Route
+            path={routes.signup}
+            render={props => (
+              <Signup
+                {...props}
+                route={routes.home}
+                logOut={logOut}
+                register={signIn}
+              />
+            )}
+          />
+        </UserProvider>
+      </div>
     </Container>
   );
 };
 
-export default App;
+export default withRouter(App);
