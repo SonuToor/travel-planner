@@ -32,6 +32,8 @@ const months = {
 const CalendarExport = props => {
   const [showAuthButton, toggleAuthButton] = useState(true);
   const [eventsArray, setEventsArray] = useState([]);
+  const [showErrorMessage, toggleErrorMessage] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState('');
 
   const [trip, updateTrip] = useContext(TripItineraryContext);
   const [user, updateUser] = useContext(UserContext);
@@ -74,6 +76,7 @@ const CalendarExport = props => {
   const handleSignoutClick = event => {
     GoogleAuth.signOut().then(() => {
       toggleAuthButton(true);
+      toggleErrorMessage(false);
     });
   };
 
@@ -146,9 +149,12 @@ const CalendarExport = props => {
               if (resp.status === "confirmed") {
                 let button = document.getElementById("export-button");
                 button.classList.add("success");
+                toggleErrorMessage(false);
               } else {
                 let button = document.getElementById("export-button");
                 button.classList.add("failure");
+                // setErrorMessage('goof');
+                toggleErrorMessage(true);
               }
             });
           });
@@ -178,6 +184,9 @@ const CalendarExport = props => {
           Export
         </Button>
       )}
+      {showErrorMessage === true ? (
+        <span>One or more events failed to export to your Google Calendar</span>
+      ) : null}
     </div>
   );
 };
