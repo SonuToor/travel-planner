@@ -89,15 +89,6 @@ const CalendarExport = props => {
     setEventsArray(userEvents);
   };
 
-  // TO DO
-  // if the event exists in the users Google Calendar, don't write it again (avoid duplicate events on Google Calendar).
-
-  // (1) read the users calendar at the dates and times you plan to write the new events
-  // (2) compare to the events you plan to write
-  // (3) if some events exist already with the same name, overwrite or skip entirely?
-
-  // ALSO LOOK IF EVENTS HAVE UNIQUE ID IN WHICH YOU COULD QUERY FOR THE ID BEFORE SUBMITTING
-
   // export the users itinerary events to their Google Calendar
   const exportEvents = event => {
     eventsArray.forEach(entry => {
@@ -109,9 +100,6 @@ const CalendarExport = props => {
 
         // go over each event
         events[0].forEach(event => {
-          // TO DO
-          // maybe take this time and date and read the users calendar
-          // if there is an event at the time and day we want to write, compare it to the eventDescription to see if it's a duplicate
           let time = event.slice(0, 5);
           let eventDescription = event.slice(7);
           let day;
@@ -130,17 +118,14 @@ const CalendarExport = props => {
 
           let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-          // TO DO
-          // try setting a unique ID that will prevent the api from writing an event more than once
-
-          // WHERE TO SET THE UNIQUE ID?
-
-          let uniqueID = `${user}-${day}-${startTime}`;
-          console.log(uniqueID);
+          let uniqueID = `${user}${day}${startTime}`
+            .toLowerCase()
+            .replace(/[wxyz:-]/g, "");
 
           // create the meta details for the trip
           var eventEntry = {
             summary: eventDescription,
+            id: uniqueID,
             start: {
               dateTime: startTime,
               timeZone: timeZone
