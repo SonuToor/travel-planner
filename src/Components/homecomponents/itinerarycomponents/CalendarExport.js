@@ -1,10 +1,11 @@
 import { Button } from "@material-ui/core";
 import CalendarIcon from "@material-ui/icons/EventNote";
 import "./CalendarExport.css";
-import React from "react";
+import React, { useContext, useState } from "react";
 import moment from "moment";
 import Script from "react-load-script";
 import { TripItineraryContext } from "../../../Contexts/tripitinerary-context";
+import { UserContext } from "../../../Contexts/loggedin-context";
 
 const url = "https://apis.google.com/js/api.js";
 var SCOPES = "https://www.googleapis.com/auth/calendar";
@@ -28,22 +29,21 @@ const months = {
   December: "12"
 };
 
-export default class CalendarExport extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      showAuthButton: true,
-      eventsArray: []
-    };
-    this.getEvents = this.getEvents.bind(this);
-  }
+const CalendarExport = props => {
+  const [showAuthButton, toggleAuthButton] = useState(true);
+  const [eventsArray, setEventsArray] = useState([]);
+  const [showErrorMessage, toggleErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  handleScriptLoad = () => {
-    window.gapi.load("client:auth2", this.initClient);
+  const [trip, updateTrip] = useContext(TripItineraryContext);
+  const [user, updateUser] = useContext(UserContext);
+
+  const handleScriptLoad = () => {
+    window.gapi.load("client:auth2", initClient);
   };
 
   // once the script has loaded, provide credentials and set up an Authorization instance
-  initClient = () => {
+  const initClient = () => {
     window.gapi.client
       .init({
         apiKey: API_KEY,
@@ -62,54 +62,39 @@ export default class CalendarExport extends React.Component {
   };
 
   //    Sign in the user upon button click.
-  handleAuthClick = event => {
+  const handleAuthClick = event => {
     GoogleAuth.signIn().then(() => {
       if (GoogleAuth.isSignedIn.get()) {
-        this.setState(
-          {
-            showAuthButton: false
-          },
-          this.getEvents()
-        );
+        toggleAuthButton(false);
+
+        getEvents();
       }
     });
   };
 
   // Sign out the user upon button click.
-  handleSignoutClick = event => {
+  const handleSignoutClick = event => {
     GoogleAuth.signOut().then(() => {
-      this.setState({
-        showAuthButton: true
-      });
+      toggleAuthButton(true);
+      toggleErrorMessage(false);
     });
   };
 
-  getEvents = () => {
-    let trip = this.context[0];
-
+  const getEvents = () => {
     // map over the days of the itinerary
-    let userEvents = this.props.dates.map(day => {
+    let userEvents = props.dates.map(day => {
       // there is no entries for that day
       if (trip[day] === undefined) {
         return;
       }
       return { [day]: Object.values(trip[day]) };
     });
-    this.setState({
-      eventsArray: userEvents
-    });
+    setEventsArray(userEvents);
   };
 
-  // TO DO
-  // if the event exists in the users Google Calendar, don't write it again (avoid duplicate events on Google Calendar).
-
-  // (1) read the users calendar at the dates and times you plan to write the new events
-  // (2) compare to the events you plan to write
-  // (3) if some events exist already with the same name, overwrite or skip entirely?
-
   // export the users itinerary events to their Google Calendar
-  exportEvents = event => {
-    this.state.eventsArray.forEach(entry => {
+  const exportEvents = event => {
+    eventsArray.forEach(entry => {
       if (entry === undefined) {
         return;
       } else {
@@ -118,9 +103,6 @@ export default class CalendarExport extends React.Component {
 
         // go over each event
         events[0].forEach(event => {
-          // TO DO
-          // maybe take this time and date and read the users calendar
-          // if there is an event at the time and day we want to write, compare it to the eventDescription to see if it's a duplicate
           let time = event.slice(0, 5);
           let eventDescription = event.slice(7);
           let day;
@@ -139,9 +121,14 @@ export default class CalendarExport extends React.Component {
 
           let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+          let uniqueID = `${user}${day}${startTime}${eventDescription}`
+            .toLowerCase()
+            .replace(/[\swxyz:-]/g, "");
+
           // create the meta details for the trip
           var eventEntry = {
             summary: eventDescription,
+            id: uniqueID,
             start: {
               dateTime: startTime,
               timeZone: timeZone
@@ -162,9 +149,27 @@ export default class CalendarExport extends React.Component {
               if (resp.status === "confirmed") {
                 let button = document.getElementById("export-button");
                 button.classList.add("success");
+                toggleErrorMessage(false);
               } else {
                 let button = document.getElementById("export-button");
                 button.classList.add("failure");
+                if (resp.code === 404) {
+                  setErrorMessage(
+                    "Uh-oh we had trouble accessing your calendar, please try again later."
+                  );
+                }
+                if (resp.code === 409) {
+                  setErrorMessage(
+                    "Uh-oh one or more of the itinerary events you wanted to export, have been exported before."
+                  );
+                }
+                if (resp.code === 500) {
+                  setErrorMessage(
+                    "Uh-oh Google Calendar encountered an error on the backend, please try again later."
+                  );
+                }
+
+                toggleErrorMessage(true);
               }
             });
           });
@@ -173,31 +178,34 @@ export default class CalendarExport extends React.Component {
     });
   };
 
-  render() {
-    return (
+  return (
+    <div className="google-calendar">
       <div className="google-calendar-export">
-        <Script url={url} onLoad={this.handleScriptLoad} />
+        <Script url={url} onLoad={handleScriptLoad} />
         <span>
           <CalendarIcon />
           Export trip itinerary to your Google Calendar?
         </span>
-        {this.state.showAuthButton === true ? (
-          <Button id="authorize-button" onClick={this.handleAuthClick}>
+        {showAuthButton === true ? (
+          <Button id="authorize-button" onClick={handleAuthClick}>
             Authorize
           </Button>
         ) : (
-          <Button id="signout-button" onClick={this.handleSignoutClick}>
+          <Button id="signout-button" onClick={handleSignoutClick}>
             Sign Out
           </Button>
         )}
-        {this.state.showAuthButton === true ? null : (
-          <Button id="export-button" onClick={this.exportEvents}>
+        {showAuthButton === true ? null : (
+          <Button id="export-button" onClick={exportEvents}>
             Export
           </Button>
         )}
       </div>
-    );
-  }
-}
+      {showErrorMessage === true ? (
+        <span className="error">{errorMessage}</span>
+      ) : null}
+    </div>
+  );
+};
 
-CalendarExport.contextType = TripItineraryContext;
+export default CalendarExport;
