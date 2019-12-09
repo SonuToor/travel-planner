@@ -33,7 +33,7 @@ const CalendarExport = props => {
   const [showAuthButton, toggleAuthButton] = useState(true);
   const [eventsArray, setEventsArray] = useState([]);
   const [showErrorMessage, toggleErrorMessage] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [trip, updateTrip] = useContext(TripItineraryContext);
   const [user, updateUser] = useContext(UserContext);
@@ -121,9 +121,9 @@ const CalendarExport = props => {
 
           let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-          let uniqueID = `${user}${day}${startTime}`
+          let uniqueID = `${user}${day}${startTime}${eventDescription}`
             .toLowerCase()
-            .replace(/[wxyz:-]/g, "");
+            .replace(/[\swxyz:-]/g, "");
 
           // create the meta details for the trip
           var eventEntry = {
@@ -153,7 +153,22 @@ const CalendarExport = props => {
               } else {
                 let button = document.getElementById("export-button");
                 button.classList.add("failure");
-                // setErrorMessage('goof');
+                if (resp.code === 404) {
+                  setErrorMessage(
+                    "Uh-oh we had trouble accessing your calendar, please try again later."
+                  );
+                }
+                if (resp.code === 409) {
+                  setErrorMessage(
+                    "Uh-oh one or more of the itinerary events you wanted to export, have been exported before."
+                  );
+                }
+                if (resp.code === 500) {
+                  setErrorMessage(
+                    "Uh-oh Google Calendar encountered an error on the backend, please try again later."
+                  );
+                }
+
                 toggleErrorMessage(true);
               }
             });
@@ -164,28 +179,30 @@ const CalendarExport = props => {
   };
 
   return (
-    <div className="google-calendar-export">
-      <Script url={url} onLoad={handleScriptLoad} />
-      <span>
-        <CalendarIcon />
-        Export trip itinerary to your Google Calendar?
-      </span>
-      {showAuthButton === true ? (
-        <Button id="authorize-button" onClick={handleAuthClick}>
-          Authorize
-        </Button>
-      ) : (
-        <Button id="signout-button" onClick={handleSignoutClick}>
-          Sign Out
-        </Button>
-      )}
-      {showAuthButton === true ? null : (
-        <Button id="export-button" onClick={exportEvents}>
-          Export
-        </Button>
-      )}
+    <div className="google-calendar">
+      <div className="google-calendar-export">
+        <Script url={url} onLoad={handleScriptLoad} />
+        <span>
+          <CalendarIcon />
+          Export trip itinerary to your Google Calendar?
+        </span>
+        {showAuthButton === true ? (
+          <Button id="authorize-button" onClick={handleAuthClick}>
+            Authorize
+          </Button>
+        ) : (
+          <Button id="signout-button" onClick={handleSignoutClick}>
+            Sign Out
+          </Button>
+        )}
+        {showAuthButton === true ? null : (
+          <Button id="export-button" onClick={exportEvents}>
+            Export
+          </Button>
+        )}
+      </div>
       {showErrorMessage === true ? (
-        <span>One or more events failed to export to your Google Calendar</span>
+        <span className="error">{errorMessage}</span>
       ) : null}
     </div>
   );
