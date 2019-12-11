@@ -1,7 +1,6 @@
 .accommodation-travel-input {
   display: flex;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-evenly;
 }
 
 input {
