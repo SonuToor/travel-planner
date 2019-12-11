@@ -3,13 +3,13 @@ import { Route, withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme } from "@material-ui/core/styles";
 import firebase from "./config/Firebase";
-import Home from "./Components/Home";
+import Home from "./Pages/Home";
 import Navigation from "./Components/Navigation";
-import Landing from "./Components/Landing";
+import Landing from "./Pages/Landing";
 import { UserProvider } from "./Contexts/loggedin-context";
-import Login from "./Components/Login";
+import Login from "./Pages/Login";
 import React, { useEffect, useState } from "react";
-import Signup from "./Components/Signup";
+import Signup from "./Pages/Signup";
 
 const theme = createMuiTheme({
   typography: {

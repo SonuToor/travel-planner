@@ -3,8 +3,14 @@
   justify-content: space-evenly;
 }
 
-input {
-  text-align: center;
+.form-display {
+  display: flex;
+  justify-content: center;
+}
+
+.travel-accommo-form {
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (max-width: 600px) {

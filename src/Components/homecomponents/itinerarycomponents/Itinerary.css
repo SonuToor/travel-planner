@@ -1,3 +1,7 @@
+.itinerary {
+  margin-top: 5%;
+}
+
 .individual-day {
   display: flex;
   justify-content: space-evenly;

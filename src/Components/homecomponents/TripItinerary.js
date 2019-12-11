@@ -88,11 +88,11 @@ const TripItinerary = props => {
           <h4 className="trip-date-title">{`${props.trip["dates"][0].slice(
             3
           )} to ${props.trip["dates"][1].slice(3)}`}</h4>
-          <TravelAndAccommoInput updateInfo={handleTravelAccommoInput} />
           <Itinerary
             dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}
             dateID={props.trip.dates[0]}
           />
+          <TravelAndAccommoInput />
         </>
       )}
     </CSSTransitionGroup>

@@ -33,7 +33,7 @@ export default function Itinerary(props) {
 
   return (
     <div className="itinerary">
-      <div className="travelaccommo-display">
+      {/* <div className="travelaccommo-display">
         <Chip
           icon={<Flight />}
           label={trip["flight"] === null ? "" : trip["flight"]}
@@ -50,7 +50,7 @@ export default function Itinerary(props) {
           icon={<TrainIcon />}
           label={trip["train"] === null ? "" : trip["train"]}
         />
-      </div>
+      </div> */}
       <CalendarExport dates={props.dates} />
       {props.dates.map((day, i) => (
         <Day
