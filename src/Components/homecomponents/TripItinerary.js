@@ -12,33 +12,6 @@ const TripItinerary = props => {
   const [trip, updateTrip] = useContext(TripItineraryContext);
   const [user, updateUser] = useContext(UserContext);
 
-  // when a user updates information regarding their accommodation or travel, this function will update the information in firebase
-  const handleTravelAccommoInput = (flight, accommo, carRental, train) => {
-    // if the user doesn't submit a new entry for a specific field, keep the field the same.
-    if (flight === "") {
-      flight = trip["flight"];
-    }
-    if (accommo === "") {
-      accommo = trip["accommodation"];
-    }
-    if (carRental === "") {
-      carRental = trip["carrental"];
-    }
-    if (train === "") {
-      train = trip["train"];
-    }
-
-    firebase
-      .database()
-      .ref(`${props.trip.dates[0]}-${user}/`)
-      .update({
-        flight: flight,
-        accommodation: accommo,
-        carrental: carRental,
-        train: train
-      });
-  };
-
   const getDatesArray = (startDate, stopDate) => {
     // get an array of dates between the first and last dates of the trip
     var dateArray = [];

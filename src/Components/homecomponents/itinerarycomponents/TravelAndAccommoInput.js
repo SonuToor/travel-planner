@@ -2,14 +2,13 @@ import AccommoForm from "./AccommoForm";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import Flight from "@material-ui/icons/Flight";
 import LocalHotel from "@material-ui/icons/LocalHotel";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TravelIconButton from "./TravelIconButton";
 import TrainIcon from "@material-ui/icons/Train";
 import TransportForm from "./TransportForm";
 import "./TravelAndAccommoInput.css";
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { fontWeight } from "@material-ui/system";
 
 const useStyles = makeStyles({
   card: {
@@ -21,12 +20,17 @@ const useStyles = makeStyles({
 
 export default function TravelAndAccommoInput(props) {
   const [formType, setFormType] = useState("");
-  const [showForm, toggleShowForm] = useState(false);
+  const [openAccommoForm, toggleAccommoForm] = useState(false);
+  const [openTransportForm, toggleTransportForm] = useState(false);
 
-  const renderForm = value => {
-    setFormType(value);
-    toggleShowForm(true);
-  };
+  useEffect(() => {
+    if (formType === "Accommo") {
+      toggleAccommoForm(true);
+    }
+    if (formType === "Flight" || formType === "Train") {
+      toggleTransportForm(true);
+    }
+  }, [formType]);
 
   const classes = useStyles();
 
@@ -38,38 +42,37 @@ export default function TravelAndAccommoInput(props) {
             icon={<Flight />}
             value="Flight"
             label="Add a Flight"
-            showForm={renderForm}
+            setForm={setFormType}
           />
           <TravelIconButton
             icon={<LocalHotel />}
             value="Accommo"
             label="Add Accommodation"
-            showForm={renderForm}
+            setForm={setFormType}
           />
           <TravelIconButton
             icon={<TrainIcon />}
             value="Train"
             label="Add a Train"
-            showForm={renderForm}
+            setForm={setFormType}
           />
           <TravelIconButton
             icon={<DirectionsCarIcon />}
             value="Car"
             label="Add a Rental Car"
-            showForm={renderForm}
+            setForm={setFormType}
           />
         </div>
-        {showForm ? (
-          <div className="form-display">
-            {formType === "Flight" || formType === "Train" ? (
-              <TransportForm transport={formType} cancel={toggleShowForm} />
-            ) : null}
-            {formType === "Accommo" ? (
-              <AccommoForm cancel={toggleShowForm} />
-            ) : null}
-          </div>
-        ) : null}
       </Card>
+      <AccommoForm
+        open={openAccommoForm}
+        close={() => toggleAccommoForm(false)}
+      />
+      <TransportForm
+        transport={formType}
+        open={openTransportForm}
+        close={() => toggleTransportForm(false)}
+      />
     </div>
   );
 }
