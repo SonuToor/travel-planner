@@ -13,8 +13,16 @@
   flex-direction: column;
 }
 
+.travel-accommo-form label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
 .sticky-footer {
-  margin-top: 20%;
+  margin-top: 30%;
   position: sticky;
   bottom: 0;
 }

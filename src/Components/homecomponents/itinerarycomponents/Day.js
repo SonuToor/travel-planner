@@ -90,7 +90,7 @@ export default function Day(props) {
             value={activity}
             updateValue={handleActivity}
           />
-          <TimePicker onChange={onChange} value={time} clockIcon={null} />
+          <TimePicker onChange={onChange} value={time} />
           <IconButton type="submit">
             <Add />
           </IconButton>

@@ -65,7 +65,7 @@ const TripItinerary = props => {
             dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}
             dateID={props.trip.dates[0]}
           />
-          <TravelAndAccommoInput />
+          <TravelAndAccommoInput startDate={props.trip.dates[0]} />
         </>
       )}
     </CSSTransitionGroup>

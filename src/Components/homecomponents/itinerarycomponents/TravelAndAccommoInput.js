@@ -1,5 +1,5 @@
 import AccommoForm from "./AccommoForm";
-import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
+import DirectionsBusIcon from "@material-ui/icons/DirectionsBus";
 import Flight from "@material-ui/icons/Flight";
 import LocalHotel from "@material-ui/icons/LocalHotel";
 import React, { useEffect, useState } from "react";
@@ -27,10 +27,16 @@ export default function TravelAndAccommoInput(props) {
     if (formType === "Accommo") {
       toggleAccommoForm(true);
     }
-    if (formType === "Flight" || formType === "Train") {
+    if (formType === "Flight" || formType === "Train" || formType === "Bus") {
       toggleTransportForm(true);
     }
   }, [formType]);
+
+  const closeModal = () => {
+    toggleAccommoForm(false);
+    toggleTransportForm(false);
+    setFormType("");
+  };
 
   const classes = useStyles();
 
@@ -39,15 +45,21 @@ export default function TravelAndAccommoInput(props) {
       <Card className={classes.card} elevation={3}>
         <div className="accommodation-travel-input">
           <TravelIconButton
-            icon={<Flight />}
-            value="Flight"
-            label="Add a Flight"
-            setForm={setFormType}
-          />
-          <TravelIconButton
             icon={<LocalHotel />}
             value="Accommo"
             label="Add Accommodation"
+            setForm={setFormType}
+          />
+          <TravelIconButton
+            icon={<DirectionsBusIcon />}
+            value="Bus"
+            label="Add a Bus"
+            setForm={setFormType}
+          />
+          <TravelIconButton
+            icon={<Flight />}
+            value="Flight"
+            label="Add a Flight"
             setForm={setFormType}
           />
           <TravelIconButton
@@ -56,22 +68,18 @@ export default function TravelAndAccommoInput(props) {
             label="Add a Train"
             setForm={setFormType}
           />
-          <TravelIconButton
-            icon={<DirectionsCarIcon />}
-            value="Car"
-            label="Add a Rental Car"
-            setForm={setFormType}
-          />
         </div>
       </Card>
       <AccommoForm
         open={openAccommoForm}
-        close={() => toggleAccommoForm(false)}
+        date={props.startDate}
+        close={closeModal}
       />
       <TransportForm
         transport={formType}
         open={openTransportForm}
-        close={() => toggleTransportForm(false)}
+        date={props.startDate}
+        close={closeModal}
       />
     </div>
   );
