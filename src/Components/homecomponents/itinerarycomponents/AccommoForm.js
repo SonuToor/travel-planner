@@ -5,11 +5,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import firebase from "../../../config/Firebase";
 import { monthStringToNum } from "../../../utils";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import StyledTextInput from "./StyledTextInput";
 import StyledButton from "../StyledButton";
+import { UserContext } from "../../../Contexts/loggedin-context";
 
 const AccommoForm = props => {
+  const [user, updateUser] = useContext(UserContext);
   const currentMonth = monthStringToNum(props.date.slice(3, 7));
   const [reservation, setReservation] = useState("");
   const [checkIn, setCheckIn] = useState(
@@ -23,20 +25,41 @@ const AccommoForm = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log("submitted");
+
     if (checkIn === "" || accommoLocation === "") {
       toggleValidationError(true);
       return;
     }
     toggleValidationError(false);
+    const checkInString = `${checkIn
+      .toString()
+      .slice(16, 21)} ${checkIn.toDateString()}`;
+    const checkOutString = `${checkOut
+      .toString()
+      .slice(16, 21)} ${checkOut.toDateString()}`;
 
-    // date string
-    console.log(checkIn.toDateString(), checkOut.toDateString());
-    // time
-    console.log(
-      checkIn.toString().slice(16, 21),
-      checkOut.toString().slice(16, 21)
+    firebase
+      .database()
+      .ref(
+        `${
+          props.date
+        }-${user}/Accommo/${accommoLocation}-${checkInString.replace(/ /g, "")}`
+      )
+      .set({
+        reservation: reservation,
+        checkIn: checkInString,
+        checkOut: checkOutString,
+        location: accommoLocation
+      });
+
+    setReservation("");
+    setCheckIn(
+      new Date(props.date.slice(11), currentMonth, props.date.slice(7, 10))
     );
+    setCheckOut(
+      new Date(props.date.slice(11), currentMonth, props.date.slice(7, 10))
+    );
+    setAccommoLocation("");
 
     props.close();
   };

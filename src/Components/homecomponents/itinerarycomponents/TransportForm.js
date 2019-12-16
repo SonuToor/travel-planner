@@ -5,13 +5,15 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import firebase from "../../../config/Firebase";
 import { monthStringToNum } from "../../../utils";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import StyledTextInput from "./StyledTextInput";
 import StyledButton from "../StyledButton";
+import { UserContext } from "../../../Contexts/loggedin-context";
 
 const TransportForm = props => {
+  const [user, updateUser] = useContext(UserContext);
   const currentMonth = monthStringToNum(props.date.slice(3, 7));
-  const [ticket, setTicket] = useState("");
+  const [id, setID] = useState("");
   const [departsFrom, setDepartsFrom] = useState("");
   const [departDateTime, setDepartDateTime] = useState(
     new Date(props.date.slice(11), currentMonth, props.date.slice(7, 10))
@@ -21,17 +23,40 @@ const TransportForm = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log("submitted");
-    console.log(
-      departDateTime.toString().slice(16, 21),
-      departDateTime.toDateString()
-    );
+
     if (destination === "" || departDateTime === "") {
       toggleValidationError(true);
       return;
     }
+
     toggleValidationError(false);
-    console.log(ticket, departsFrom, departDateTime, destination);
+
+    let date = `${departDateTime
+      .toString()
+      .slice(16, 21)} ${departDateTime.toDateString()}`;
+
+    firebase
+      .database()
+      .ref(
+        `${props.date}-${user}/${props.transport}/${destination}-${date.replace(
+          / /g,
+          ""
+        )}`
+      )
+      .set({
+        id: id,
+        departsFrom: departsFrom,
+        destination: destination,
+        departDate: date
+      });
+
+    setID("");
+    setDepartsFrom("");
+    setDepartDateTime(
+      new Date(props.date.slice(11), currentMonth, props.date.slice(7, 10))
+    );
+    setDestination("");
+
     props.close();
   };
 
@@ -57,9 +82,9 @@ const TransportForm = props => {
             </span>
           ) : null}
           <StyledTextInput
-            label="Ticket Number"
-            value={ticket}
-            updateValue={setTicket}
+            label={`${props.transport} Number`}
+            value={id}
+            updateValue={setID}
           />
           <StyledTextInput
             label="Departs From"
