@@ -1,3 +1,4 @@
+/* TripItinerary Styling */
 .example-enter {
   opacity: 0.01;
 }
@@ -26,9 +27,141 @@
 }
 .trip-title {
   margin-top: 2%;
-  margin-bottom: 1%;
 }
 .trip-date-title {
   text-align: center;
   margin-top: 0%;
+}
+
+.itinerary-data-display {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1%;
+}
+
+.travel-accommo-display {
+  position: fixed;
+  left: 0;
+  width: 25%;
+  max-height: 50%;
+  overflow-y: scroll;
+}
+
+/* AccommoAndTravelInput Styling */
+.accommodation-travel-input {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.form-display {
+  display: flex;
+  justify-content: center;
+}
+
+.travel-accommo-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-accommo-form label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.sticky-footer {
+  margin-top: 30%;
+  position: sticky;
+  bottom: 0;
+}
+
+/* Itinerary Styling */
+.itinerary {
+  width: 80%;
+  margin-left: 22%;
+}
+
+.individual-day {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* Day Styling */
+.cards {
+  display: flex;
+}
+
+.individual-card {
+  width: 25%;
+  min-width: 230px;
+}
+
+.event-form {
+  display: flex;
+  align-items: baseline;
+  margin-top: -1.8%;
+}
+
+.card-title {
+  text-align: center;
+}
+
+.activities-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+/* CalendarExport Styling */
+
+.google-calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.google-calendar-export {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.error {
+  color: red;
+  margin-bottom: 3%;
+}
+
+.MuiButton-root.success {
+  color: green;
+}
+
+.MuiButton-root.failure {
+  color: red;
+}
+
+@media only screen and (max-width: 600px) {
+  .event-form {
+    margin-top: -7%;
+    margin-bottom: -7%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .cards {
+    display: flex;
+    flex-direction: column;
+  }
+  .itinerary-data-display {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1%;
+  }
+  .travel-accommo-display {
+    position: inherit;
+  }
+  .itinerary {
+    width: 100%;
+  }
 }

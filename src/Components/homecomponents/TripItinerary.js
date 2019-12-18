@@ -1,8 +1,10 @@
+import CalendarExport from "./itinerarycomponents/CalendarExport";
 import { CSSTransitionGroup } from "react-transition-group";
 import firebase from "../../config/Firebase";
 import Itinerary from "./itinerarycomponents/Itinerary";
 import moment from "moment";
 import React, { useContext, useEffect } from "react";
+import TravelAndAccommoDisplay from "./itinerarycomponents/TravelAndAccommoDisplay";
 import TravelAndAccommoInput from "./itinerarycomponents/TravelAndAccommoInput";
 import "./TripItinerary.css";
 import { TripItineraryContext } from "../../Contexts/tripitinerary-context";
@@ -61,10 +63,16 @@ const TripItinerary = props => {
           <h4 className="trip-date-title">{`${props.trip["dates"][0].slice(
             3
           )} to ${props.trip["dates"][1].slice(3)}`}</h4>
-          <Itinerary
+          <CalendarExport
             dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}
-            dateID={props.trip.dates[0]}
           />
+          <div className="itinerary-data-display">
+            <TravelAndAccommoDisplay />
+            <Itinerary
+              dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}
+              dateID={props.trip.dates[0]}
+            />
+          </div>
           <TravelAndAccommoInput startDate={props.trip.dates[0]} />
         </>
       )}

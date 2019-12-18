@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import TravelIconButton from "./TravelIconButton";
 import TrainIcon from "@material-ui/icons/Train";
 import TransportForm from "./TransportForm";
-import "./TravelAndAccommoInput.css";
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 

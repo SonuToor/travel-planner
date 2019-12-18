@@ -1,5 +1,4 @@
 import Add from "@material-ui/icons/Add";
-import "./Day.css";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -9,7 +8,6 @@ import firebase from "../../../config/Firebase";
 import IconButton from "@material-ui/core/IconButton";
 import PeriodOfDayCard from "./PeriodOfDayCard";
 import React, { useContext, useState } from "react";
-import { TextField } from "@material-ui/core";
 import TimePicker from "react-time-picker";
 import Typography from "@material-ui/core/Typography";
 import { TripItineraryContext } from "../../../Contexts/tripitinerary-context";
@@ -17,13 +15,13 @@ import StyledTextInput from "./StyledTextInput";
 import { UserContext } from "../../../Contexts/loggedin-context";
 
 const useStyles = makeStyles(theme => ({
-  card: {
-    minWidth: 325
-  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     flexBasis: "33.33%",
     flexShrink: 0
+  },
+  details: {
+    padding: "8px 8px 8px"
   }
 }));
 
@@ -97,7 +95,7 @@ export default function Day(props) {
         </form>
       </ExpansionPanelSummary>
       <div className="individual-day">
-        <ExpansionPanelDetails>
+        <ExpansionPanelDetails className={classes.details}>
           {tripDay === undefined
             ? null
             : Object.keys(tripDay).map(hour => {
@@ -123,25 +121,25 @@ export default function Day(props) {
               })}
           <div className="cards">
             <PeriodOfDayCard
-              class={classes.card}
+              class="individual-card"
               period={"Morning"}
               list={mornList}
               handleDelete={handleDelete}
             />
             <PeriodOfDayCard
-              class={classes.card}
+              class="individual-card"
               period={"Afternoon"}
               list={aftList}
               handleDelete={handleDelete}
             />
             <PeriodOfDayCard
-              class={classes.card}
+              class="individual-card"
               period={"Evening"}
               list={eveList}
               handleDelete={handleDelete}
             />
             <PeriodOfDayCard
-              class={classes.card}
+              class="individual-card"
               period={"Night"}
               list={nightList}
               handleDelete={handleDelete}

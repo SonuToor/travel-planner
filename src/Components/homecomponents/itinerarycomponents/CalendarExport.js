@@ -1,6 +1,5 @@
 import { Button } from "@material-ui/core";
 import CalendarIcon from "@material-ui/icons/EventNote";
-import "./CalendarExport.css";
 import React, { useContext, useState } from "react";
 import moment from "moment";
 import Script from "react-load-script";
