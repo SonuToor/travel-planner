@@ -43,19 +43,15 @@ const TravelAndAccommoDisplay = props => {
         <TransportDisplay
           icon={<DirectionsBusIcon />}
           data={busses}
-          transport="Buses"
+          transport="Bus"
         />
         <StyledDivider />
-        <TransportDisplay
-          icon={<Flight />}
-          data={flights}
-          transport="Flights"
-        />
+        <TransportDisplay icon={<Flight />} data={flights} transport="Flight" />
         <StyledDivider />
         <TransportDisplay
           icon={<TrainIcon />}
           data={trains}
-          transport="Trains"
+          transport="Train"
         />
         <StyledDivider />
       </List>

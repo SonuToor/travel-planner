@@ -3,30 +3,55 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Card } from "@material-ui/core";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    overflow: "visible",
+    marginBottom: "1%",
+    backgroundColor: "#f0f1f2",
+    color: "#836529"
+  }
+}));
 
 const TransportDisplay = props => {
   const { icon, data, transport } = props;
-  console.log(data);
+
+  const formattedDate = date => {
+    return `${date.slice(0, 5)} -${date.slice(9)}`;
+  };
+
+  const classes = useStyles();
+
   return (
-    <ListItem>
+    <ListItem disableGutters={true}>
       <ListItemAvatar>
         <Avatar>{icon}</Avatar>
       </ListItemAvatar>
       {data === undefined ? (
-        <ListItemText primary={transport} secondary="Nothing here yet!" />
+        <ListItemText secondary="Nothing here yet!" />
       ) : (
         <ListItemText
-          primary={transport}
           secondary={
             <Typography component={"span"} variant={"caption"}>
               {Object.keys(data).map(entry => (
-                <ul style={{ listStyle: "none" }}>
-                  <li>{`Departs from: ${data[entry]["destination"]}`}</li>
-                  <li>{`Destination: ${data[entry]["destination"]}`}</li>
-                  <li>{`Destination: ${data[entry]["destination"]}`}</li>
-                  <li>{`Destination: ${data[entry]["destination"]}`}</li>
-                </ul>
+                <Card className={classes.root}>
+                  <ul
+                    style={{
+                      listStyle: "none",
+                      marginBottom: "3%",
+                      paddingInlineStart: "5px"
+                    }}
+                  >
+                    <li>{`${transport} Number: ${data[entry]["id"]}`}</li>
+                    <li>{`Departs: ${data[entry]["departsFrom"]}`}</li>
+                    <li>{`Destination: ${data[entry]["destination"]}`}</li>
+                    <li>{`When: ${formattedDate(
+                      data[entry]["departDate"]
+                    )}`}</li>
+                  </ul>
+                </Card>
               ))}
             </Typography>
           }

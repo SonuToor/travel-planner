@@ -40,10 +40,10 @@
 }
 
 .travel-accommo-display {
-  position: fixed;
+  position: sticky;
   left: 0;
   width: 25%;
-  max-height: 50%;
+  max-height: 400px;
   overflow-y: scroll;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .sticky-footer {
-  margin-top: 30%;
+  margin-top: 20%;
   position: sticky;
   bottom: 0;
 }
@@ -80,7 +80,7 @@
 /* Itinerary Styling */
 .itinerary {
   width: 80%;
-  margin-left: 22%;
+  margin-left: 1%;
 }
 
 .individual-day {
@@ -153,13 +153,19 @@
     display: flex;
     flex-direction: column;
   }
+  .individual-card {
+    width: 100%;
+    min-width: 230px;
+  }
   .itinerary-data-display {
     display: flex;
     flex-direction: column;
     margin-top: 1%;
   }
   .travel-accommo-display {
-    position: inherit;
+    position: relative;
+    height: 25%;
+    width: auto;
   }
   .itinerary {
     width: 100%;
