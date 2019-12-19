@@ -67,7 +67,7 @@ const TripItinerary = props => {
             dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}
           />
           <div className="itinerary-data-display">
-            <TravelAndAccommoDisplay />
+            <TravelAndAccommoDisplay dateID={props.trip.dates[0]} />
             <Itinerary
               dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}
               dateID={props.trip.dates[0]}

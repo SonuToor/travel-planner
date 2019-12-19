@@ -50,6 +50,17 @@
   background-color: #f0f1f2;
 }
 
+.delete-entry {
+  display: flex;
+  align-items: center;
+}
+
+.travel-accommo-display ul {
+  list-style: none;
+  margin-bottom: 3%;
+  padding-inline-start: 3px;
+}
+
 /* AccommoAndTravelInput Styling */
 .accommodation-travel-input {
   display: flex;
@@ -168,8 +179,8 @@
   .travel-accommo-display {
     position: relative;
     max-height: 240px;
-    width: 75%;
-    margin-left: 12.5%;
+    width: 80%;
+    margin-left: 10%;
     margin-bottom: 4%;
   }
   .itinerary {

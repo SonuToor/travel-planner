@@ -29,20 +29,27 @@ const TravelAndAccommoDisplay = props => {
     <div className="travel-accommo-display">
       <List className={classes.root}>
         <StyledDivider />
-        <AccommoDisplay data={accommo} />
+        <AccommoDisplay data={accommo} dateID={props.dateID} />
         <StyledDivider />
         <TransportDisplay
           icon={<DirectionsBusIcon />}
           data={busses}
           transport="Bus"
+          dateID={props.dateID}
         />
         <StyledDivider />
-        <TransportDisplay icon={<Flight />} data={flights} transport="Flight" />
+        <TransportDisplay
+          icon={<Flight />}
+          data={flights}
+          transport="Flight"
+          dateID={props.dateID}
+        />
         <StyledDivider />
         <TransportDisplay
           icon={<TrainIcon />}
           data={trains}
           transport="Train"
+          dateID={props.dateID}
         />
         <StyledDivider />
       </List>
