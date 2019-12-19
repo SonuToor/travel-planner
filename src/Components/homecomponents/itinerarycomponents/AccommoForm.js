@@ -26,7 +26,12 @@ const AccommoForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (checkIn === "" || accommoLocation === "") {
+    if (
+      checkIn === "" ||
+      accommoLocation === "" ||
+      reservation === "" ||
+      checkOut === ""
+    ) {
       toggleValidationError(true);
       return;
     }
@@ -52,6 +57,7 @@ const AccommoForm = props => {
         location: accommoLocation
       });
 
+    toggleValidationError(false);
     setReservation("");
     setCheckIn(
       new Date(props.date.slice(11), currentMonth, props.date.slice(7, 10))
@@ -66,6 +72,14 @@ const AccommoForm = props => {
 
   const reset = () => {
     toggleValidationError(false);
+    setReservation("");
+    setCheckIn(
+      new Date(props.date.slice(11), currentMonth, props.date.slice(7, 10))
+    );
+    setCheckOut(
+      new Date(props.date.slice(11), currentMonth, props.date.slice(7, 10))
+    );
+    setAccommoLocation("");
     props.close();
   };
 

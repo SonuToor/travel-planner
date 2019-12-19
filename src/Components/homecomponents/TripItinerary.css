@@ -43,8 +43,11 @@
   position: sticky;
   left: 0;
   width: 25%;
-  max-height: 400px;
+  height: 100%;
+  max-height: 425px;
   overflow-y: scroll;
+  border-radius: 10px;
+  background-color: #f0f1f2;
 }
 
 /* AccommoAndTravelInput Styling */
@@ -72,7 +75,7 @@
 }
 
 .sticky-footer {
-  margin-top: 20%;
+  margin-top: 18%;
   position: sticky;
   bottom: 0;
 }
@@ -164,10 +167,18 @@
   }
   .travel-accommo-display {
     position: relative;
-    height: 25%;
-    width: auto;
+    max-height: 240px;
+    width: 75%;
+    margin-left: 12.5%;
+    margin-bottom: 4%;
   }
   .itinerary {
     width: 100%;
+  }
+  .sticky-footer {
+    margin-top: 40%;
+  }
+  .accommodation-travel-input span {
+    font-size: 75%;
   }
 }

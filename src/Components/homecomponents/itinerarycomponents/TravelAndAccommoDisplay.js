@@ -1,19 +1,24 @@
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
+import AccommoDisplay from "./AccommoDisplay";
 import DirectionsBusIcon from "@material-ui/icons/DirectionsBus";
 import Flight from "@material-ui/icons/Flight";
-import LocalHotel from "@material-ui/icons/LocalHotel";
 import TrainIcon from "@material-ui/icons/Train";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import StyledDivider from "./StyledDivider";
 import TransportDisplay from "./TransportDisplay";
 import { TripItineraryContext } from "../../../Contexts/tripitinerary-context";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    paddingTop: "4px",
+    paddingBottom: "4px"
+  }
+}));
 
 const TravelAndAccommoDisplay = props => {
   const [trip, updateTrip] = useContext(TripItineraryContext);
+  const classes = useStyles();
 
   // before rendering these out, need to check for undefined
   const flights = trip["Flight"];
@@ -22,23 +27,9 @@ const TravelAndAccommoDisplay = props => {
   const trains = trip["Train"];
   return (
     <div className="travel-accommo-display">
-      <List>
+      <List className={classes.root}>
         <StyledDivider />
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <LocalHotel />
-            </Avatar>
-          </ListItemAvatar>
-          {accommo === undefined ? (
-            <ListItemText
-              primary="Accommodation"
-              secondary="Nothing here yet!"
-            />
-          ) : (
-            <ListItemText primary="Accommodation" secondary={"info here"} />
-          )}
-        </ListItem>
+        <AccommoDisplay data={accommo} />
         <StyledDivider />
         <TransportDisplay
           icon={<DirectionsBusIcon />}

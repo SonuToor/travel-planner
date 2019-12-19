@@ -28,7 +28,9 @@
 .main-title {
   text-align: center;
 }
-
+.trips-title {
+  margin-top: 10%;
+}
 .no-trips-title {
   text-align: center;
 }

@@ -24,7 +24,12 @@ const TransportForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (destination === "" || departDateTime === "") {
+    if (
+      destination === "" ||
+      departDateTime === "" ||
+      id === "" ||
+      departsFrom === ""
+    ) {
       toggleValidationError(true);
       return;
     }
@@ -50,6 +55,7 @@ const TransportForm = props => {
         departDate: date
       });
 
+    toggleValidationError(false);
     setID("");
     setDepartsFrom("");
     setDepartDateTime(
@@ -62,6 +68,12 @@ const TransportForm = props => {
 
   const reset = () => {
     toggleValidationError(false);
+    setID("");
+    setDepartsFrom("");
+    setDepartDateTime(
+      new Date(props.date.slice(11), currentMonth, props.date.slice(7, 10))
+    );
+    setDestination("");
     props.close();
   };
 

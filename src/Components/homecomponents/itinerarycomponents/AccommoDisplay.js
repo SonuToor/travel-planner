@@ -1,3 +1,4 @@
+import LocalHotel from "@material-ui/icons/LocalHotel";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -18,8 +19,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TransportDisplay = props => {
-  const { icon, data, transport } = props;
+const AccommoDisplay = props => {
+  const { data } = props;
 
   const formattedDate = date => {
     return `${date.slice(0, 5)} -${date.slice(9)}`;
@@ -30,7 +31,9 @@ const TransportDisplay = props => {
   return (
     <ListItem className={classes.gutters}>
       <ListItemAvatar>
-        <Avatar>{icon}</Avatar>
+        <Avatar>
+          <LocalHotel />
+        </Avatar>
       </ListItemAvatar>
       {data === undefined ? (
         <ListItemText secondary="Nothing here yet!" />
@@ -47,11 +50,13 @@ const TransportDisplay = props => {
                       paddingInlineStart: "5px"
                     }}
                   >
-                    <li>{`${transport} Number: ${data[entry]["id"]}`}</li>
-                    <li>{`Departs: ${data[entry]["departsFrom"]}`}</li>
-                    <li>{`Destination: ${data[entry]["destination"]}`}</li>
-                    <li>{`When: ${formattedDate(
-                      data[entry]["departDate"]
+                    <li>{`Reservation: ${data[entry]["reservation"]}`}</li>
+                    <li>{`Lodging: ${data[entry]["location"]}`}</li>
+                    <li>{`Check In: ${formattedDate(
+                      data[entry]["checkIn"]
+                    )}`}</li>
+                    <li>{`Check Out: ${formattedDate(
+                      data[entry]["checkOut"]
                     )}`}</li>
                   </ul>
                 </Card>
@@ -64,4 +69,4 @@ const TransportDisplay = props => {
   );
 };
 
-export default TransportDisplay;
+export default AccommoDisplay;
