@@ -63,10 +63,7 @@ export default class Home extends React.Component {
       .database()
       .ref(`${this.state.dates[0]}-${this.context[0]}/`)
       .set({
-        flight: "",
-        accommodation: "",
-        carrental: "",
-        train: ""
+        startDate: this.state.dates[0]
       });
   };
 

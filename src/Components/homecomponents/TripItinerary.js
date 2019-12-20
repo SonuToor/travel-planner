@@ -1,8 +1,8 @@
 import CalendarExport from "./itinerarycomponents/CalendarExport";
+import { createArrayOfDates } from "../../utils";
 import { CSSTransitionGroup } from "react-transition-group";
 import firebase from "../../config/Firebase";
 import Itinerary from "./itinerarycomponents/Itinerary";
-import moment from "moment";
 import React, { useContext, useEffect } from "react";
 import TravelAndAccommoDisplay from "./itinerarycomponents/TravelAndAccommoDisplay";
 import TravelAndAccommoInput from "./itinerarycomponents/TravelAndAccommoInput";
@@ -13,18 +13,6 @@ import { UserContext } from "../../Contexts/loggedin-context";
 const TripItinerary = props => {
   const [trip, updateTrip] = useContext(TripItineraryContext);
   const [user, updateUser] = useContext(UserContext);
-
-  const getDatesArray = (startDate, stopDate) => {
-    // get an array of dates between the first and last dates of the trip
-    var dateArray = [];
-    var currentDate = moment(startDate);
-    var endDate = moment(stopDate);
-    while (currentDate <= endDate) {
-      dateArray.push(moment(currentDate).format("MMMM Do YYYY"));
-      currentDate = moment(currentDate).add(1, "days");
-    }
-    return dateArray;
-  };
 
   // get the trips for the selected trip add them to the TripContext so it's available wherever it might be needed in the app
   const fetchTripData = () => {
@@ -64,12 +52,15 @@ const TripItinerary = props => {
             3
           )} to ${props.trip["dates"][1].slice(3)}`}</h4>
           <CalendarExport
-            dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}
+            dates={createArrayOfDates(props.trip.dates[0], props.trip.dates[1])}
           />
           <div className="itinerary-data-display">
-            <TravelAndAccommoDisplay dateID={props.trip.dates[0]} />
+            <TravelAndAccommoDisplay />
             <Itinerary
-              dates={getDatesArray(props.trip.dates[0], props.trip.dates[1])}
+              dates={createArrayOfDates(
+                props.trip.dates[0],
+                props.trip.dates[1]
+              )}
               dateID={props.trip.dates[0]}
             />
           </div>

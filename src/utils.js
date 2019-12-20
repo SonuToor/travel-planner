@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const MONTHS = [
   "Jan",
   "Feb",
@@ -19,4 +21,18 @@ export const monthStringToNum = month => {
   } else {
     return null;
   }
+};
+
+export const createArrayOfDates = (startDate, stopDate) => {
+  var dateArray = [];
+  if (startDate === null || stopDate === null) {
+    return dateArray;
+  }
+  var currentDate = moment(startDate);
+  var endDate = moment(stopDate);
+  while (currentDate <= endDate) {
+    dateArray.push(moment(currentDate).format("MMMM Do YYYY"));
+    currentDate = moment(currentDate).add(1, "days");
+  }
+  return dateArray;
 };

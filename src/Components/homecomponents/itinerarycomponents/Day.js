@@ -44,7 +44,7 @@ export default function Day(props) {
 
     firebase
       .database()
-      .ref(`${props.dateID}-${user}/${props.date}/${timeID}`)
+      .ref(`${trip.startDate}-${user}/${props.date}/${timeID}`)
       .remove();
   };
 

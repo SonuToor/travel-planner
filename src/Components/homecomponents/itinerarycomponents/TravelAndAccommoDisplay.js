@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TravelAndAccommoDisplay = props => {
+const TravelAndAccommoDisplay = () => {
   const [trip, updateTrip] = useContext(TripItineraryContext);
   const classes = useStyles();
 
@@ -29,27 +29,27 @@ const TravelAndAccommoDisplay = props => {
     <div className="travel-accommo-display">
       <List className={classes.root}>
         <StyledDivider />
-        <AccommoDisplay data={accommo} dateID={props.dateID} />
+        <AccommoDisplay data={accommo} dateID={trip.startDate} />
         <StyledDivider />
         <TransportDisplay
           icon={<DirectionsBusIcon />}
           data={busses}
           transport="Bus"
-          dateID={props.dateID}
+          dateID={trip.startDate}
         />
         <StyledDivider />
         <TransportDisplay
           icon={<Flight />}
           data={flights}
           transport="Flight"
-          dateID={props.dateID}
+          dateID={trip.startDate}
         />
         <StyledDivider />
         <TransportDisplay
           icon={<TrainIcon />}
           data={trains}
           transport="Train"
-          dateID={props.dateID}
+          dateID={trip.startDate}
         />
         <StyledDivider />
       </List>

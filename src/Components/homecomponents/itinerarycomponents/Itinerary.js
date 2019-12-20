@@ -25,13 +25,7 @@ export default function Itinerary(props) {
   return (
     <div className="itinerary">
       {props.dates.map((day, i) => (
-        <Day
-          key={day}
-          date={day}
-          index={i}
-          handleAdd={handleActivityAdd}
-          dateID={props.dateID}
-        />
+        <Day key={day} date={day} index={i} handleAdd={handleActivityAdd} />
       ))}
     </div>
   );
