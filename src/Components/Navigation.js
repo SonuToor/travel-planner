@@ -8,8 +8,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 
-import "./Navigation.css";
-
 // this is the Navigation bar that is stickied to the top of the page thoroughout the App
 function Navigation(props) {
   const useStyles = makeStyles(theme => ({

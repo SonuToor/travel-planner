@@ -58,7 +58,7 @@ export default class Trips extends React.Component {
         transitionEnterTimeout={500}
         transitionLeaveTimeout={300}
       >
-        <h2 className="main-title">Trips</h2>
+        <h2 className="trips-title">Trips</h2>
         {this.state.tripDetails === null ||
         this.state.tripDetails === undefined ? (
           <h3 className="no-trips-title">No trips saved yet!</h3>

@@ -1,10 +1,10 @@
-import DatesForm from "./homecomponents/DatesForm";
+import DatesForm from "../Components/homecomponents/DatesForm";
 import firebase from "../config/Firebase";
-import LocationForm from "./homecomponents/LocationForm";
+import LocationForm from "../Components/homecomponents/LocationForm";
 import React from "react";
-import Trips from "./homecomponents/Trips";
+import Trips from "../Components/homecomponents/Trips";
 import { Route, Switch } from "react-router-dom";
-import TripItinerary from "./homecomponents/TripItinerary";
+import TripItinerary from "../Components/homecomponents/TripItinerary";
 import { ItineraryProvider } from "../Contexts/tripitinerary-context";
 import { UserContext } from "../Contexts/loggedin-context";
 
@@ -63,10 +63,7 @@ export default class Home extends React.Component {
       .database()
       .ref(`${this.state.dates[0]}-${this.context[0]}/`)
       .set({
-        flight: "",
-        accommodation: "",
-        carrental: "",
-        train: ""
+        startDate: this.state.dates[0]
       });
   };
 
