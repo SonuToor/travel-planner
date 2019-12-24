@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import { CSSTransitionGroup } from "react-transition-group";
+import Flip from "react-reveal/Flip";
 import "./LocationForm.css";
 import plane from "../../Images/airplane.png";
 import React from "react";
@@ -71,15 +71,7 @@ export default class LocationForm extends React.Component {
 
   render() {
     return (
-      <CSSTransitionGroup
-        transitionName="example"
-        transitionAppear={true}
-        transitionAppearTimeout={500}
-        transitionEnter={true}
-        transitionLeave={true}
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={300}
-      >
+      <Flip left>
         <h2>
           Where are we off to?
           <img className="plane" src={plane} alt="paper airplane" />
@@ -110,7 +102,7 @@ export default class LocationForm extends React.Component {
             </Button>
           </form>
         </div>
-      </CSSTransitionGroup>
+      </Flip>
     );
   }
 }

@@ -2,8 +2,8 @@ import Button from "@material-ui/core/Button";
 import calendarPic from "../../Images/calendario.jpeg";
 import "./DatesForm.css";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
+import Flip from "react-reveal/Flip";
 import React from "react";
-import { CSSTransitionGroup } from "react-transition-group";
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 // get the duration of the trip based off of the two dates (account for different timezones)
@@ -52,15 +52,7 @@ export default class DateForm extends React.Component {
 
   render() {
     return (
-      <CSSTransitionGroup
-        transitionName="example"
-        transitionAppear={true}
-        transitionAppearTimeout={500}
-        transitionEnter={true}
-        transitionLeave={true}
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={300}
-      >
+      <Flip left>
         <h2>
           What are our dates?
           <img
@@ -87,7 +79,7 @@ export default class DateForm extends React.Component {
             Submit
           </Button>
         </form>
-      </CSSTransitionGroup>
+      </Flip>
     );
   }
 }

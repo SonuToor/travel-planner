@@ -1,8 +1,10 @@
-import background from "../Images/background.jpg";
-import datesFormImage from "../Images/date-selection.png";
-import itineraryImage from "../Images/itinerary-input.png";
+import pickDates from "../Images/pickdates.svg";
+import pickLocation from "../Images/pickdestination.svg";
+import itineraryDemo from "../Images/itinerary-demo.png";
+import fillItinerary from "../Images/fillinitinerary.svg";
+import { Link } from "react-router-dom";
+import StyledButton from "../Components/homecomponents/StyledButton";
 import "./Landing.css";
-import locationFormImage from "../Images/location-selection.png";
 import React from "react";
 
 // this is the landing page that users first see when they navigate to travel-planner
@@ -15,9 +17,53 @@ export default class Landing extends React.Component {
   render() {
     return (
       <div>
-        <h1>Welcome to your new travel buddy.</h1>
+        <h1>Welcome to your travel planner.</h1>
         <div className="planner-demo">
-          <div className="first-step">
+          <img
+            className="demo-pic"
+            src={itineraryDemo}
+            alt="the destination form"
+          />
+          <div style={{ marginLeft: "3%" }}>
+            <h3 style={{ marginTop: "15%" }}>
+              Everything you need to know about your trip in one place, whenever
+              you need it.
+            </h3>
+            <Link to="/signup" style={{ textDecoration: "none" }}>
+              <StyledButton text="Sign up now!" />
+            </Link>
+          </div>
+        </div>
+        <div
+          style={{
+            marginTop: "5%",
+            display: "flex",
+            justifyContent: "space-evenly"
+          }}
+        >
+          <div className="steps-left-align">
+            <img
+              src={pickLocation}
+              alt="choose a destination"
+              className="steps-picture"
+            />
+          </div>
+          <div className="steps-right-align">
+            <img
+              src={pickDates}
+              alt="choose a destination"
+              className="steps-picture"
+            />
+          </div>
+          <div className="steps-left-align">
+            <img
+              src={fillItinerary}
+              alt="choose a destination"
+              className="steps-picture"
+            />
+          </div>
+        </div>
+        {/* <div className="first-step">
             <p>1. Choose a destination.</p>
             <img
               className="demo-pics"
@@ -41,8 +87,10 @@ export default class Landing extends React.Component {
               alt="the sample itinerary"
             />
           </div>
-        </div>
-        <img className="bg" src={background} alt="by Dariusz Sankowski" />
+        </div> */}
+        <footer className="landing-footer">
+          <span>Designed and Developed by Sonu Toor</span>
+        </footer>
       </div>
     );
   }

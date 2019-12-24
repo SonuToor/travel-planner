@@ -1,5 +1,5 @@
-import { CSSTransitionGroup } from "react-transition-group";
 import firebase from "../../config/Firebase";
+import Flip from "react-reveal/Flip";
 import React from "react";
 import TripCards from "./TripCards";
 import { UserContext } from "../../Contexts/loggedin-context";
@@ -49,15 +49,7 @@ export default class Trips extends React.Component {
 
   render() {
     return (
-      <CSSTransitionGroup
-        transitionName="example"
-        transitionAppear={true}
-        transitionAppearTimeout={500}
-        transitionEnter={true}
-        transitionLeave={true}
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={300}
-      >
+      <Flip left>
         <h2 className="trips-title">Trips</h2>
         {this.state.tripDetails === null ||
         this.state.tripDetails === undefined ? (
@@ -70,7 +62,7 @@ export default class Trips extends React.Component {
             deleteTrip={this.deleteTrip}
           />
         )}
-      </CSSTransitionGroup>
+      </Flip>
     );
   }
 }
