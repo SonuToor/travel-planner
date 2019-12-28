@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TravelAndAccommoDisplay = () => {
-  const [trip, updateTrip] = useContext(TripItineraryContext);
+  const [trip] = useContext(TripItineraryContext);
   const classes = useStyles();
 
   // before rendering these out, need to check for undefined

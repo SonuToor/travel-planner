@@ -12,7 +12,7 @@ import { UserContext } from "../../Contexts/loggedin-context";
 
 const TripItinerary = props => {
   const [trip, updateTrip] = useContext(TripItineraryContext);
-  const [user, updateUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   // get the trips for the selected trip add them to the TripContext so it's available wherever it might be needed in the app
   const fetchTripData = () => {

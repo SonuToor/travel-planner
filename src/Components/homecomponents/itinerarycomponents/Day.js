@@ -26,8 +26,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Day(props) {
-  const [trip, updateTrip] = useContext(TripItineraryContext);
-  const [user, updateUser] = useContext(UserContext);
+  const [trip] = useContext(TripItineraryContext);
+  const [user] = useContext(UserContext);
 
   const tripDay = trip[props.date];
 

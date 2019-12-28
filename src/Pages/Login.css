@@ -19,6 +19,13 @@
   margin-top: 20%;
 }
 
+.MuiFormLabel-root {
+  color: rgb(105, 55, 161);
+}
+.Mui-focused {
+  color: rgb(105, 55, 161);
+}
+
 @media only screen and (max-width: 600px) {
   .login-form {
     display: flex;

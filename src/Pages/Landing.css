@@ -1,45 +1,49 @@
 h1 {
+  margin-top: 4%;
   text-align: center;
+  text-decoration: underline;
+  text-decoration-color: rgb(105, 55, 161);
 }
 h3 {
-  font-size: 1.35em;
+  font-size: 1.4em;
+  text-align: center;
 }
 p {
   text-align: center;
 }
 
+.pie-pic {
+  width: 6%;
+}
 .planner-demo {
   display: flex;
   justify-content: space-evenly;
   text-align: center;
+  margin-top: 10%;
+  margin-bottom: 15%;
 }
 
-.steps-left-align {
+.steps-title {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-
-.steps-right-align {
+.steps {
+  display: flex;
+  margin-top: 4%;
+  margin-bottom: 10%;
+}
+.step {
+  color: rgb(105, 55, 161);
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .steps-picture {
   width: 50%;
 }
-/* .first-step {
-  display: flex;
-  flex-direction: column;
-  width: 33%;
-}
 
-.second-step {
-  display: flex;
-  flex-direction: column;
-  width: 33%;
-}
-
-*/
 .third-step {
   display: flex;
   flex-direction: column;
@@ -52,11 +56,36 @@ p {
 }
 
 .demo-pic:hover {
-  transform: scale(1.1);
+  transform: scale(1.18);
 }
 
 .landing-footer {
+  font-weight: bold;
+  color: rgb(105, 55, 161);
+  margin-top: 3%;
+  margin-bottom: 1%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  position: relative;
+  bottom: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .planner-demo {
+    flex-direction: column;
+    margin-bottom: 50%;
+  }
+  .demo-pic {
+    width: 100%;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+  h1 {
+    margin-top: 22%;
+  }
+  .pie-pic {
+    width: 10%;
+  }
 }

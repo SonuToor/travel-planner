@@ -1,5 +1,5 @@
 import firebase from "../../config/Firebase";
-import Flip from "react-reveal/Flip";
+import Fade from "react-reveal/Fade";
 import React from "react";
 import TripCards from "./TripCards";
 import { UserContext } from "../../Contexts/loggedin-context";
@@ -49,7 +49,7 @@ export default class Trips extends React.Component {
 
   render() {
     return (
-      <Flip left>
+      <Fade top>
         <h2 className="trips-title">Trips</h2>
         {this.state.tripDetails === null ||
         this.state.tripDetails === undefined ? (
@@ -62,7 +62,7 @@ export default class Trips extends React.Component {
             deleteTrip={this.deleteTrip}
           />
         )}
-      </Flip>
+      </Fade>
     );
   }
 }

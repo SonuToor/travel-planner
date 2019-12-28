@@ -3,6 +3,7 @@ import pickLocation from "../Images/pickdestination.svg";
 import itineraryDemo from "../Images/itinerary-demo.png";
 import fillItinerary from "../Images/fillinitinerary.svg";
 import { Link } from "react-router-dom";
+import pieDrawing from "../Images/piedrawing.jpg";
 import StyledButton from "../Components/homecomponents/StyledButton";
 import "./Landing.css";
 import React from "react";
@@ -34,62 +35,42 @@ export default class Landing extends React.Component {
             </Link>
           </div>
         </div>
-        <div
-          style={{
-            marginTop: "5%",
-            display: "flex",
-            justifyContent: "space-evenly"
-          }}
-        >
-          <div className="steps-left-align">
+        <h3 className="steps-title">
+          Easy as{" "}
+          {<img src={pieDrawing} className="pie-pic" alt="pie drawing" />}
+        </h3>
+        <div className="steps">
+          <div className="step">
             <img
               src={pickLocation}
               alt="choose a destination"
               className="steps-picture"
             />
+            <p>Choose a destination.</p>
           </div>
-          <div className="steps-right-align">
-            <img
-              src={pickDates}
-              alt="choose a destination"
-              className="steps-picture"
-            />
+          <div className="step">
+            <img src={pickDates} alt="choose dates" className="steps-picture" />
+            <p>Set your dates.</p>
           </div>
-          <div className="steps-left-align">
+          <div className="step">
             <img
               src={fillItinerary}
-              alt="choose a destination"
+              alt="fill in itinerary"
               className="steps-picture"
             />
+            <p>Fill in your easy to read itinerary.</p>
           </div>
         </div>
-        {/* <div className="first-step">
-            <p>1. Choose a destination.</p>
-            <img
-              className="demo-pics"
-              src={locationFormImage}
-              alt="the destination form"
-            />
-          </div>
-          <div className="second-step">
-            <p>2. Pick your dates.</p>
-            <img
-              className="demo-pics"
-              src={datesFormImage}
-              alt="the dates form"
-            />
-          </div>
-          <div className="third-step">
-            <p>3. Fill in your desired itinerary.</p>
-            <img
-              className="demo-pics"
-              src={itineraryImage}
-              alt="the sample itinerary"
-            />
-          </div>
-        </div> */}
         <footer className="landing-footer">
-          <span>Designed and Developed by Sonu Toor</span>
+          <span>
+            Designed and Developed by{" "}
+            <a
+              href="https://github.com/SonuToor/travel-planner"
+              target="_blank"
+            >
+              Sonu Toor
+            </a>
+          </span>
         </footer>
       </div>
     );

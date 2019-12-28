@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import Flip from "react-reveal/Flip";
+import Fade from "react-reveal/Fade";
 import "./LocationForm.css";
 import plane from "../../Images/airplane.png";
 import React from "react";
@@ -71,7 +71,7 @@ export default class LocationForm extends React.Component {
 
   render() {
     return (
-      <Flip left>
+      <Fade top>
         <h2>
           Where are we off to?
           <img className="plane" src={plane} alt="paper airplane" />
@@ -102,7 +102,7 @@ export default class LocationForm extends React.Component {
             </Button>
           </form>
         </div>
-      </Flip>
+      </Fade>
     );
   }
 }
