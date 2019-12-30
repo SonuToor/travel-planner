@@ -1,5 +1,6 @@
 import { Button } from "@material-ui/core";
 import EmailInput from "./EmailInput";
+import ExploreIcon from "@material-ui/icons/Explore";
 import firebase from "../config/Firebase";
 import React, { useEffect, useState } from "react";
 import PasswordInput from "./PasswordInput";
@@ -51,8 +52,8 @@ const Signup = props => {
 
   return (
     <div className="form-background">
+      <ExploreIcon />
       <form className="signup-form" onSubmit={handleSubmit}>
-        <h3>Sign Up Now!</h3>
         {isError ? (
           <p style={{ color: "red", textAlign: "center" }}>{error}</p>
         ) : null}
@@ -75,9 +76,9 @@ const Signup = props => {
           variant="contained"
           className="signup-button"
           type="submit"
-          style={{ marginTop: "2%" }}
+          style={{ marginTop: "10%", marginBottom: "5%" }}
         >
-          Submit
+          Sign Up
         </Button>
       </form>
     </div>

@@ -1,4 +1,5 @@
 import { Button } from "@material-ui/core";
+import ExploreIcon from "@material-ui/icons/Explore";
 import firebase from "../config/Firebase";
 import "./Login.css";
 import EmailInput from "./EmailInput";
@@ -43,8 +44,8 @@ const Login = props => {
 
   return (
     <div className="form-background-login">
+      <ExploreIcon />
       <form className="login-form" onSubmit={handleSubmit}>
-        <h3>Login</h3>
         {isError ? (
           <p style={{ color: "red", textAlign: "center" }}>{error}</p>
         ) : null}
@@ -60,9 +61,9 @@ const Login = props => {
           variant="contained"
           className="login-button"
           type="submit"
-          style={{ marginTop: "2%" }}
+          style={{ marginTop: "10%", marginBottom: "5%" }}
         >
-          Submit
+          Login
         </Button>
       </form>
     </div>

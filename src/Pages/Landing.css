@@ -88,4 +88,7 @@ p {
   .pie-pic {
     width: 10%;
   }
+  .steps {
+    flex-direction: column;
+  }
 }

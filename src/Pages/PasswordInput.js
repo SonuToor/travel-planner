@@ -5,24 +5,20 @@ import {
   InputLabel,
   FormControl
 } from "@material-ui/core";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const StyledInput = withStyles({
   underline: {
-    borderBottom: "2px solid rgb(105, 55, 161)",
+    borderBottom: "2px solid black",
     "&:after": {
-      // The MUI source seems to use this but it doesn't work
-      borderBottom: "2px solid rgb(105, 55, 161)"
+      borderBottom: "2px solid black"
+    },
+    "&:hover": {
+      borderBottom: "2px solid black"
     }
-  },
-  formControl: {
-    color: "rgb(105, 55, 161)"
-  },
-  focused: {
-    color: "rgb(105, 55, 161)"
   }
 })(Input);
 
@@ -34,8 +30,8 @@ const PasswordInput = props => {
   };
 
   return (
-    <FormControl>
-      <InputLabel>{label}</InputLabel>
+    <FormControl style={{ marginTop: "5%", marginBottom: "5%" }}>
+      <InputLabel style={{ color: "black" }}>{label}</InputLabel>
       <StyledInput
         variant="outlined"
         type={showPassword ? "text" : "password"}

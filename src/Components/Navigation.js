@@ -69,20 +69,20 @@ function Navigation(props) {
           )}
           <h4 className={classes.title}>Let's get exploring!</h4>
           {props.user !== "null" ? (
-            <NavLink to={routes.trips}>
+            <NavLink to={routes.trips} style={{ textDecoration: "none" }}>
               <Button>My Trips</Button>
             </NavLink>
           ) : (
-            <NavLink to={routes.signup}>
+            <NavLink to={routes.signup} style={{ textDecoration: "none" }}>
               <Button>Sign Up</Button>
             </NavLink>
           )}
           {props.user !== "null" ? (
-            <NavLink to={routes.landing}>
+            <NavLink to={routes.landing} style={{ textDecoration: "none" }}>
               <Button onClick={logOutUser}>Logout</Button>
             </NavLink>
           ) : (
-            <NavLink to={routes.login}>
+            <NavLink to={routes.login} style={{ textDecoration: "none" }}>
               <Button>Login</Button>
             </NavLink>
           )}

@@ -5,15 +5,27 @@ import {
   InputLabel,
   FormControl
 } from "@material-ui/core";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import React from "react";
+
+const StyledInput = withStyles({
+  underline: {
+    borderBottom: "2px solid black",
+    "&:after": {
+      borderBottom: "2px solid black"
+    },
+    "&:hover": {
+      borderBottom: "2px solid black"
+    }
+  }
+})(Input);
 
 const EmailInput = props => {
   const { value, label, updateValue } = props;
   return (
     <FormControl>
-      <InputLabel htmlFor="user-email">{label}</InputLabel>
-      <Input
+      <InputLabel style={{ color: "black" }}>{label}</InputLabel>
+      <StyledInput
         type="email"
         value={value}
         onChange={e => updateValue(e.target.value)}

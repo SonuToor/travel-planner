@@ -3,6 +3,7 @@ import { createArrayOfDates } from "../../utils";
 import Fade from "react-reveal/Fade";
 import firebase from "../../config/Firebase";
 import Itinerary from "./itinerarycomponents/Itinerary";
+import LoadingIndicator from "./LoadingIndicator";
 import React, { useContext, useEffect } from "react";
 import TravelAndAccommoDisplay from "./itinerarycomponents/TravelAndAccommoDisplay";
 import TravelAndAccommoInput from "./itinerarycomponents/TravelAndAccommoInput";
@@ -36,7 +37,7 @@ const TripItinerary = props => {
   return (
     <Fade bottom>
       {trip === "" || trip === null ? (
-        <span>loading</span>
+        <LoadingIndicator />
       ) : (
         <>
           <h2 className="trip-title">{`Your trip to ${props.trip["location"]}`}</h2>
