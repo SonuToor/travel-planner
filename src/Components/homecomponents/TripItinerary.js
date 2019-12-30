@@ -1,8 +1,9 @@
 import CalendarExport from "./itinerarycomponents/CalendarExport";
 import { createArrayOfDates } from "../../utils";
-import { CSSTransitionGroup } from "react-transition-group";
+import Fade from "react-reveal/Fade";
 import firebase from "../../config/Firebase";
 import Itinerary from "./itinerarycomponents/Itinerary";
+import LoadingIndicator from "./LoadingIndicator";
 import React, { useContext, useEffect } from "react";
 import TravelAndAccommoDisplay from "./itinerarycomponents/TravelAndAccommoDisplay";
 import TravelAndAccommoInput from "./itinerarycomponents/TravelAndAccommoInput";
@@ -12,7 +13,7 @@ import { UserContext } from "../../Contexts/loggedin-context";
 
 const TripItinerary = props => {
   const [trip, updateTrip] = useContext(TripItineraryContext);
-  const [user, updateUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   // get the trips for the selected trip add them to the TripContext so it's available wherever it might be needed in the app
   const fetchTripData = () => {
@@ -34,17 +35,9 @@ const TripItinerary = props => {
   }, []);
 
   return (
-    <CSSTransitionGroup
-      transitionName="example"
-      transitionAppear={true}
-      transitionAppearTimeout={500}
-      transitionEnter={true}
-      transitionLeave={true}
-      transitionEnterTimeout={500}
-      transitionLeaveTimeout={300}
-    >
+    <Fade bottom>
       {trip === "" || trip === null ? (
-        <span>loading</span>
+        <LoadingIndicator />
       ) : (
         <>
           <h2 className="trip-title">{`Your trip to ${props.trip["location"]}`}</h2>
@@ -67,7 +60,7 @@ const TripItinerary = props => {
           <TravelAndAccommoInput startDate={props.trip.dates[0]} />
         </>
       )}
-    </CSSTransitionGroup>
+    </Fade>
   );
 };
 

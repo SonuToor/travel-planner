@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../../../Contexts/loggedin-context";
 
 export default function Itinerary(props) {
-  const [user, updateUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   const handleActivityAdd = (day, time, activity) => {
     if (activity === "") {
