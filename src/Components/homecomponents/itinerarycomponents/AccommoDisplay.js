@@ -35,7 +35,7 @@ const iconButton = makeStyles(theme => ({
 }));
 
 const AccommoDisplay = props => {
-  const [user, updateUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const { data } = props;
 
   const formattedDate = date => {

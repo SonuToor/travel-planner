@@ -29,8 +29,6 @@ const routes = {
 const App = props => {
   const [user, updateUser] = useState(localStorage.getItem("user"));
 
-  // const history = useHistory();
-
   const logOut = () => {
     firebase
       .auth()
@@ -51,12 +49,12 @@ const App = props => {
   };
 
   useEffect(() => {
-    if (user === "null") {
+    if (user === "null" || user === null) {
       props.history.push(routes.landing);
     } else {
       props.history.push(routes.location);
     }
-  }, []);
+  }, [user]);
 
   return (
     <Container>

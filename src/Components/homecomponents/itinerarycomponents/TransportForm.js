@@ -11,7 +11,7 @@ import StyledButton from "../StyledButton";
 import { UserContext } from "../../../Contexts/loggedin-context";
 
 const TransportForm = props => {
-  const [user, updateUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const currentMonth = monthStringToNum(props.date.slice(3, 7));
   const [id, setID] = useState("");
   const [departsFrom, setDepartsFrom] = useState("");
