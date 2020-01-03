@@ -36,7 +36,7 @@ const iconButton = makeStyles(theme => ({
 }));
 
 const TransportDisplay = props => {
-  const [user, updateUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const { icon, data, transport } = props;
 
   const formattedDate = date => {

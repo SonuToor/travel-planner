@@ -34,8 +34,8 @@ const CalendarExport = props => {
   const [showErrorMessage, toggleErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [trip, updateTrip] = useContext(TripItineraryContext);
-  const [user, updateUser] = useContext(UserContext);
+  const [trip] = useContext(TripItineraryContext);
+  const [user] = useContext(UserContext);
 
   const handleScriptLoad = () => {
     window.gapi.load("client:auth2", initClient);
