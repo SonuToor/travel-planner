@@ -1,6 +1,6 @@
 import pickDates from "../Images/pickdates.svg";
 import pickLocation from "../Images/pickdestination.svg";
-import itineraryDemo from "../Images/itinerary-demo.png";
+import PhotoCarousel from "./PhotoCarousel";
 import fillItinerary from "../Images/fillinitinerary.svg";
 import { Link } from "react-router-dom";
 import pieDrawing from "../Images/piedrawing.jpg";
@@ -20,12 +20,10 @@ export default class Landing extends React.Component {
       <div>
         <h1>Welcome to your travel planner.</h1>
         <div className="planner-demo">
-          <img
-            className="demo-pic"
-            src={itineraryDemo}
-            alt="the destination form"
-          />
-          <div style={{ marginLeft: "3%" }}>
+          <div className="carousel">
+            <PhotoCarousel />
+          </div>
+          <div>
             <h3 style={{ marginTop: "15%" }}>
               Everything you need to know about your trip in one place, whenever
               you need it.
