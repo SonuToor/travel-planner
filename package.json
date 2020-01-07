@@ -15,6 +15,7 @@
     "react": "^16.9.0",
     "react-datetime-picker": "^2.8.0",
     "react-dom": "^16.9.0",
+    "react-image-gallery": "^1.0.3",
     "react-load-script": "0.0.6",
     "react-reveal": "^1.2.2",
     "react-router": "^5.1.2",

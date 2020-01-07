@@ -60,8 +60,10 @@
 }
 
 .sticky-footer {
-  margin-top: 18%;
+  margin-top: 22%;
   position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
   bottom: 0;
 }
 

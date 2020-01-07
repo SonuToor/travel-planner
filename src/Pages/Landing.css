@@ -1,3 +1,5 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
 h1 {
   margin-top: 4%;
   text-align: center;
@@ -11,7 +13,12 @@ h3 {
 p {
   text-align: center;
 }
-
+.carousel {
+  width: 125%;
+}
+.image-gallery-icon:hover {
+  color: rgb(105, 55, 161);
+}
 .pie-pic {
   width: 6%;
 }
@@ -50,15 +57,6 @@ p {
   width: 33%;
 }
 
-.demo-pic {
-  width: 50%;
-  transition: all 0.2s ease-in-out;
-}
-
-.demo-pic:hover {
-  transform: scale(1.18);
-}
-
 .landing-footer {
   font-weight: bold;
   color: rgb(105, 55, 161);
@@ -75,7 +73,7 @@ p {
     flex-direction: column;
     margin-bottom: 50%;
   }
-  .demo-pic {
+  .carousel {
     width: 100%;
   }
 
